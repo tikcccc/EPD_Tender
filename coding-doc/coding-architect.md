@@ -135,7 +135,7 @@ EPD_Tender/
 ## 6. Evidence 溯源架構決策
 - 由後端做定位，前端只負責展示。
 - 理由：
-  - `reference/test.json` 目前無 `page/bbox`，純前端只靠字串搜索穩定度不足。
+  - `backend/data/reports/seed-report-cards.json` 目前無 `page/bbox`，純前端只靠字串搜索穩定度不足。
   - 後端可預建索引與 fuzzy match，提高命中率與一致性。
 - 降級策略：
   - 若 bbox 不可得，至少返回 page + quote，前端仍可跳頁並提示「近似定位」。

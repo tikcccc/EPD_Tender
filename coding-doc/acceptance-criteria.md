@@ -75,7 +75,7 @@
   - 長文本不破版，行為可閱讀（截斷或展開）
 - 測試案例：
   - TC-CARD-001
-  - 前置：載入 `reference/test.json`
+  - 前置：載入 `backend/data/reports/seed-report-cards.json`
   - 步驟：查看所有卡片
   - 期望：欄位完整且對應正確
 

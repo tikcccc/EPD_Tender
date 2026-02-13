@@ -5,6 +5,7 @@ import type { BBox } from "@/features/tender-ui/types";
 type PdfWorkspaceProps = {
   documentId: string;
   currentPage: number;
+  highlightPage?: number | null;
   bbox: BBox | null;
   bboxes: BBox[] | null;
   zoom: number;
@@ -56,6 +57,7 @@ function getRenderScale(zoom: number): number {
 export function PdfWorkspace({
   documentId,
   currentPage,
+  highlightPage = null,
   bbox,
   bboxes,
   zoom,
@@ -293,6 +295,9 @@ export function PdfWorkspace({
     if (canvasSize.width <= 0 || canvasSize.height <= 0) {
       return [];
     }
+    if (!highlightPage || safePage !== highlightPage) {
+      return [];
+    }
 
     const effectiveBboxes = bboxes && bboxes.length > 0 ? bboxes : bbox ? [bbox] : [];
     return effectiveBboxes.map((rect) => {
@@ -308,7 +313,7 @@ export function PdfWorkspace({
         height: `${Math.max(2, height)}px`,
       };
     });
-  }, [bbox, bboxes, canvasSize.height, canvasSize.width, renderScale]);
+  }, [bbox, bboxes, canvasSize.height, canvasSize.width, highlightPage, renderScale, safePage]);
 
   return (
     <div className="c-pdf-stage">

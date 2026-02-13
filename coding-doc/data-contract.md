@@ -55,8 +55,8 @@
 | manual_verdict_note | string | 否 | 人工校驗註記 |
 | anchors | EvidenceAnchor[] | 否 | 解析後定位結果 |
 
-## 3.4 與現有 `reference/test.json` 的相容
-- `reference/test.json` 是 `ReportItem[]`（陣列）格式。
+## 3.4 與現有 `backend/data/reports/seed-report-cards.json` 的相容
+- `backend/data/reports/seed-report-cards.json` 是 `ReportItem[]`（陣列）格式。
 - ingestion 時允許直接上傳 `ReportItem[]`，後端補齊 `ReportPackage` 外層欄位。
 - `anchors` 為解析後補充欄位，原始輸入可缺省。
 

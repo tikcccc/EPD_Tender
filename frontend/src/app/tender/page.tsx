@@ -31,12 +31,13 @@ const FALLBACK_DOCUMENT: DocumentReference = {
   display_name: "Unknown Document",
 };
 const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._-]+)(?:\s*,[^:\n]+)?\s*:/gi;
-const QUOTED_SEGMENT_RE = /"([^"]+)"/g;
+const QUOTED_SEGMENT_PATTERNS = [/"([^"]+)"/g, /“([^”]+)”/g];
 
 type ResolveCandidate = {
   order: number;
   document_id: string;
   evidence_text: string;
+  reference_id: string;
   anchor: EvidenceAnchor;
   payload: ResolveEvidenceResult;
 };
@@ -75,7 +76,22 @@ function normalizeEvidenceText(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
-function extractEvidenceByDocument(item: ReportItem): Map<string, string> {
+function extractQuotedSegments(text: string): string[] {
+  const segments: string[] = [];
+
+  QUOTED_SEGMENT_PATTERNS.forEach((pattern) => {
+    const regex = new RegExp(pattern);
+    segments.push(
+      ...Array.from(text.matchAll(regex))
+        .map((match) => normalizeEvidenceText(match[1] ?? ""))
+        .filter(Boolean),
+    );
+  });
+
+  return segments;
+}
+
+function extractEvidenceByDocument(item: ReportItem): Map<string, string[]> {
   const references = Array.from(new Set(item.document_references.map((reference) => reference.trim()).filter(Boolean)));
   const referenceKeyMap = new Map(references.map((reference) => [reference.toLowerCase(), reference]));
   const extracted = new Map<string, string[]>();
@@ -92,11 +108,8 @@ function extractEvidenceByDocument(item: ReportItem): Map<string, string> {
     const segmentStart = match.index + match[0].length;
     const segmentEnd = index + 1 < matches.length && matches[index + 1].index !== undefined ? matches[index + 1].index : item.evidence.length;
     const segment = item.evidence.slice(segmentStart, segmentEnd);
-    const quoteRegex = new RegExp(QUOTED_SEGMENT_RE);
-    const quotes = Array.from(segment.matchAll(quoteRegex))
-      .map((quoted) => normalizeEvidenceText(quoted[1] ?? ""))
-      .filter(Boolean);
-    const normalizedSegment = normalizeEvidenceText(segment.replace(quoteRegex, "$1"));
+    const quotes = extractQuotedSegments(segment);
+    const normalizedSegment = normalizeEvidenceText(segment.replace(/["“”]/g, ""));
     const fragments = quotes.length > 0 ? quotes : normalizedSegment ? [normalizedSegment] : [];
 
     if (fragments.length === 0) {
@@ -104,17 +117,31 @@ function extractEvidenceByDocument(item: ReportItem): Map<string, string> {
     }
 
     const existing = extracted.get(documentId) ?? [];
-    extracted.set(documentId, [...existing, ...fragments]);
+    const merged = [...existing];
+    fragments.forEach((fragment) => {
+      if (!merged.includes(fragment)) {
+        merged.push(fragment);
+      }
+    });
+    extracted.set(documentId, merged);
   });
+  return extracted;
+}
 
-  const result = new Map<string, string>();
-  extracted.forEach((segments, documentId) => {
-    const text = normalizeEvidenceText(segments.join(" "));
-    if (text) {
-      result.set(documentId, text);
-    }
-  });
-  return result;
+function buildReferenceId(documentId: string, segmentIndex: number): string {
+  return `${documentId}:${segmentIndex}`;
+}
+
+function resolveReferenceId(
+  documentId: string,
+  evidenceText: string,
+  evidenceByDocument: Map<string, string[]>,
+): string {
+  const normalizedEvidence = normalizeEvidenceText(evidenceText);
+  const segments = evidenceByDocument.get(documentId) ?? [];
+  const segmentIndex = segments.findIndex((segment) => normalizeEvidenceText(segment) === normalizedEvidence);
+
+  return buildReferenceId(documentId, segmentIndex >= 0 ? segmentIndex : 0);
 }
 
 function getCandidateDocumentIds(item: ReportItem, defaultDocumentId: string): string[] {
@@ -215,9 +242,10 @@ function toApproximateState(
 }
 
 function getClauseKeyword(evidenceText: string): string | undefined {
-  const clauseMatch = evidenceText.match(/\bClause\s+(\d{1,3}(?:\.\d+){0,2})\b/i);
-  if (clauseMatch?.[1]) {
-    return clauseMatch[1];
+  // Prefer a leading clause label such as "59.3 ..."; body text may also reference other clauses (e.g. Clause 59.1).
+  const leadingClauseMatch = evidenceText.match(/^\s*(?:\([a-z]\)\s*)?(\d{1,3}(?:\.\d+){1,3})(?![\d-])/i);
+  if (leadingClauseMatch?.[1]) {
+    return leadingClauseMatch[1];
   }
 
   const sectionMatch = evidenceText.match(/\bSection\s+(\d{1,3}(?:\.\d+){1,3})(?:\([a-z]\))?/i);
@@ -225,8 +253,17 @@ function getClauseKeyword(evidenceText: string): string | undefined {
     return sectionMatch[1];
   }
 
-  const numericClauseMatch = evidenceText.match(/(?:^|[\s"'(])(\d{1,3}(?:\.\d+){1,2})(?![\d-])/);
-  return numericClauseMatch?.[1];
+  const numericClauseMatch = evidenceText.match(/(?:^|[\s"'(])(\d{1,3}(?:\.\d+){1,3})(?![\d-])/);
+  if (numericClauseMatch?.[1]) {
+    return numericClauseMatch[1];
+  }
+
+  const clauseMatch = evidenceText.match(/\bClause\s+(\d{1,3}(?:\.\d+){0,3})\b/i);
+  if (clauseMatch?.[1]) {
+    return clauseMatch[1];
+  }
+
+  return undefined;
 }
 
 export default function TenderPage() {
@@ -255,6 +292,7 @@ export default function TenderPage() {
     loading: false,
   });
   const [activeItemId, setActiveItemId] = useState<string>("");
+  const [activeReferenceId, setActiveReferenceId] = useState<string>("");
   const [workspaceDocuments, setWorkspaceDocuments] = useState<DocumentReference[]>([FALLBACK_DOCUMENT]);
   const [switchingDocument, setSwitchingDocument] = useState(false);
   const [viewerPage, setViewerPage] = useState(1);
@@ -279,6 +317,10 @@ export default function TenderPage() {
   const documentMap = useMemo(() => toDocumentMap(template), [template]);
   const documentLabels = useMemo(() => {
     const entries = Object.values(documentMap).map((document) => [document.document_id, document.display_name] as const);
+    return Object.fromEntries(entries);
+  }, [documentMap]);
+  const documentFileNames = useMemo(() => {
+    const entries = Object.values(documentMap).map((document) => [document.document_id, document.file_name] as const);
     return Object.fromEntries(entries);
   }, [documentMap]);
 
@@ -399,6 +441,7 @@ export default function TenderPage() {
     options?: {
       forcedDocumentId?: string;
       evidenceTextOverride?: string;
+      referenceId?: string;
       fromDocumentSwitcher?: boolean;
     },
   ): Promise<void> {
@@ -416,8 +459,12 @@ export default function TenderPage() {
         ? options.forcedDocumentId
         : candidateDocumentIds[0];
     const preferredDocument = toDocumentReference(preferredDocumentId, documentMap, defaultDocument);
+    const preferredEvidenceSegments = evidenceByDocument.get(preferredDocumentId);
     const preferredEvidence =
-      options?.evidenceTextOverride ?? evidenceByDocument.get(preferredDocumentId) ?? item.evidence;
+      options?.evidenceTextOverride ?? preferredEvidenceSegments?.[0] ?? item.evidence;
+    const preferredReferenceId =
+      options?.referenceId ?? resolveReferenceId(preferredDocumentId, preferredEvidence, evidenceByDocument);
+    setActiveReferenceId(preferredReferenceId);
 
     const baseState: EvidenceWorkspaceState = {
       ...toApproximateState(item, documentMap, defaultDocument),
@@ -442,21 +489,28 @@ export default function TenderPage() {
     }
 
     try {
-      const targetDocumentIds = options?.forcedDocumentId ? [preferredDocumentId] : candidateDocumentIds;
+      const resolveInputs = options?.forcedDocumentId
+        ? [{ documentId: preferredDocumentId, evidenceText: preferredEvidence, referenceId: preferredReferenceId }]
+        : candidateDocumentIds.flatMap((documentId) => {
+            const candidateSegments = evidenceByDocument.get(documentId);
+            const evidenceTexts = candidateSegments && candidateSegments.length > 0 ? candidateSegments : [item.evidence];
+
+            return evidenceTexts.map((evidenceText, segmentIndex) => ({
+              documentId,
+              evidenceText,
+              referenceId: buildReferenceId(documentId, segmentIndex),
+            }));
+          });
 
       const settled = await Promise.allSettled(
-        targetDocumentIds.map(async (documentId, order): Promise<ResolveCandidate> => {
-          const candidateEvidenceText =
-            options?.forcedDocumentId && options.evidenceTextOverride && documentId === preferredDocumentId
-              ? options.evidenceTextOverride
-              : evidenceByDocument.get(documentId) ?? item.evidence;
-          const clauseKeyword = getClauseKeyword(candidateEvidenceText) ?? getClauseKeyword(item.evidence);
+        resolveInputs.map(async ({ documentId, evidenceText, referenceId }, order): Promise<ResolveCandidate> => {
+          const clauseKeyword = getClauseKeyword(evidenceText) ?? getClauseKeyword(item.evidence);
 
           const payload = await resolveEvidence({
             report_id: reportId,
             item_id: item.item_id,
             document_id: documentId,
-            evidence_text: candidateEvidenceText,
+            evidence_text: evidenceText,
             hints: {
               clause_keyword: clauseKeyword,
             },
@@ -470,7 +524,8 @@ export default function TenderPage() {
           return {
             order,
             document_id: documentId,
-            evidence_text: candidateEvidenceText,
+            evidence_text: evidenceText,
+            reference_id: referenceId,
             anchor,
             payload,
           };
@@ -488,6 +543,7 @@ export default function TenderPage() {
       const bestCandidate = pickBestResolveCandidate(successfulCandidates);
       const bestAnchor = bestCandidate.anchor;
       const resolvedDocument = toDocumentReference(bestCandidate.document_id, documentMap, defaultDocument);
+      setActiveReferenceId(bestCandidate.reference_id);
 
       setWorkspaceState({
         item_id: item.item_id,
@@ -503,6 +559,7 @@ export default function TenderPage() {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "Evidence resolve failed.";
+      setActiveReferenceId(preferredReferenceId);
       setWorkspaceState({
         ...baseState,
         loading: false,
@@ -677,7 +734,9 @@ export default function TenderPage() {
                   item={item}
                   isActive={item.item_id === activeItemId}
                   activeDocumentId={item.item_id === activeItemId ? workspaceState.document_id : undefined}
+                  activeReferenceId={item.item_id === activeItemId ? activeReferenceId : undefined}
                   documentLabels={documentLabels}
+                  documentFileNames={documentFileNames}
                   onEvidenceClick={(card, options) => void focusEvidence(card, options)}
                 />
               ))}
@@ -733,6 +792,7 @@ export default function TenderPage() {
           <PdfWorkspace
             documentId={workspaceState.document_id}
             currentPage={viewerPage}
+            highlightPage={workspaceState.page}
             bbox={workspaceState.bbox}
             bboxes={workspaceState.bboxes ?? null}
             zoom={zoom}

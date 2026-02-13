@@ -10,7 +10,7 @@ BACKEND_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_ROOT = BACKEND_ROOT.parent
 REFERENCE_DIR = PROJECT_ROOT / "reference"
 NEC_TEMPLATE_PATH = BACKEND_ROOT / "data" / "templates" / "nec-template.json"
-SEED_REPORT_PATH = REFERENCE_DIR / "test.json"
+SEED_REPORT_PATH = BACKEND_ROOT / "data" / "reports" / "seed-report-cards.json"
 
 SERVICE_NAME = "epd-tender-api"
 SERVICE_VERSION = "1.0.0"

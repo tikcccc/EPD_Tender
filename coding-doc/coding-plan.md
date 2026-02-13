@@ -11,7 +11,7 @@
 
 ### In Scope
 - 基於 `reference/code.html` 實作相同版型與交互方向。
-- 讀取結構化 JSON 報告（如 `reference/test.json`）。
+- 讀取結構化 JSON 報告（如 `backend/data/reports/seed-report-cards.json`）。
 - 支援兩份 tender PDF 載入、切換、頁碼跳轉與 evidence 高亮。
 - 支援導出固定格式 Word/PDF（至少一種先落地）。
 
