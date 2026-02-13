@@ -21,6 +21,12 @@ class EvidenceResolveConfig:
   exact_threshold: float = 88.0
   approximate_threshold: float = 62.0
   clause_bonus: float = 6.0
+  content_weight: float = 0.70
+  context_weight: float = 0.20
+  clause_weight: float = 0.10
+  content_min_resolve: float = 55.0
+  content_fallback_min: float = 45.0
+  candidate_limit: int = 120
   score_strategy: Literal["max", "weighted"] = "weighted"
   weight_partial: float = 0.45
   weight_token_set: float = 0.45
@@ -74,6 +80,18 @@ def get_evidence_resolve_config() -> EvidenceResolveConfig:
     min(exact_threshold, _env_float("EVIDENCE_APPROX_THRESHOLD", _DEFAULT_EVIDENCE_CONFIG.approximate_threshold)),
   )
   clause_bonus = max(0.0, min(20.0, _env_float("EVIDENCE_CLAUSE_BONUS", _DEFAULT_EVIDENCE_CONFIG.clause_bonus)))
+  content_weight = max(0.0, _env_float("EVIDENCE_CONTENT_WEIGHT", _DEFAULT_EVIDENCE_CONFIG.content_weight))
+  context_weight = max(0.0, _env_float("EVIDENCE_CONTEXT_WEIGHT", _DEFAULT_EVIDENCE_CONFIG.context_weight))
+  clause_weight = max(0.0, _env_float("EVIDENCE_CLAUSE_WEIGHT", _DEFAULT_EVIDENCE_CONFIG.clause_weight))
+  content_min_resolve = max(
+    0.0,
+    min(100.0, _env_float("EVIDENCE_CONTENT_MIN_RESOLVE", _DEFAULT_EVIDENCE_CONFIG.content_min_resolve)),
+  )
+  content_fallback_min = max(
+    0.0,
+    min(content_min_resolve, _env_float("EVIDENCE_CONTENT_FALLBACK_MIN", _DEFAULT_EVIDENCE_CONFIG.content_fallback_min)),
+  )
+  candidate_limit = max(20, _env_int("EVIDENCE_CANDIDATE_LIMIT", _DEFAULT_EVIDENCE_CONFIG.candidate_limit))
 
   weight_partial = max(0.0, _env_float("EVIDENCE_WEIGHT_PARTIAL", _DEFAULT_EVIDENCE_CONFIG.weight_partial))
   weight_token_set = max(0.0, _env_float("EVIDENCE_WEIGHT_TOKEN_SET", _DEFAULT_EVIDENCE_CONFIG.weight_token_set))
@@ -111,6 +129,12 @@ def get_evidence_resolve_config() -> EvidenceResolveConfig:
     exact_threshold=exact_threshold,
     approximate_threshold=approximate_threshold,
     clause_bonus=clause_bonus,
+    content_weight=content_weight,
+    context_weight=context_weight,
+    clause_weight=clause_weight,
+    content_min_resolve=content_min_resolve,
+    content_fallback_min=content_fallback_min,
+    candidate_limit=candidate_limit,
     score_strategy=strategy,
     weight_partial=weight_partial,
     weight_token_set=weight_token_set,

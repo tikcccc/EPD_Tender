@@ -30,58 +30,56 @@ def test_thresholds_are_configurable(monkeypatch) -> None:
   assert strict_result.status == "unresolved"
 
 
-def test_clause_bonus_and_strategy_are_configurable(monkeypatch) -> None:
-  line_text = "18.3 The Contractor shall finalise the EMP within 45 days."
+def test_unified_scoring_enforces_content_gate(monkeypatch) -> None:
+  line_text = (
+    "59.4 Within 28 days of the receipt by the Supervising Officer of the certificate under Clause 59.3 "
+    "issued by the Design Checker, the Supervising Officer shall inform the Contractor in writing that the "
+    "Supervising Officer consents or does not consent to the draft Operation Plan as certified."
+  )
   entry = pdf_locator_service.IndexedLine(
-    page=18,
+    page=102,
     text=line_text,
-    normalized="18.3 the contractor shall finalise the emp within 45 days",
+    normalized=(
+      "59.4 within 28 days of the receipt by the supervising officer of the certificate under clause 59.3 "
+      "issued by the design checker, the supervising officer shall inform the contractor in writing that the "
+      "supervising officer consents or does not consent to the draft operation plan as certified."
+    ),
     bbox=(82.0, 112.0, 520.0, 140.0),
   )
 
   monkeypatch.setattr(pdf_locator_service, "_get_index", lambda _path: [entry])
 
-  no_bonus = EvidenceResolveConfig(
+  config = EvidenceResolveConfig(
     score_strategy="weighted",
-    exact_threshold=90.0,
-    approximate_threshold=40.0,
-    clause_bonus=0.0,
-  )
-  with_bonus = EvidenceResolveConfig(
-    score_strategy="weighted",
-    exact_threshold=90.0,
-    approximate_threshold=40.0,
-    clause_bonus=60.0,
-  )
-  max_strategy = EvidenceResolveConfig(
-    score_strategy="max",
-    exact_threshold=90.0,
-    approximate_threshold=40.0,
-    clause_bonus=60.0,
+    exact_threshold=30.0,
+    approximate_threshold=20.0,
+    content_weight=0.05,
+    context_weight=0.05,
+    clause_weight=0.90,
+    content_min_resolve=60.0,
   )
 
   dummy_pdf = Path("dummy.pdf")
-  evidence_text = "18.3"
-
-  no_bonus_result = pdf_locator_service.locate_evidence(
-    dummy_pdf,
-    evidence_text,
-    clause_keyword="18.3",
-    resolve_config=no_bonus,
-  )
-  with_bonus_result = pdf_locator_service.locate_evidence(
-    dummy_pdf,
-    evidence_text,
-    clause_keyword="18.3",
-    resolve_config=with_bonus,
-  )
-  max_strategy_result = pdf_locator_service.locate_evidence(
-    dummy_pdf,
-    evidence_text,
-    clause_keyword="18.3",
-    resolve_config=max_strategy,
+  weak_evidence = "9.4 Clause 59.3"
+  rich_evidence = (
+    "9.4 Within 28 days of the receipt by the Supervising Officer of the certificate under Clause 59.3 "
+    "issued by the Design Checker, the Supervising Officer shall inform the Contractor in writing that the "
+    "Supervising Officer consents or does not consent to the draft Operation Plan as certified."
   )
 
-  assert no_bonus_result.status == "unresolved"
-  assert with_bonus_result.status in {"resolved_exact", "resolved_approximate"}
-  assert max_strategy_result.match_score >= with_bonus_result.match_score
+  weak_result = pdf_locator_service.locate_evidence(
+    dummy_pdf,
+    weak_evidence,
+    clause_keyword="9.4",
+    resolve_config=config,
+  )
+  rich_result = pdf_locator_service.locate_evidence(
+    dummy_pdf,
+    rich_evidence,
+    clause_keyword="9.4",
+    resolve_config=config,
+  )
+
+  assert weak_result.status == "unresolved"
+  assert rich_result.status in {"resolved_exact", "resolved_approximate"}
+  assert rich_result.page == 102

@@ -7,7 +7,7 @@
       "evidence_text": "18.3 The Contractor shall finalise the EMP within 45 days of the date of the Letter of Acceptance and submit 3 hard copies of the EMP and a soft copy in Microsoft Word format to the Supervising Officer.",
       "allowed_statuses": ["resolved_exact", "resolved_approximate"],
       "expected_page": 49,
-      "expected_bbox": [72.02400207575781, 530.5433349609375, 93.98400115966797, 542.7646484375],
+      "expected_bbox": [121.01000213623047, 530.5433349609375, 531.6699829101562, 542.7646484375],
       "min_match_score": 0.9
     },
     {
@@ -17,7 +17,7 @@
       "evidence_text": "18.4 The Contractor shall review and update the EMP monthly and submit 3 hard copies of the updated part of the EMP and a soft copy in Microsoft Word format to the Supervising Officer.",
       "allowed_statuses": ["resolved_exact", "resolved_approximate"],
       "expected_page": 49,
-      "expected_bbox": [72.02400207575781, 582.413330078125, 93.98400115966797, 594.6346435546875],
+      "expected_bbox": [121.01000213623047, 582.413330078125, 526.0035400390625, 594.6346435546875],
       "min_match_score": 0.9
     },
     {
@@ -27,7 +27,17 @@
       "evidence_text": "The Contractor shall submit a draft Design and Works Plan for the certification by the Design Checker and consent by the Supervising Officer.",
       "allowed_statuses": ["resolved_exact", "resolved_approximate"],
       "expected_page": 104,
-      "expected_bbox": [93.59999084472656, 271.07366943359375, 119.68680572509766, 282.5616455078125],
+      "expected_bbox": [144.47999572753906, 271.07366943359375, 242.6001434326172, 282.5616455078125],
+      "min_match_score": 0.9
+    },
+    {
+      "case_id": "case-operation-plan-missing-major-clause",
+      "document_id": "main_coc",
+      "clause_keyword": "9.4",
+      "evidence_text": "9.4 Within 28 days of the receipt by the Supervising Officer of the certificate under Clause 59.3 issued by the Design Checker, the Supervising Officer shall inform the Contractor in writing that the Supervising Officer consents or does not consent to the draft Operation Plan as certified.",
+      "allowed_statuses": ["resolved_exact", "resolved_approximate"],
+      "expected_page": 102,
+      "expected_bbox": [121.01000213623047, 623.21337890625, 526.1500244140625, 635.4346313476562],
       "min_match_score": 0.9
     },
     {
@@ -37,8 +47,8 @@
       "evidence_text": "Monthly Reports shall be submitted to the Employer by the 14th day of the month following the reporting month to which the report relates.",
       "allowed_statuses": ["resolved_exact", "resolved_approximate"],
       "expected_page": 325,
-      "expected_bbox": [93.5999984741211, 84.35353088378906, 114.62718963623047, 95.84153747558594],
-      "min_match_score": 0.9
+      "expected_bbox": [170.16000366210938, 143.15357971191406, 518.3958740234375, 154.64158630371094],
+      "min_match_score": 0.85
     }
   ],
   "negative_cases": [

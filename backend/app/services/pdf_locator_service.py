@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import heapq
 import re
 import threading
 from dataclasses import dataclass
@@ -15,6 +16,10 @@ _SPACE_RE = re.compile(r"\s+")
 _CLAUSE_RE = re.compile(r"(?:Clause\s*)?(\d{1,3})(?:\.\d+)?", re.IGNORECASE)
 _DOUBLE_QUOTE_RE = re.compile(r'"([^"]{20,})"')
 _SMART_QUOTE_RE = re.compile(r"“([^”]{20,})”")
+_FROM_PREFIX_RE = re.compile(r"^from\s+[^:]{0,240}:\s*", re.IGNORECASE)
+_LEADING_CLAUSE_RE = re.compile(r"^\s*(?:\([a-z]\)\s*)?(\d{1,3}(?:\.\d+){1,3})(?![\d-])", re.IGNORECASE)
+_CLAUSE_LABEL_RE = re.compile(r"\bClause\s+(\d{1,3}(?:\.\d+){0,3})\b", re.IGNORECASE)
+_GENERIC_CLAUSE_RE = re.compile(r"(?:^|[\s\"'(])(\d{1,3}(?:\.\d+){1,3})(?![\d-])")
 
 
 @dataclass(slots=True)
@@ -36,6 +41,30 @@ class LocatorResult:
   match_score: float
   match_method: str
   status: str
+
+
+@dataclass(slots=True)
+class QueryBundle:
+  content_queries: list[str]
+  context_queries: list[str]
+  clause_candidates: list[str]
+
+
+@dataclass(slots=True)
+class PreScoredCandidate:
+  entry: IndexedLine
+  content_score: float
+  content_query: str | None
+
+
+@dataclass(slots=True)
+class ScoredCandidate:
+  entry: IndexedLine
+  content_score: float
+  context_score: float
+  clause_score: float
+  final_score: float
+  content_query: str | None
 
 
 _INDEX_CACHE: dict[str, tuple[int, list[IndexedLine]]] = {}
@@ -131,40 +160,164 @@ def _get_index(pdf_path: Path) -> list[IndexedLine]:
   return entries
 
 
-def _build_queries(
+def _dedupe_queries(queries: list[str], *, limit: int) -> list[str]:
+  seen: set[str] = set()
+  result: list[str] = []
+
+  for query in queries:
+    normalized = _normalize_text(query)
+    if not normalized or normalized in seen:
+      continue
+
+    seen.add(normalized)
+    result.append(query)
+    if len(result) >= limit:
+      break
+
+  return result
+
+
+def _normalize_clause_token(raw: str) -> str | None:
+  candidate = raw.strip().strip(" \"'“”.,;:()").replace(" ", "")
+  if not candidate:
+    return None
+  if not re.fullmatch(r"\d{1,3}(?:\.\d+){0,3}", candidate):
+    return None
+  return candidate
+
+
+def _extract_leading_clause_token(evidence_text: str) -> str | None:
+  text = _SPACE_RE.sub(" ", evidence_text).strip()
+  text = _FROM_PREFIX_RE.sub("", text)
+  match = _LEADING_CLAUSE_RE.search(text)
+  if not match:
+    return None
+  return _normalize_clause_token(match.group(1))
+
+
+def _infer_missing_major_clause(evidence_text: str, leading_clause: str | None) -> str | None:
+  if not leading_clause or "." not in leading_clause:
+    return None
+
+  leading_parts = leading_clause.split(".")
+  leading_major = leading_parts[0]
+  if len(leading_major) != 1:
+    return None
+
+  contextual_matches = [
+    normalized
+    for normalized in (_normalize_clause_token(match) for match in _CLAUSE_LABEL_RE.findall(evidence_text))
+    if normalized
+  ]
+  if not contextual_matches:
+    return None
+
+  contextual_major = contextual_matches[0].split(".")[0]
+  if contextual_major == leading_major or len(contextual_major) <= len(leading_major):
+    return None
+
+  corrected = ".".join([contextual_major, *leading_parts[1:]])
+  return _normalize_clause_token(corrected)
+
+
+def _build_clause_candidates(evidence_text: str, clause_keyword: str | None) -> list[str]:
+  raw_candidates: list[str] = []
+
+  if clause_keyword:
+    raw_candidates.append(clause_keyword)
+
+  leading_clause = _extract_leading_clause_token(evidence_text)
+  if leading_clause:
+    raw_candidates.append(leading_clause)
+
+  raw_candidates.extend(_CLAUSE_LABEL_RE.findall(evidence_text))
+  raw_candidates.extend(match.group(1) for match in _GENERIC_CLAUSE_RE.finditer(evidence_text))
+
+  corrected = _infer_missing_major_clause(evidence_text, leading_clause)
+  if corrected:
+    raw_candidates.append(corrected)
+
+  seen: set[str] = set()
+  result: list[str] = []
+  for raw in raw_candidates:
+    normalized = _normalize_clause_token(raw)
+    if not normalized:
+      continue
+    key = normalized.lower()
+    if key in seen:
+      continue
+    seen.add(key)
+    result.append(normalized)
+
+  return result
+
+
+def _strip_source_and_heading(text: str) -> str:
+  cleaned = _SPACE_RE.sub(" ", text).strip()
+  if not cleaned:
+    return ""
+
+  cleaned = _FROM_PREFIX_RE.sub("", cleaned)
+  cleaned = cleaned.strip(" \"'“”")
+  cleaned = re.sub(
+    r"^(?:section|clause)\s*\d+(?:\.\d+)*(?:\([a-z]\))?\s*[:\-]\s*",
+    "",
+    cleaned,
+    flags=re.IGNORECASE,
+  )
+  cleaned = re.sub(r"^\d+(?:\.\d+)*(?:\([a-z]\))?\s*[:\-]\s*", "", cleaned)
+  cleaned = re.sub(r"^\d+(?:\.\d+)*(?:\([a-z]\))?\s+", "", cleaned)
+  cleaned = re.sub(r"^\([a-z]\)\s*", "", cleaned, flags=re.IGNORECASE)
+  return cleaned.strip(" \"'“”.;:")
+
+
+def _build_query_bundle(
   evidence_text: str,
   clause_keyword: str | None,
   *,
   resolve_config: EvidenceResolveConfig,
-) -> list[str]:
-  normalized = _trim_quote(evidence_text, resolve_config=resolve_config)
-  segments = [segment.strip() for segment in re.split(r"[\n\.;]", evidence_text) if segment.strip()]
+) -> QueryBundle:
+  quoted_segments = sorted(_extract_quoted_segments(evidence_text), key=len, reverse=True)
+  body_text = _strip_source_and_heading(evidence_text)
+  context_base = _FROM_PREFIX_RE.sub("", _trim_quote(evidence_text, resolve_config=resolve_config))
 
-  queries: list[str] = []
+  content_candidates: list[str] = []
+  context_candidates: list[str] = []
 
-  if clause_keyword:
-    queries.append(clause_keyword.strip())
+  content_candidates.extend(quoted_segments)
+  context_candidates.extend(quoted_segments)
 
-  if normalized:
-    queries.append(normalized[: resolve_config.query_max_length])
+  if body_text:
+    content_candidates.append(body_text[: resolve_config.query_max_length])
+  if context_base:
+    context_candidates.append(context_base[: resolve_config.query_max_length])
 
-  for segment in segments:
-    if len(segment) >= resolve_config.segment_min_length:
-      queries.append(segment[: resolve_config.segment_max_length])
-    if len(queries) >= resolve_config.query_limit:
-      break
-
-  # Keep order while deduplicating.
-  seen: set[str] = set()
-  result: list[str] = []
-  for query in queries:
-    norm = _normalize_text(query)
-    if not norm or norm in seen:
+  body_segments = [segment.strip() for segment in re.split(r"[\n\.;]", body_text) if segment.strip()]
+  for segment in body_segments:
+    if len(segment) < resolve_config.segment_min_length:
       continue
-    seen.add(norm)
-    result.append(query)
+    content_candidates.append(segment[: resolve_config.segment_max_length])
+    context_candidates.append(segment[: resolve_config.segment_max_length])
 
-  return result[: resolve_config.query_limit]
+  content_queries = _dedupe_queries(content_candidates, limit=resolve_config.query_limit)
+  context_queries = _dedupe_queries(context_candidates, limit=resolve_config.query_limit)
+
+  if not content_queries and context_queries:
+    content_queries = context_queries[: resolve_config.query_limit]
+  if not context_queries and content_queries:
+    context_queries = content_queries[: resolve_config.query_limit]
+
+  if not content_queries:
+    fallback = _trim_quote(evidence_text, resolve_config=resolve_config)
+    if fallback:
+      content_queries = [fallback[: resolve_config.query_max_length]]
+      context_queries = [fallback[: resolve_config.query_max_length]]
+
+  return QueryBundle(
+    content_queries=content_queries,
+    context_queries=context_queries,
+    clause_candidates=_build_clause_candidates(evidence_text, clause_keyword),
+  )
 
 
 def _score_query(query_norm: str, entry_norm: str, *, resolve_config: EvidenceResolveConfig) -> float:
@@ -265,6 +418,105 @@ def _collect_search_needles(
     needles.append(needle)
 
   return needles
+
+
+def _max_query_score(
+  queries: list[str],
+  target_norm: str,
+  *,
+  resolve_config: EvidenceResolveConfig,
+) -> tuple[float, str | None]:
+  best_score = 0.0
+  best_query: str | None = None
+
+  for query in queries:
+    query_norm = _normalize_text(query)
+    if not query_norm:
+      continue
+
+    score = _score_query(query_norm, target_norm, resolve_config=resolve_config)
+    if score > best_score:
+      best_score = score
+      best_query = query
+
+  return best_score, best_query
+
+
+def _contains_clause_token(text_norm: str, clause_token: str) -> bool:
+  if not text_norm or not clause_token:
+    return False
+
+  pattern = rf"(?<!\d){re.escape(clause_token.lower())}(?!\d)"
+  return re.search(pattern, text_norm) is not None
+
+
+def _score_clause_alignment(clause_candidates: list[str], entry_norm: str, context_norm: str) -> float:
+  if not clause_candidates:
+    return 0.0
+
+  for candidate in clause_candidates:
+    if _contains_clause_token(entry_norm, candidate) or _contains_clause_token(context_norm, candidate):
+      return 100.0
+
+  return 0.0
+
+
+def _blend_scores(
+  *,
+  content_score: float,
+  context_score: float,
+  clause_score: float,
+  resolve_config: EvidenceResolveConfig,
+) -> float:
+  total_weight = resolve_config.content_weight + resolve_config.context_weight + resolve_config.clause_weight
+  if total_weight <= 0:
+    return content_score
+
+  weighted = (
+    content_score * resolve_config.content_weight
+    + context_score * resolve_config.context_weight
+    + clause_score * resolve_config.clause_weight
+  )
+  return weighted / total_weight
+
+
+def _build_block_context_map(index: list[IndexedLine]) -> dict[tuple[int, int], list[IndexedLine]]:
+  block_map: dict[tuple[int, int], list[IndexedLine]] = {}
+  for entry in index:
+    key = (entry.page, entry.block_index)
+    block_map.setdefault(key, []).append(entry)
+
+  for entries in block_map.values():
+    entries.sort(key=lambda line: line.line_index)
+
+  return block_map
+
+
+def _get_entry_context(entry: IndexedLine, block_map: dict[tuple[int, int], list[IndexedLine]], *, window: int = 1) -> str:
+  block_entries = block_map.get((entry.page, entry.block_index))
+  if not block_entries:
+    return entry.text
+
+  context_lines = [
+    candidate.text
+    for candidate in block_entries
+    if abs(candidate.line_index - entry.line_index) <= window and candidate.text.strip()
+  ]
+  if not context_lines:
+    return entry.text
+
+  return _SPACE_RE.sub(" ", " ".join(context_lines)).strip()
+
+
+def _find_clause_fallback_page(index: list[IndexedLine], clause_candidates: list[str]) -> int | None:
+  if not clause_candidates:
+    return None
+
+  for entry in index:
+    for candidate in clause_candidates:
+      if _contains_clause_token(entry.normalized, candidate):
+        return entry.page
+  return None
 
 
 def _rect_to_bbox(rect: fitz.Rect) -> tuple[float, float, float, float] | None:
@@ -406,84 +658,134 @@ def locate_evidence(
       status="unresolved",
     )
 
-  queries = _build_queries(evidence_text, clause_keyword, resolve_config=config)
-  clause_norm = _normalize_text(clause_keyword) if clause_keyword else ""
+  query_bundle = _build_query_bundle(evidence_text, clause_keyword, resolve_config=config)
 
-  best_entry: IndexedLine | None = None
-  best_raw_score = 0.0
-  best_query: str | None = None
+  pre_scored_candidates: list[PreScoredCandidate] = []
+  best_content_candidate: PreScoredCandidate | None = None
 
   for entry in index:
-    candidate_best = 0.0
-    candidate_query: str | None = None
-    for query in queries:
-      query_norm = _normalize_text(query)
-      if not query_norm:
-        continue
+    content_score, content_query = _max_query_score(
+      query_bundle.content_queries,
+      entry.normalized,
+      resolve_config=config,
+    )
+    candidate = PreScoredCandidate(
+      entry=entry,
+      content_score=content_score,
+      content_query=content_query,
+    )
+    pre_scored_candidates.append(candidate)
 
-      score = _score_query(query_norm, entry.normalized, resolve_config=config)
-      if score > candidate_best:
-        candidate_best = score
-        candidate_query = query
+    if best_content_candidate is None or candidate.content_score > best_content_candidate.content_score:
+      best_content_candidate = candidate
 
-    if clause_norm and clause_norm in entry.normalized:
-      candidate_best = min(100.0, candidate_best + config.clause_bonus)
+  top_limit = min(len(pre_scored_candidates), max(1, config.candidate_limit))
+  top_candidates = heapq.nlargest(top_limit, pre_scored_candidates, key=lambda candidate: candidate.content_score)
 
-    if candidate_best > best_raw_score:
-      best_raw_score = candidate_best
-      best_entry = entry
-      best_query = candidate_query
+  block_map = _build_block_context_map(index)
 
-  if best_entry and best_raw_score >= config.exact_threshold:
+  best_candidate: ScoredCandidate | None = None
+  best_key: tuple[float, float, float, float] | None = None
+
+  for candidate in top_candidates:
+    context_text = _get_entry_context(candidate.entry, block_map)
+    context_norm = _normalize_text(context_text)
+    context_score, _ = _max_query_score(
+      query_bundle.context_queries,
+      context_norm,
+      resolve_config=config,
+    )
+    clause_score = _score_clause_alignment(
+      query_bundle.clause_candidates,
+      candidate.entry.normalized,
+      context_norm,
+    )
+    final_score = _blend_scores(
+      content_score=candidate.content_score,
+      context_score=context_score,
+      clause_score=clause_score,
+      resolve_config=config,
+    )
+
+    ranking_key = (
+      final_score,
+      candidate.content_score,
+      context_score,
+      clause_score,
+    )
+    if best_key is None or ranking_key > best_key:
+      best_key = ranking_key
+      best_candidate = ScoredCandidate(
+        entry=candidate.entry,
+        content_score=candidate.content_score,
+        context_score=context_score,
+        clause_score=clause_score,
+        final_score=final_score,
+        content_query=candidate.content_query,
+      )
+
+  best_final_score = best_candidate.final_score if best_candidate else 0.0
+
+  if (
+    best_candidate
+    and best_candidate.content_score >= config.content_min_resolve
+    and best_candidate.final_score >= config.exact_threshold
+  ):
     resolved_bboxes = _resolve_highlight_bboxes(
       pdf_path,
-      page=best_entry.page,
+      page=best_candidate.entry.page,
       evidence_text=evidence_text,
-      best_query=best_query,
-      best_entry=best_entry,
+      best_query=best_candidate.content_query,
+      best_entry=best_candidate.entry,
       resolve_config=config,
     )
     return LocatorResult(
-      page=best_entry.page,
-      quote=_trim_quote(best_entry.text, resolve_config=config),
-      bbox=best_entry.bbox,
+      page=best_candidate.entry.page,
+      quote=_trim_quote(best_candidate.entry.text, resolve_config=config),
+      bbox=best_candidate.entry.bbox,
       bboxes=resolved_bboxes,
-      match_score=round(best_raw_score / 100.0, 4),
+      match_score=round(best_candidate.final_score / 100.0, 4),
       match_method="exact",
       status="resolved_exact",
     )
 
-  if best_entry and best_raw_score >= config.approximate_threshold:
+  if (
+    best_candidate
+    and best_candidate.content_score >= config.content_min_resolve
+    and best_candidate.final_score >= config.approximate_threshold
+  ):
     resolved_bboxes = _resolve_highlight_bboxes(
       pdf_path,
-      page=best_entry.page,
+      page=best_candidate.entry.page,
       evidence_text=evidence_text,
-      best_query=best_query,
-      best_entry=best_entry,
+      best_query=best_candidate.content_query,
+      best_entry=best_candidate.entry,
       resolve_config=config,
     )
     return LocatorResult(
-      page=best_entry.page,
-      quote=_trim_quote(best_entry.text, resolve_config=config),
-      bbox=best_entry.bbox,
+      page=best_candidate.entry.page,
+      quote=_trim_quote(best_candidate.entry.text, resolve_config=config),
+      bbox=best_candidate.entry.bbox,
       bboxes=resolved_bboxes,
-      match_score=round(best_raw_score / 100.0, 4),
+      match_score=round(best_candidate.final_score / 100.0, 4),
       match_method="fuzzy",
       status="resolved_approximate",
     )
 
   fallback_page = _extract_clause_page(evidence_text, resolve_config=config)
-  if clause_norm:
-    clause_entry = next((entry for entry in index if clause_norm in entry.normalized), None)
-    if clause_entry:
-      fallback_page = clause_entry.page
+  if best_content_candidate and best_content_candidate.content_score >= config.content_fallback_min:
+    fallback_page = best_content_candidate.entry.page
+  else:
+    clause_fallback_page = _find_clause_fallback_page(index, query_bundle.clause_candidates)
+    if clause_fallback_page is not None:
+      fallback_page = clause_fallback_page
 
   return LocatorResult(
     page=fallback_page,
     quote=_trim_quote(evidence_text, resolve_config=config),
     bbox=None,
     bboxes=None,
-    match_score=round(best_raw_score / 100.0, 4),
+    match_score=round(best_final_score / 100.0, 4),
     match_method="fuzzy",
     status="unresolved",
   )
