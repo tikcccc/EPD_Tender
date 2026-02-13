@@ -1,0 +1,10 @@
+# Frontend local build artifacts
+frontend/node_modules/
+frontend/.next/
+
+# Backend local virtual environment
+backend/.venv/
+
+# Python caches
+__pycache__/
+*.py[cod]

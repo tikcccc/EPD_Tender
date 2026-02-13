@@ -1,0 +1,754 @@
+{
+  "doc_dir": "/home/tikhong/EPD_Tender/coding-doc",
+  "files_count": 9,
+  "files": [
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/acceptance-criteria.md",
+      "title": "Acceptance Criteria",
+      "heading_count": 17,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Acceptance Criteria"
+        },
+        {
+          "line": 5,
+          "level": 2,
+          "text": "1. Standard 管理"
+        },
+        {
+          "line": 7,
+          "level": 2,
+          "text": "AC-STD-001 展示所有可用 Standard 列表"
+        },
+        {
+          "line": 19,
+          "level": 2,
+          "text": "AC-STD-002 允許手動勾選所需 Standard"
+        },
+        {
+          "line": 31,
+          "level": 2,
+          "text": "AC-STD-003 提供 NEC 模板快捷選項"
+        },
+        {
+          "line": 43,
+          "level": 2,
+          "text": "2. 優先級自定義"
+        },
+        {
+          "line": 45,
+          "level": 2,
+          "text": "AC-PRI-001 可調整所選 Standard 優先級順序"
+        },
+        {
+          "line": 57,
+          "level": 2,
+          "text": "AC-PRI-002 支援一鍵恢復 NEC 預設優先級"
+        },
+        {
+          "line": 68,
+          "level": 2,
+          "text": "3. 報告卡片展示與 PDF 溯源"
+        },
+        {
+          "line": 70,
+          "level": 2,
+          "text": "AC-CARD-001 卡片渲染完整資訊"
+        },
+        {
+          "line": 82,
+          "level": 2,
+          "text": "AC-CARD-002 點擊 Evidence 跳 PDF 頁並高亮"
+        },
+        {
+          "line": 99,
+          "level": 2,
+          "text": "4. 報告導出"
+        },
+        {
+          "line": 101,
+          "level": 2,
+          "text": "AC-EXP-001 可輸出固定格式文檔"
+        },
+        {
+          "line": 112,
+          "level": 2,
+          "text": "AC-EXP-002 輸出內容完整"
+        },
+        {
+          "line": 124,
+          "level": 2,
+          "text": "5. 輸入依賴驗收"
+        },
+        {
+          "line": 126,
+          "level": 2,
+          "text": "AC-DATA-001 接受結構化 JSON 報告資料"
+        },
+        {
+          "line": 135,
+          "level": 2,
+          "text": "AC-DATA-002 NEC 模板與預設優先級可配置"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/api-spec.md",
+      "title": "API Spec (Backend)",
+      "heading_count": 26,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "API Spec (Backend)"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 概覽"
+        },
+        {
+          "line": 9,
+          "level": 2,
+          "text": "2. API 設計規範"
+        },
+        {
+          "line": 11,
+          "level": 3,
+          "text": "2.1 版本規範"
+        },
+        {
+          "line": 16,
+          "level": 3,
+          "text": "2.2 請求標頭"
+        },
+        {
+          "line": 20,
+          "level": 3,
+          "text": "2.3 回應封裝"
+        },
+        {
+          "line": 31,
+          "level": 3,
+          "text": "2.4 錯誤封裝"
+        },
+        {
+          "line": 47,
+          "level": 3,
+          "text": "2.5 HTTP 狀態碼"
+        },
+        {
+          "line": 56,
+          "level": 2,
+          "text": "3. 錯誤碼字典"
+        },
+        {
+          "line": 65,
+          "level": 2,
+          "text": "4. 端點定義"
+        },
+        {
+          "line": 67,
+          "level": 2,
+          "text": "4.1 Health Check"
+        },
+        {
+          "line": 85,
+          "level": 2,
+          "text": "4.2 取得 NEC 模板"
+        },
+        {
+          "line": 105,
+          "level": 2,
+          "text": "4.3 報告載入與標準化"
+        },
+        {
+          "line": 141,
+          "level": 2,
+          "text": "4.4 查詢卡片列表"
+        },
+        {
+          "line": 168,
+          "level": 2,
+          "text": "4.5 Evidence 定位"
+        },
+        {
+          "line": 213,
+          "level": 2,
+          "text": "4.6 生成輸出報告"
+        },
+        {
+          "line": 240,
+          "level": 2,
+          "text": "4.7 取得 PDF 文件"
+        },
+        {
+          "line": 248,
+          "level": 2,
+          "text": "5. 後端 API 規範（執行級）"
+        },
+        {
+          "line": 250,
+          "level": 2,
+          "text": "5.1 驗證規範"
+        },
+        {
+          "line": 255,
+          "level": 2,
+          "text": "5.2 相容規範"
+        },
+        {
+          "line": 260,
+          "level": 2,
+          "text": "5.3 性能規範"
+        },
+        {
+          "line": 266,
+          "level": 2,
+          "text": "5.4 日誌規範"
+        },
+        {
+          "line": 274,
+          "level": 2,
+          "text": "5.5 可觀測性規範"
+        },
+        {
+          "line": 281,
+          "level": 2,
+          "text": "5.6 安全規範"
+        },
+        {
+          "line": 286,
+          "level": 2,
+          "text": "6. OpenAPI 要求"
+        },
+        {
+          "line": 294,
+          "level": 2,
+          "text": "7. 與前端對接注意事項"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/coding-architect.md",
+      "title": "Coding Architect",
+      "heading_count": 15,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Coding Architect"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 目標與邊界"
+        },
+        {
+          "line": 13,
+          "level": 2,
+          "text": "2. 技術棧選型"
+        },
+        {
+          "line": 15,
+          "level": 3,
+          "text": "前端"
+        },
+        {
+          "line": 24,
+          "level": 3,
+          "text": "後端（建議必備）"
+        },
+        {
+          "line": 30,
+          "level": 3,
+          "text": "基礎設施"
+        },
+        {
+          "line": 36,
+          "level": 2,
+          "text": "3. 推薦專案結構"
+        },
+        {
+          "line": 101,
+          "level": 2,
+          "text": "4. 模組職責"
+        },
+        {
+          "line": 103,
+          "level": 3,
+          "text": "前端模組"
+        },
+        {
+          "line": 110,
+          "level": 3,
+          "text": "後端模組"
+        },
+        {
+          "line": 116,
+          "level": 2,
+          "text": "5. 核心資料流"
+        },
+        {
+          "line": 135,
+          "level": 2,
+          "text": "6. Evidence 溯源架構決策"
+        },
+        {
+          "line": 143,
+          "level": 2,
+          "text": "7. 文件映射策略"
+        },
+        {
+          "line": 149,
+          "level": 2,
+          "text": "8. 安全與可運維設計"
+        },
+        {
+          "line": 155,
+          "level": 2,
+          "text": "9. 可擴展路線"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/coding-plan.md",
+      "title": "Coding Plan",
+      "heading_count": 18,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Coding Plan"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 項目目標"
+        },
+        {
+          "line": 10,
+          "level": 2,
+          "text": "2. 範圍定義"
+        },
+        {
+          "line": 12,
+          "level": 3,
+          "text": "In Scope"
+        },
+        {
+          "line": 18,
+          "level": 3,
+          "text": "Out of Scope（本期）"
+        },
+        {
+          "line": 23,
+          "level": 2,
+          "text": "3. 里程碑與交付物"
+        },
+        {
+          "line": 25,
+          "level": 3,
+          "text": "M0 - 啟動與契約定稿（0.5 週）"
+        },
+        {
+          "line": 34,
+          "level": 3,
+          "text": "M1 - 前端骨架與核心互動（1 週）"
+        },
+        {
+          "line": 43,
+          "level": 3,
+          "text": "M2 - 後端 API 與 evidence 定位（1 週）"
+        },
+        {
+          "line": 51,
+          "level": 3,
+          "text": "M3 - 導出與質量封版（0.5~1 週）"
+        },
+        {
+          "line": 59,
+          "level": 2,
+          "text": "4. 工作分解（WBS）"
+        },
+        {
+          "line": 61,
+          "level": 3,
+          "text": "前端"
+        },
+        {
+          "line": 69,
+          "level": 3,
+          "text": "後端"
+        },
+        {
+          "line": 75,
+          "level": 3,
+          "text": "測試"
+        },
+        {
+          "line": 81,
+          "level": 2,
+          "text": "5. 依賴與前置確認"
+        },
+        {
+          "line": 87,
+          "level": 2,
+          "text": "6. 風險與應對"
+        },
+        {
+          "line": 95,
+          "level": 2,
+          "text": "7. 質量門禁（Go/No-Go）"
+        },
+        {
+          "line": 101,
+          "level": 2,
+          "text": "8. 發布計劃"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/coding-rules.md",
+      "title": "Coding Rules",
+      "heading_count": 10,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Coding Rules"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 通用原則"
+        },
+        {
+          "line": 9,
+          "level": 2,
+          "text": "2. 檔案與命名規則"
+        },
+        {
+          "line": 22,
+          "level": 2,
+          "text": "3. 前端規範（Next.js + React）"
+        },
+        {
+          "line": 40,
+          "level": 2,
+          "text": "4. 後端規範（FastAPI）"
+        },
+        {
+          "line": 56,
+          "level": 2,
+          "text": "5. 資料與契約規範"
+        },
+        {
+          "line": 63,
+          "level": 2,
+          "text": "6. 測試規範"
+        },
+        {
+          "line": 70,
+          "level": 2,
+          "text": "7. 版本與提交規範"
+        },
+        {
+          "line": 80,
+          "level": 2,
+          "text": "8. 安全規範"
+        },
+        {
+          "line": 85,
+          "level": 2,
+          "text": "9. 文件同步規範"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/data-contract.md",
+      "title": "Data Contract",
+      "heading_count": 20,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Data Contract"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 目的"
+        },
+        {
+          "line": 10,
+          "level": 2,
+          "text": "2. 版本策略"
+        },
+        {
+          "line": 15,
+          "level": 2,
+          "text": "3. Report Package Schema"
+        },
+        {
+          "line": 17,
+          "level": 2,
+          "text": "3.1 根物件 `ReportPackage`"
+        },
+        {
+          "line": 29,
+          "level": 2,
+          "text": "3.2 `Document`"
+        },
+        {
+          "line": 38,
+          "level": 2,
+          "text": "3.3 `ReportItem`"
+        },
+        {
+          "line": 58,
+          "level": 2,
+          "text": "3.4 與現有 `reference/test.json` 的相容"
+        },
+        {
+          "line": 63,
+          "level": 2,
+          "text": "4. Standard Schema"
+        },
+        {
+          "line": 65,
+          "level": 2,
+          "text": "4.1 `Standard`"
+        },
+        {
+          "line": 77,
+          "level": 2,
+          "text": "4.2 `StandardTemplate`"
+        },
+        {
+          "line": 85,
+          "level": 2,
+          "text": "4.3 `StandardRef`"
+        },
+        {
+          "line": 92,
+          "level": 2,
+          "text": "5. Evidence Anchor Schema"
+        },
+        {
+          "line": 94,
+          "level": 2,
+          "text": "5.1 `EvidenceAnchor`"
+        },
+        {
+          "line": 111,
+          "level": 2,
+          "text": "5.2 `BBox`"
+        },
+        {
+          "line": 127,
+          "level": 2,
+          "text": "6. 導出請求契約"
+        },
+        {
+          "line": 129,
+          "level": 2,
+          "text": "6.1 `ExportRequest`"
+        },
+        {
+          "line": 138,
+          "level": 2,
+          "text": "6.2 `SelectedStandard`"
+        },
+        {
+          "line": 146,
+          "level": 2,
+          "text": "7. 枚舉字典"
+        },
+        {
+          "line": 153,
+          "level": 2,
+          "text": "8. 最小合法樣例"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/implementation-tasks.md",
+      "title": "Implementation Tasks",
+      "heading_count": 4,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Implementation Tasks"
+        },
+        {
+          "line": 5,
+          "level": 2,
+          "text": "Milestone Checklist"
+        },
+        {
+          "line": 12,
+          "level": 2,
+          "text": "Feature Execution Checklist"
+        },
+        {
+          "line": 70,
+          "level": 2,
+          "text": "Integration and Hardening"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/pr-checklist.md",
+      "title": "PR Checklist",
+      "heading_count": 5,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "PR Checklist"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "Contract and API"
+        },
+        {
+          "line": 8,
+          "level": 2,
+          "text": "Requirement Coverage"
+        },
+        {
+          "line": 13,
+          "level": 2,
+          "text": "Quality and Tests"
+        },
+        {
+          "line": 18,
+          "level": 2,
+          "text": "Documentation Sync"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/test-strategy.md",
+      "title": "Test Strategy",
+      "heading_count": 22,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Test Strategy"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 測試目標"
+        },
+        {
+          "line": 10,
+          "level": 2,
+          "text": "2. 測試分層（Test Pyramid）"
+        },
+        {
+          "line": 12,
+          "level": 2,
+          "text": "2.1 單元測試"
+        },
+        {
+          "line": 19,
+          "level": 2,
+          "text": "2.2 集成測試"
+        },
+        {
+          "line": 26,
+          "level": 2,
+          "text": "2.3 E2E 測試"
+        },
+        {
+          "line": 31,
+          "level": 2,
+          "text": "3. 前端測試策略"
+        },
+        {
+          "line": 33,
+          "level": 2,
+          "text": "3.1 重點案例"
+        },
+        {
+          "line": 40,
+          "level": 2,
+          "text": "3.2 E2E 範圍"
+        },
+        {
+          "line": 48,
+          "level": 2,
+          "text": "4. 後端 API 測試策略"
+        },
+        {
+          "line": 50,
+          "level": 2,
+          "text": "4.1 契約測試"
+        },
+        {
+          "line": 54,
+          "level": 2,
+          "text": "4.2 業務測試"
+        },
+        {
+          "line": 60,
+          "level": 2,
+          "text": "4.3 異常測試"
+        },
+        {
+          "line": 66,
+          "level": 2,
+          "text": "5. Evidence 定位準確率測試"
+        },
+        {
+          "line": 68,
+          "level": 2,
+          "text": "5.1 Golden Dataset"
+        },
+        {
+          "line": 77,
+          "level": 2,
+          "text": "5.2 指標"
+        },
+        {
+          "line": 82,
+          "level": 2,
+          "text": "5.3 目標門檻"
+        },
+        {
+          "line": 87,
+          "level": 2,
+          "text": "5.4 回歸策略"
+        },
+        {
+          "line": 91,
+          "level": 2,
+          "text": "6. 導出測試策略"
+        },
+        {
+          "line": 101,
+          "level": 2,
+          "text": "7. 性能與穩定性測試"
+        },
+        {
+          "line": 109,
+          "level": 2,
+          "text": "8. CI/CD 測試門禁"
+        },
+        {
+          "line": 120,
+          "level": 2,
+          "text": "9. 測試資料管理"
+        }
+      ]
+    }
+  ]
+}

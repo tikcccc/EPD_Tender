@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tender Implementation Runner"
+  short_description: "Turn coding-doc into executable tasks and PR checklist"
+  default_prompt: "Use $tender-implementation-runner to generate implementation tasks and PR checklist from coding-doc."

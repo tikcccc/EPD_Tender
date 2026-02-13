@@ -1,0 +1,52 @@
+{
+  "positive_cases": [
+    {
+      "case_id": "case-emp-finalise",
+      "document_id": "main_coc",
+      "clause_keyword": "18.3",
+      "evidence_text": "18.3 The Contractor shall finalise the EMP within 45 days of the date of the Letter of Acceptance and submit 3 hard copies of the EMP and a soft copy in Microsoft Word format to the Supervising Officer.",
+      "allowed_statuses": ["resolved_exact", "resolved_approximate"],
+      "expected_page": 49,
+      "expected_bbox": [72.02400207575781, 530.5433349609375, 93.98400115966797, 542.7646484375],
+      "min_match_score": 0.9
+    },
+    {
+      "case_id": "case-emp-monthly",
+      "document_id": "main_coc",
+      "clause_keyword": "18.4",
+      "evidence_text": "18.4 The Contractor shall review and update the EMP monthly and submit 3 hard copies of the updated part of the EMP and a soft copy in Microsoft Word format to the Supervising Officer.",
+      "allowed_statuses": ["resolved_exact", "resolved_approximate"],
+      "expected_page": 49,
+      "expected_bbox": [72.02400207575781, 582.413330078125, 93.98400115966797, 594.6346435546875],
+      "min_match_score": 0.9
+    },
+    {
+      "case_id": "case-design-plan",
+      "document_id": "I-EP_SP_174_20-ER-0",
+      "clause_keyword": "1.27.2",
+      "evidence_text": "The Contractor shall submit a draft Design and Works Plan for the certification by the Design Checker and consent by the Supervising Officer.",
+      "allowed_statuses": ["resolved_exact", "resolved_approximate"],
+      "expected_page": 104,
+      "expected_bbox": [93.59999084472656, 271.07366943359375, 119.68680572509766, 282.5616455078125],
+      "min_match_score": 0.9
+    },
+    {
+      "case_id": "case-monthly-report",
+      "document_id": "I-EP_SP_174_20-ER-0",
+      "clause_keyword": "6.5.4",
+      "evidence_text": "Monthly Reports shall be submitted to the Employer by the 14th day of the month following the reporting month to which the report relates.",
+      "allowed_statuses": ["resolved_exact", "resolved_approximate"],
+      "expected_page": 325,
+      "expected_bbox": [93.5999984741211, 84.35353088378906, 114.62718963623047, 95.84153747558594],
+      "min_match_score": 0.9
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "case-unrelated-text",
+      "document_id": "main_coc",
+      "evidence_text": "Completely unrelated content about airplanes and banana trees",
+      "expected_status": "unresolved"
+    }
+  ]
+}

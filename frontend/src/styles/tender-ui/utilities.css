@@ -1,0 +1,14 @@
+/* Utility helpers */
+.u-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u-muted {
+  color: var(--color-subtext);
+}
+
+.u-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}

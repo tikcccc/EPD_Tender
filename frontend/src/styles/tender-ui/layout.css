@@ -1,0 +1,75 @@
+/* Layout primitives */
+.l-shell {
+  display: grid;
+  grid-template-columns: minmax(380px, 44%) minmax(0, 56%);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.l-sidebar {
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.l-sidebar-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-5) var(--space-8);
+}
+
+.l-workspace {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(233, 242, 252, 0.9));
+}
+
+.l-workspace-canvas {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+@media (max-width: 1080px) {
+  .l-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .l-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+    max-height: none;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .l-sidebar-scroll {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .l-workspace {
+    max-height: none;
+    min-height: 70vh;
+    overflow: visible;
+  }
+
+  .l-workspace-canvas {
+    height: auto;
+    min-height: 70vh;
+    overflow: visible;
+  }
+}

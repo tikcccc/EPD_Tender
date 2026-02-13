@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend UI Prototype"
+  short_description: "Apply code.html style system with reusable CSS architecture"
+  default_prompt: "Use $frontend-ui-prototype to build UI based on reference/code.html with the project CSS architecture."

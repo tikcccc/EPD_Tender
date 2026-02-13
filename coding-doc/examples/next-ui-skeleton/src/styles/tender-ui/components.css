@@ -1,0 +1,66 @@
+/* Reusable components */
+.c-card {
+  border-left: 2px solid var(--color-primary);
+  padding-left: var(--space-4);
+}
+
+.c-card.is-consistent {
+  border-left-color: #22c55e;
+}
+
+.c-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.c-badge.is-major {
+  background: var(--color-major-bg);
+  color: var(--color-major-text);
+}
+
+.c-badge.is-consistent {
+  background: var(--color-consistent-bg);
+  color: var(--color-consistent-text);
+}
+
+.c-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--color-border);
+  background: #f3f4f6;
+}
+
+.c-toolbar-btn {
+  border: 0;
+  background: transparent;
+  border-radius: var(--radius-md);
+  padding: 8px;
+  cursor: pointer;
+}
+
+.c-toolbar-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.c-pdf-canvas {
+  width: min(800px, 100%);
+  min-height: 1100px;
+  margin: 0 auto;
+  padding: 64px;
+  background: #fff;
+  box-shadow: var(--shadow-pdf);
+  font-family: var(--font-doc);
+}
+
+.c-highlight {
+  background: var(--color-highlight-bg);
+  border: 1px solid var(--color-highlight-border);
+  border-radius: var(--radius-sm);
+}

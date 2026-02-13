@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coding Doc Indexer"
+  short_description: "Auto-locate and index coding-doc files for tasks"
+  default_prompt: "Use $coding-doc-indexer to load the right coding-doc files and answer this request."

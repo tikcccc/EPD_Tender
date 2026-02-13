@@ -1,0 +1,53 @@
+{
+  "template_id": "nec-default-v1",
+  "name": "NEC Default Template",
+  "standards": [
+    {
+      "standard_id": "deadline",
+      "name": "Deadline Compliance",
+      "default_priority": 1,
+      "enabled_by_default": true,
+      "check_types": ["deadline"]
+    },
+    {
+      "standard_id": "documentation",
+      "name": "Document Completeness",
+      "default_priority": 2,
+      "enabled_by_default": true,
+      "check_types": ["deadline"]
+    },
+    {
+      "standard_id": "design_checker",
+      "name": "Design Checker Workflow",
+      "default_priority": 3,
+      "enabled_by_default": true,
+      "check_types": ["deadline"]
+    },
+    {
+      "standard_id": "consent_path",
+      "name": "Supervising Officer Consent",
+      "default_priority": 4,
+      "enabled_by_default": false,
+      "check_types": ["deadline"]
+    },
+    {
+      "standard_id": "reporting",
+      "name": "Monthly Reporting",
+      "default_priority": 5,
+      "enabled_by_default": false,
+      "check_types": ["deadline"]
+    }
+  ],
+  "documents": [
+    {
+      "document_id": "main_coc",
+      "file_name": "I-EP_SP_174_20-COC-0.pdf",
+      "display_name": "Conditions of Contract"
+    },
+    {
+      "document_id": "I-EP_SP_174_20-ER-0",
+      "file_name": "I-EP_SP_174_20-ER-0.pdf",
+      "display_name": "Employer's Requirements"
+    }
+  ]
+}

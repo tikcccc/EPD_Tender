@@ -1,0 +1,4 @@
+interface:
+  display_name: "Doc Sync Governor"
+  short_description: "Keep architecture, API, tests, and contracts in sync"
+  default_prompt: "Use $doc-sync-governor to check and fix consistency across project docs."

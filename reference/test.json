@@ -1,0 +1,120 @@
+[
+  {
+    "item_id": "485804ab",
+    "consistency_status": "consistent",
+    "confidence_score": 0.95,
+    "evidence": "18.3 The Contractor shall finalise the EMP within 45 days of the date of the Letter of Acceptance and submit 3 hard copies of the EMP and a soft copy in Microsoft Word format to the Supervising Officer.\n18.1 The Contractor shall prepare a draft Environmental Management Plan (EMP) in accordance with the requirements set out in the Employer’s Requirements and based on the Contractor’s Plans submitted by the Contractor in the Tender and submit 3 copies of the draft EMP to the Supervising Officer for comment within 28 days of the date of the Letter of Acceptance.",
+    "reasoning": "The checklist item states that the Contractor shall submit an Environmental Management Plan (EMP) within 45 days of the Letter of Acceptance. However, the tender documents distinguish between two submissions: (1) a draft EMP must be submitted within 28 days (Clause 18.1), and (2) the finalised EMP must be submitted within 45 days (Clause 18.3). The checklist item conflates these two stages by implying a single submission is due at 45 days, omitting the mandatory earlier draft submission at 28 days and misrepresenting the nature of the 45-day deadline (which applies to the final EMP, not the initial submission). Therefore, the description is factually inaccurate regarding timing and submission requirements.",
+    "document_references": [
+      "main_coc"
+    ],
+    "check_type": "deadline",
+    "description": "(PART 1) The Contractor shall submit a draft Environmental Management Plan (EMP) within 28 days of the date of the Letter of Acceptance (Clause 18.1), and shall finalise the EMP within 45 days of the date of the Letter of Acceptance (Clause 18.3).",
+    "keywords": [
+      "draft EMP within 28 days",
+      "finalise EMP within 45 days",
+      "Letter of Acceptance",
+      "Environmental Management Plan"
+    ],
+    "source": "LLM_Discovery_CORRECTED",
+    "severity": "major",
+    "manual_verdict": "consistent",
+    "manual_verdict_category": "checklist_corrected",
+    "manual_verdict_note": "检查项描述已修正: (PART 1) The Contractor shall submit a draft Environmental M..."
+  },
+  {
+    "item_id": "fecadfd2",
+    "consistency_status": "consistent",
+    "confidence_score": 0.95,
+    "evidence": "From main_coc: \"18.2 If the Supervising Officer is of the opinion that the draft EMP does not meet the requirements of the Contract, he shall request the Contractor to revise the draft EMP by notice in writing and the Contractor shall revise the draft EMP and re-submit within days of the date of the notice.\"",
+    "reasoning": "The checklist item states that if the Supervising Officer requests a revision of the Environmental Management Plan (EMP), the Contractor must revise and resubmit it within the timeframe specified by the Supervising Officer. The main_coc excerpt (Clause 18.2) confirms this process: the Supervising Officer may request revisions in writing, and the Contractor must revise and resubmit the EMP 'within days of the date of the notice.' Although the exact number of days is omitted (likely a typographical gap in the source), the clause clearly implies that the resubmission deadline is tied to the notice issued by the Supervising Officer—effectively meaning the timeframe is specified by the Supervising Officer, as stated in the checklist. This constitutes a consistent paraphrase of the contractual requirement.",
+    "document_references": [
+      "main_coc"
+    ],
+    "check_type": "deadline",
+    "description": "(PART 1) If the Supervising Officer requests revision of the Environmental Management Plan, the Contractor shall revise and resubmit it within the timeframe specified by the Supervising Officer.",
+    "keywords": [
+      "revise and resubmit",
+      "Supervising Officer",
+      "Environmental Management Plan"
+    ],
+    "source": "LLM_Discovery_CORRECTED",
+    "severity": "major"
+  },
+  {
+    "item_id": "0b0cfce4",
+    "consistency_status": "consistent",
+    "confidence_score": 1.0,
+    "evidence": "18.4 The Contractor shall review and update the EMP monthly and submit 3 hard copies of the updated part of the EMP and a soft copy in Microsoft Word format to the Supervising Officer.",
+    "reasoning": "The checklist item states that 'The Contractor shall review the Environmental Management Plan monthly and submit updated parts to the Supervising Officer.' This is directly and explicitly supported by Clause 18.4 in the main_coc document, which mandates monthly review and update of the EMP and submission of the updated part to the Supervising Officer. The wording in the checklist is a clear paraphrase of this clause, with no material deviation in meaning or requirement.",
+    "document_references": [
+      "main_coc"
+    ],
+    "check_type": "deadline",
+    "description": "(PART 1) The Contractor shall review the Environmental Management Plan monthly and submit updated parts to the Supervising Officer.",
+    "keywords": [
+      "review the Environmental Management Plan monthly",
+      "updated part",
+      "Supervising Officer"
+    ],
+    "source": "LLM_Discovery_CORRECTED",
+    "severity": "major"
+  },
+  {
+    "item_id": "adc566f6",
+    "consistency_status": "consistent",
+    "confidence_score": 0.98,
+    "evidence": "From document I-EP_SP_174_20-ER-0, Section 1.27.2(a): \"The Contractor shall submit a draft Design and Works Plan for the certification by the Design Checker and consent by the Supervising Officer.\"",
+    "reasoning": "The checklist item states that 'The Contractor shall submit a draft Design and Works Plan for certification by the Design Checker and consent by the Supervising Officer.' This is directly and explicitly mirrored in Section 1.27.2(a) of the Employer’s Requirements document (I-EP_SP_174_20-ER-0). The keywords 'Design and Works Plan', 'certification by the Design Checker', and 'consent by the Supervising Officer' all appear verbatim or in equivalent phrasing. No contradictions exist in the provided excerpts, and the requirement is clearly established as a contractual obligation.",
+    "document_references": [
+      "I-EP_SP_174_20-ER-0"
+    ],
+    "check_type": "deadline",
+    "description": "(PART 1) The Contractor shall submit a draft Design and Works Plan for certification by the Design Checker and consent by the Supervising Officer.",
+    "keywords": [
+      "Design and Works Plan",
+      "certification by the Design Checker",
+      "consent by the Supervising Officer"
+    ],
+    "source": "LLM_Discovery",
+    "severity": "major"
+  },
+  {
+    "item_id": "f8f30ca6",
+    "consistency_status": "consistent",
+    "confidence_score": 0.98,
+    "evidence": "From I-EP_SP_174_20-ER-0: \"(a) The Contractor shall submit a draft Operation Plan in accordance with Clause 59 of the Conditions of Contract for the certification by the Design Checker and consent by the Supervising Officer.\" From main_coc: \"59.3 Without prejudice to Clauses 42 and 44, within 28 days of receipt by the Design Checker of the draft Operation Plan submitted under Clause 59.1, the Design Checker shall certify that such draft Operation Plan is in accordance with the Contract...\" and \"9.4 Within 28 days of the receipt by the Supervising Officer of the certificate under Clause 59.3 issued by the Design Checker, the Supervising Officer shall inform the Contractor in writing that the Supervising Officer consents or does not consent to the draft Operation Plan as certified.\"",
+    "reasoning": "The checklist item states that the Contractor must submit a draft Operation Plan in accordance with Clause 59 for certification by the Design Checker and consent by the Supervising Officer. This is directly and explicitly confirmed in both the main Conditions of Contract (main_coc) and the Employer’s Requirements document (I-EP_SP_174_20-ER-0). The procedural sequence—submission, certification by Design Checker, then consent by Supervising Officer—is accurately reflected in the cited clauses. No contradictions or factual errors are present.",
+    "document_references": [
+      "main_coc",
+      "I-EP_SP_174_20-ER-0"
+    ],
+    "check_type": "deadline",
+    "description": "(PART 1) The Contractor shall submit a draft Operation Plan in accordance with Clause 59 of the Conditions of Contract for certification by the Design Checker and consent by the Supervising Officer.",
+    "keywords": [
+      "Operation Plan",
+      "Clause 59",
+      "certification by the Design Checker"
+    ],
+    "source": "LLM_Discovery",
+    "severity": "major"
+  },
+  {
+    "item_id": "22bf814f",
+    "consistency_status": "consistent",
+    "confidence_score": 1.0,
+    "evidence": "Monthly Reports shall be submitted to the Employer by the 14th day of the month following the reporting month to which the report relates.",
+    "reasoning": "The checklist item states that 'The Contractor shall submit Monthly Reports to the Employer by the 14th day of the month following the reporting month.' This is directly and verbatim supported by clause 6.5.4(a) in document I-EP_SP_174_20-ER-0, which specifies the exact same deadline and context for Monthly Report submission. The keywords 'Monthly Report', 'by the 14th day of the month', and 'reporting month' all appear in the source excerpt with identical meaning and structure.",
+    "document_references": [
+      "I-EP_SP_174_20-ER-0"
+    ],
+    "check_type": "deadline",
+    "description": "(PART 1) The Contractor shall submit Monthly Reports to the Employer by the 14th day of the month following the reporting month.",
+    "keywords": [
+      "Monthly Report",
+      "by the 14th day of the month",
+      "reporting month"
+    ],
+    "source": "LLM_Discovery",
+    "severity": "major"
+  }]

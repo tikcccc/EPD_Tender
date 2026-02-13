@@ -1,0 +1,5 @@
+{
+  "page_accuracy_min": 0.95,
+  "bbox_iou_avg_min": 0.60,
+  "resolve_success_rate_min": 0.98
+}
