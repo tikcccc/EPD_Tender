@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from uuid import uuid4
 
 from fastapi import FastAPI, Request
@@ -13,12 +14,33 @@ from app.core.errors import ApiError
 
 app = FastAPI(title="EPD Tender Analysis API", version="1.0.0")
 
-app.add_middleware(
-  CORSMiddleware,
-  allow_origins=[
+
+def _parse_cors_allow_origins() -> list[str]:
+  configured = os.getenv("CORS_ALLOW_ORIGINS", "")
+  if configured.strip():
+    origins = [entry.strip().rstrip("/") for entry in configured.split(",") if entry.strip()]
+    if origins:
+      return origins
+
+  # Default local origins + current Vercel production domain.
+  return [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-  ],
+    "https://epd-tender.vercel.app",
+  ]
+
+
+def _parse_cors_allow_origin_regex() -> str | None:
+  configured = os.getenv("CORS_ALLOW_ORIGIN_REGEX", "").strip()
+  if not configured:
+    return None
+  return configured
+
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=_parse_cors_allow_origins(),
+  allow_origin_regex=_parse_cors_allow_origin_regex(),
   allow_credentials=True,
   allow_methods=["*"],
   allow_headers=["*"],

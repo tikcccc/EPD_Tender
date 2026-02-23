@@ -60,6 +60,13 @@ OpenAPI:
 - `EVIDENCE_PAGE_MIN` (default: `1`)
 - `EVIDENCE_PAGE_MAX` (default: `200`)
 
+## CORS (Render + Vercel)
+
+Configure allowed frontend origins with environment variables:
+
+- `CORS_ALLOW_ORIGINS`: comma-separated origins (example: `https://epd-tender.vercel.app,https://epd-tender-git-main-xxx.vercel.app`)
+- `CORS_ALLOW_ORIGIN_REGEX`: optional regex for preview domains (example: `^https://epd-tender-.*\\.vercel\\.app$`)
+
 ## Tests
 
 ```bash
