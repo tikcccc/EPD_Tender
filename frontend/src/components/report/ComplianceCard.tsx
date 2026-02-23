@@ -28,6 +28,19 @@ function normalizeEvidenceText(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
+function formatCheckTypeLabel(checkType: string): string {
+  const normalized = checkType.trim();
+  if (!normalized) {
+    return "N/A";
+  }
+
+  return normalized
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
 function extractQuotedSegments(text: string): string[] {
   const segments: string[] = [];
 
@@ -90,6 +103,9 @@ export function ComplianceCard({
   onEvidenceClick,
 }: ComplianceCardProps) {
   const normalizedEvidence = item.evidence.replace(/\s+/g, " ").trim();
+  const severityLabel = `${item.severity.charAt(0).toUpperCase()}${item.severity.slice(1)}`;
+  const confidenceLabel = item.confidence_score.toFixed(2);
+  const checkTypeLabel = useMemo(() => formatCheckTypeLabel(item.check_type), [item.check_type]);
   const evidenceByDocument = useMemo(() => extractReferenceEvidenceByDocument(item), [item]);
   const referenceItems = useMemo(() => {
     const references = Array.from(new Set(item.document_references.map((reference) => reference.trim()).filter(Boolean)));
@@ -127,13 +143,13 @@ export function ComplianceCard({
   return (
     <article className={`c-card is-${item.consistency_status}${isActive ? " is-active" : ""}`}>
       <div className="c-card-top">
-        <div>
-          <p className="c-card-kicker">Category: {item.check_type}</p>
+        <div className="c-card-heading">
           <h3 className="c-card-title">Compliance Review</h3>
-        </div>
-        <div className="c-card-score">
-          <span className={`c-badge is-${item.severity}`}>{item.severity.toUpperCase()}</span>
-          <span className="c-badge is-score">Confidence {Math.round(item.confidence_score * 100)}%</span>
+          <div className="c-card-tags">
+            <span className="c-chip is-category">Category: {checkTypeLabel}</span>
+            <span className={`c-chip is-severity is-${item.severity}`}>Severity: {severityLabel}</span>
+            <span className="c-chip is-confidence">Confidence: {confidenceLabel}</span>
+          </div>
         </div>
       </div>
 

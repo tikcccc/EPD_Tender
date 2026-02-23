@@ -44,7 +44,7 @@
   --shadow-md: 0 8px 26px rgba(15, 23, 42, 0.1);
   --shadow-pdf: 0 20px 45px rgba(15, 23, 42, 0.14), 0 1px 0 rgba(15, 23, 42, 0.08);
 
-  --font-ui: var(--font-ui-family), "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
+  --font-ui: var(--font-ui-latin-family), var(--font-ui-cjk-family), "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
   --font-doc: var(--font-doc-family), "Noto Serif CJK TC", "PMingLiU", serif;
 
   --fw-regular: 400;
