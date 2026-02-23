@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { TenderAppShell } from "@/components/layout/TenderAppShell";
 import { PdfWorkspace } from "@/components/pdf/PdfWorkspace";
@@ -747,9 +746,9 @@ export default function TenderPage() {
     <TenderAppShell
       actions={
         <>
-          <Link className="c-btn c-btn-secondary" href="/admin/settings">
+          <button className="c-btn c-btn-secondary" type="button" disabled title="Temporarily unavailable">
             Admin Settings
-          </Link>
+          </button>
           <button className="c-btn c-btn-primary" type="button" onClick={() => void exportReport()}>
             Output Report
           </button>
