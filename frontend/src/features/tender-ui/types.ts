@@ -181,6 +181,20 @@ export interface ManualReviewHistoryResult {
   entries: ManualReviewHistoryEntry[];
 }
 
+export interface ManualReviewHistoryUpdateResult {
+  report_id: string;
+  item_id: string;
+  item: ReportItem;
+  entry: ManualReviewHistoryEntry;
+}
+
+export interface ManualReviewHistoryDeleteResult {
+  report_id: string;
+  item_id: string;
+  item: ReportItem;
+  deleted_history_id: string;
+}
+
 export interface ApiEnvelope<T> {
   code: string;
   message: string;

@@ -536,6 +536,28 @@
   word-break: break-word;
 }
 
+.c-review-history-item-actions {
+  align-items: center;
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.c-review-edit-state {
+  align-items: center;
+  display: flex;
+  gap: var(--space-2);
+  justify-content: space-between;
+}
+
+.c-link-btn.c-link-btn-danger {
+  color: #b91c1c;
+}
+
+.c-link-btn.c-link-btn-danger:hover {
+  color: #991b1b;
+}
+
 .c-review-history-pagination {
   align-items: center;
   display: flex;

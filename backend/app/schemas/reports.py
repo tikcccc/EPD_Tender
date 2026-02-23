@@ -98,3 +98,17 @@ class ManualReviewHistoryListData(BaseModel):
   page_size: int
   total: int
   entries: list[ManualReviewHistoryEntry]
+
+
+class ManualReviewHistoryUpdateData(BaseModel):
+  report_id: str
+  item_id: str
+  item: ReportItem
+  entry: ManualReviewHistoryEntry
+
+
+class ManualReviewHistoryDeleteData(BaseModel):
+  report_id: str
+  item_id: str
+  item: ReportItem
+  deleted_history_id: str

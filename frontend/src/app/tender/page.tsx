@@ -8,11 +8,13 @@ import { ComplianceCard } from "@/components/report/ComplianceCard";
 import { WorkspaceBottomBar } from "@/components/toolbar/WorkspaceBottomBar";
 import { WorkspaceToolbar } from "@/components/toolbar/WorkspaceToolbar";
 import {
+  deleteManualReviewHistoryEntry,
   exportReportFile,
   fetchNecTemplate,
   fetchReportCards,
   ingestReport,
   resolveEvidence,
+  updateManualReviewHistoryEntry,
   updateManualReview,
 } from "@/features/tender-ui/api-client";
 import type {
@@ -717,6 +719,28 @@ export default function TenderPage() {
     );
   }
 
+  async function updateManualReviewHistory(item: ReportItem, historyId: string, payload: ManualReviewUpdatePayload): Promise<void> {
+    if (!reportId) {
+      throw new Error("Report is not ready yet.");
+    }
+
+    const result = await updateManualReviewHistoryEntry(reportId, item.item_id, historyId, payload);
+    setReportItems((previous) =>
+      previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)),
+    );
+  }
+
+  async function deleteManualReviewHistory(item: ReportItem, historyId: string): Promise<void> {
+    if (!reportId) {
+      throw new Error("Report is not ready yet.");
+    }
+
+    const result = await deleteManualReviewHistoryEntry(reportId, item.item_id, historyId);
+    setReportItems((previous) =>
+      previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)),
+    );
+  }
+
   const templateName = template?.name ?? "N/A";
 
   return (
@@ -798,6 +822,10 @@ export default function TenderPage() {
                   documentFileNames={documentFileNames}
                   onEvidenceClick={(card, options) => void focusEvidence(card, options)}
                   onSaveManualReview={(card, payload) => saveManualReview(card, payload)}
+                  onUpdateManualReviewHistory={(card, historyId, payload) =>
+                    updateManualReviewHistory(card, historyId, payload)
+                  }
+                  onDeleteManualReviewHistory={(card, historyId) => deleteManualReviewHistory(card, historyId)}
                 />
               ))}
             </div>

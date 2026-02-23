@@ -1,8 +1,10 @@
 import type {
   ApiEnvelope,
+  ManualReviewHistoryDeleteResult,
   IngestReportPayload,
   IngestReportResult,
   ManualReviewHistoryResult,
+  ManualReviewHistoryUpdateResult,
   ManualReviewUpdatePayload,
   ManualReviewUpdateResult,
   NecTemplatePayload,
@@ -128,6 +130,46 @@ export async function fetchManualReviewHistory(
   );
 
   return parseEnvelope<ManualReviewHistoryResult>(response);
+}
+
+export async function updateManualReviewHistoryEntry(
+  reportId: string,
+  itemId: string,
+  historyId: string,
+  payload: ManualReviewUpdatePayload,
+): Promise<ManualReviewHistoryUpdateResult> {
+  const response = await fetch(
+    `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-reviews/${encodeURIComponent(historyId)}`,
+    {
+      method: "PATCH",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  return parseEnvelope<ManualReviewHistoryUpdateResult>(response);
+}
+
+export async function deleteManualReviewHistoryEntry(
+  reportId: string,
+  itemId: string,
+  historyId: string,
+): Promise<ManualReviewHistoryDeleteResult> {
+  const response = await fetch(
+    `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-reviews/${encodeURIComponent(historyId)}`,
+    {
+      method: "DELETE",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  return parseEnvelope<ManualReviewHistoryDeleteResult>(response);
 }
 
 export async function exportReportFile(payload: {

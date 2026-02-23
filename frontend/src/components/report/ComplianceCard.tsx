@@ -27,6 +27,12 @@ type ComplianceCardProps = {
     },
   ) => void;
   onSaveManualReview: (item: ReportItem, payload: ManualReviewUpdatePayload) => Promise<void>;
+  onUpdateManualReviewHistory: (
+    item: ReportItem,
+    historyId: string,
+    payload: ManualReviewUpdatePayload,
+  ) => Promise<void>;
+  onDeleteManualReviewHistory: (item: ReportItem, historyId: string) => Promise<void>;
 };
 
 const REFERENCE_PREVIEW_LIMIT = 120;
@@ -50,6 +56,14 @@ const MANUAL_CATEGORY_OPTIONS: Array<{ value: ManualVerdictCategory; label: stri
   { value: "data_issue", label: "Data Issue" },
   { value: "other", label: "Other" },
 ];
+
+type HistoryEditTarget = {
+  history_id: string;
+  edited_at: string;
+  manual_verdict: ManualVerdict | null;
+  manual_verdict_category: ManualVerdictCategory | null;
+  manual_verdict_note: string | null;
+};
 
 function toManualOptionLabel(
   value: string,
@@ -148,6 +162,8 @@ export function ComplianceCard({
   documentFileNames,
   onEvidenceClick,
   onSaveManualReview,
+  onUpdateManualReviewHistory,
+  onDeleteManualReviewHistory,
 }: ComplianceCardProps) {
   const normalizedEvidence = item.evidence.replace(/\s+/g, " ").trim();
   const severityLabel = `${item.severity.charAt(0).toUpperCase()}${item.severity.slice(1)}`;
@@ -200,6 +216,9 @@ export function ComplianceCard({
   const [historyEntries, setHistoryEntries] = useState<ManualReviewHistoryEntry[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState("");
+  const [historyEditTarget, setHistoryEditTarget] = useState<HistoryEditTarget | null>(null);
+  const [savingHistoryEdit, setSavingHistoryEdit] = useState(false);
+  const [deletingHistoryId, setDeletingHistoryId] = useState("");
   const [remarkPopoverOpen, setRemarkPopoverOpen] = useState(false);
   const [remarkPopoverPinned, setRemarkPopoverPinned] = useState(false);
   const previousItemIdRef = useRef(item.item_id);
@@ -218,6 +237,9 @@ export function ComplianceCard({
       setHistoryTotal(0);
       setHistoryEntries([]);
       setHistoryError("");
+      setHistoryEditTarget(null);
+      setSavingHistoryEdit(false);
+      setDeletingHistoryId("");
       setRemarkPopoverOpen(false);
       setRemarkPopoverPinned(false);
     }
@@ -336,6 +358,9 @@ export function ComplianceCard({
   const normalizedManualNote = toNullableText(manualNote);
   const isManualNoteEmpty = !normalizedManualNote;
   const remarkCount = historyTotal > 0 ? historyTotal : item.manual_verdict_note?.trim() ? 1 : 0;
+  const isEditingHistory = Boolean(historyEditTarget);
+  const editingHistoryTimeLabel = historyEditTarget ? formatManualReviewTime(historyEditTarget.edited_at) : "";
+  const isSavingAnyReview = savingManualReview || savingHistoryEdit;
 
   function toggleRemarkPopoverPin(): void {
     setRemarkPopoverPinned((previous) => {
@@ -356,7 +381,122 @@ export function ComplianceCard({
     setRemarkPopoverOpen(false);
   }
 
-  function renderManualReviewHistory(extraClassName?: string): JSX.Element {
+  function beginHistoryEdit(entry: ManualReviewHistoryEntry): void {
+    setManualReviewError("");
+    setManualReviewNotice("");
+    setHistoryEditTarget({
+      history_id: entry.history_id,
+      edited_at: entry.edited_at,
+      manual_verdict: entry.manual_verdict,
+      manual_verdict_category: entry.manual_verdict_category,
+      manual_verdict_note: entry.manual_verdict_note,
+    });
+    setManualVerdict(entry.manual_verdict ?? "");
+    setManualCategory(entry.manual_verdict_category ?? "");
+    setManualNote(entry.manual_verdict_note ?? "");
+    setManualReviewExpanded(true);
+    setManualReviewTab("edit");
+    setRemarkPopoverPinned(false);
+    setRemarkPopoverOpen(false);
+  }
+
+  function cancelHistoryEdit(): void {
+    setHistoryEditTarget(null);
+    setManualVerdict(item.manual_verdict ?? "");
+    setManualCategory(item.manual_verdict_category ?? "");
+    setManualNote(item.manual_verdict_note ?? "");
+    setManualReviewTab("history");
+    setHistoryPage(1);
+  }
+
+  async function saveHistoryEdit(): Promise<void> {
+    if (!historyEditTarget) {
+      return;
+    }
+
+    const normalized = toNullableText(manualNote);
+    if (!normalized) {
+      setManualReviewNotice("");
+      setManualReviewError("Remark cannot be empty.");
+      return;
+    }
+    if (normalized.length > MANUAL_NOTE_MAX_LENGTH) {
+      setManualReviewNotice("");
+      setManualReviewError(`Manual note must be ${MANUAL_NOTE_MAX_LENGTH} characters or fewer.`);
+      return;
+    }
+
+    setManualReviewError("");
+    setManualReviewNotice("");
+    setSavingHistoryEdit(true);
+    try {
+      const nextVerdict = toNullableText(manualVerdict) as ManualVerdict | null;
+      const nextCategory = toNullableText(manualCategory) as ManualVerdictCategory | null;
+      const payload: ManualReviewUpdatePayload = {};
+
+      if (nextVerdict !== historyEditTarget.manual_verdict) {
+        payload.manual_verdict = nextVerdict;
+      }
+      if (nextCategory !== historyEditTarget.manual_verdict_category) {
+        payload.manual_verdict_category = nextCategory;
+      }
+      if (normalized !== historyEditTarget.manual_verdict_note) {
+        payload.manual_verdict_note = normalized;
+      }
+
+      if (Object.keys(payload).length === 0) {
+        setManualReviewNotice("");
+        setManualReviewError("");
+        return;
+      }
+
+      await onUpdateManualReviewHistory(item, historyEditTarget.history_id, payload);
+      setManualReviewNotice("Remark updated.");
+      setHistoryEditTarget(null);
+      setManualReviewTab("history");
+      setHistoryPage(1);
+      if (shouldLoadHistory || manualReviewExpanded) {
+        void loadManualReviewHistory(1);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to update remark.";
+      setManualReviewNotice("");
+      setManualReviewError(message);
+    } finally {
+      setSavingHistoryEdit(false);
+    }
+  }
+
+  async function deleteHistoryEntry(entry: ManualReviewHistoryEntry): Promise<void> {
+    const confirmed = window.confirm("Delete this remark?");
+    if (!confirmed) {
+      return;
+    }
+
+    setManualReviewError("");
+    setManualReviewNotice("");
+    setDeletingHistoryId(entry.history_id);
+    try {
+      await onDeleteManualReviewHistory(item, entry.history_id);
+      if (historyEditTarget?.history_id === entry.history_id) {
+        setHistoryEditTarget(null);
+        setManualReviewTab("history");
+      }
+      setManualReviewNotice("Remark deleted.");
+      setHistoryPage(1);
+      if (shouldLoadHistory) {
+        void loadManualReviewHistory(1);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to delete remark.";
+      setManualReviewNotice("");
+      setManualReviewError(message);
+    } finally {
+      setDeletingHistoryId("");
+    }
+  }
+
+  function renderManualReviewHistory(extraClassName?: string) {
     const className = extraClassName ? `c-review-history ${extraClassName}` : "c-review-history";
 
     return (
@@ -372,6 +512,7 @@ export function ComplianceCard({
               {historyEntries.map((entry) => {
                 const verdictLabel = toManualOptionLabel(entry.manual_verdict ?? "", MANUAL_VERDICT_OPTIONS, "Not set");
                 const categoryLabel = toManualOptionLabel(entry.manual_verdict_category ?? "", MANUAL_CATEGORY_OPTIONS, "Not set");
+                const isDeleting = deletingHistoryId === entry.history_id;
                 return (
                   <li key={entry.history_id} className="c-review-history-item">
                     <div className="c-review-history-item-head">
@@ -382,6 +523,24 @@ export function ComplianceCard({
                       </div>
                     </div>
                     <p className="c-review-history-item-note">{entry.manual_verdict_note ?? "No remark note."}</p>
+                    <div className="c-review-history-item-actions">
+                      <button
+                        className="c-link-btn"
+                        type="button"
+                        onClick={() => beginHistoryEdit(entry)}
+                        disabled={isSavingAnyReview || !!deletingHistoryId}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="c-link-btn c-link-btn-danger"
+                        type="button"
+                        onClick={() => void deleteHistoryEntry(entry)}
+                        disabled={isSavingAnyReview || isDeleting || !!deletingHistoryId}
+                      >
+                        {isDeleting ? "Deleting..." : "Delete"}
+                      </button>
+                    </div>
                   </li>
                 );
               })}
@@ -414,6 +573,11 @@ export function ComplianceCard({
   }
 
   async function saveManualReview(): Promise<void> {
+    if (isEditingHistory) {
+      await saveHistoryEdit();
+      return;
+    }
+
     if (!normalizedManualNote) {
       setManualReviewNotice("");
       setManualReviewError("Remark cannot be empty.");
@@ -578,6 +742,15 @@ export function ComplianceCard({
         }
       />
 
+      <div className="c-card-meta">
+        <span className="c-card-meta-label">Keywords</span>
+        {item.keywords.map((keyword, index) => (
+          <span key={`${keyword}-${index}`} className="c-chip">
+            {keyword}
+          </span>
+        ))}
+      </div>
+
       <section className="c-card-section c-review-section" aria-label="Manual review">
         <div className="c-review-header">
           <p className="c-card-section-label">Manual Review</p>
@@ -623,6 +796,15 @@ export function ComplianceCard({
 
             {manualReviewTab === "edit" ? (
               <>
+                {isEditingHistory ? (
+                  <div className="c-review-edit-state">
+                    <p className="c-notice c-review-feedback">Editing history from {editingHistoryTimeLabel}</p>
+                    <button className="c-link-btn" type="button" onClick={cancelHistoryEdit} disabled={isSavingAnyReview}>
+                      Cancel History Edit
+                    </button>
+                  </div>
+                ) : null}
+
                 <div className="c-review-grid">
                   <label className="c-review-field" htmlFor={`manual-verdict-${item.item_id}`}>
                     <span className="c-review-field-label">Verdict</span>
@@ -635,7 +817,7 @@ export function ComplianceCard({
                         setManualReviewError("");
                         setManualReviewNotice("");
                       }}
-                      disabled={savingManualReview}
+                      disabled={isSavingAnyReview}
                     >
                       <option value="">Not set</option>
                       {MANUAL_VERDICT_OPTIONS.map((option) => (
@@ -656,7 +838,7 @@ export function ComplianceCard({
                         setManualReviewError("");
                         setManualReviewNotice("");
                       }}
-                      disabled={savingManualReview}
+                      disabled={isSavingAnyReview}
                     >
                       <option value="">Not set</option>
                       {MANUAL_CATEGORY_OPTIONS.map((option) => (
@@ -680,7 +862,7 @@ export function ComplianceCard({
                       setManualReviewError("");
                       setManualReviewNotice("");
                     }}
-                    disabled={savingManualReview}
+                    disabled={isSavingAnyReview}
                     placeholder="Add manual review notes..."
                   />
                   <span className="c-review-counter">
@@ -689,11 +871,11 @@ export function ComplianceCard({
                 </label>
 
                 <div className="c-card-footer c-review-actions">
-                  <button className="c-btn c-btn-secondary" type="button" onClick={() => void clearManualReview()} disabled={savingManualReview}>
+                  <button className="c-btn c-btn-secondary" type="button" onClick={() => void clearManualReview()} disabled={isSavingAnyReview}>
                     Clear Remark
                   </button>
-                  <button className="c-btn c-btn-primary" type="button" onClick={() => void saveManualReview()} disabled={savingManualReview || isManualNoteEmpty}>
-                    {savingManualReview ? "Saving..." : "Save Remark"}
+                  <button className="c-btn c-btn-primary" type="button" onClick={() => void saveManualReview()} disabled={isSavingAnyReview || isManualNoteEmpty}>
+                    {isSavingAnyReview ? "Saving..." : isEditingHistory ? "Save History Edit" : "Save Remark"}
                   </button>
                 </div>
 
@@ -706,15 +888,6 @@ export function ComplianceCard({
           </div>
         ) : null}
       </section>
-
-      <div className="c-card-meta">
-        <span className="c-card-meta-label">Keywords</span>
-        {item.keywords.map((keyword, index) => (
-          <span key={`${keyword}-${index}`} className="c-chip">
-            {keyword}
-          </span>
-        ))}
-      </div>
     </article>
   );
 }

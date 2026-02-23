@@ -24,6 +24,7 @@ When user includes `@skills/skill-index.md`, choose the best matching skill belo
 ## Routing Keywords
 
 - `style`, `UI`, `layout`, `component`, `css`, `prototype` -> `$frontend-ui-prototype`
+- `remark`, `manual review`, `edit remark`, `delete remark`, `history action` -> `$frontend-ui-prototype`
 - `task list`, `sprint`, `plan to execution`, `checklist` -> `$tender-implementation-runner`
 - `api contract`, `schema`, `acceptance`, `test strategy`, `docs answer` -> `$coding-doc-indexer`
 - `doc sync`, `inconsistency`, `drift`, `cross-doc` -> `$doc-sync-governor`

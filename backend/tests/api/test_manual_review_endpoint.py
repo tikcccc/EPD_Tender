@@ -129,3 +129,124 @@ def test_manual_review_history_pagination(client: TestClient) -> None:
   assert len(page2_payload["entries"]) == 1
   assert page2_payload["entries"][0]["manual_verdict"] == "needs_followup"
   assert page2_payload["entries"][0]["manual_verdict_note"] == "Need more evidence."
+
+
+def test_manual_review_history_edit_updates_selected_entry(client: TestClient) -> None:
+  report_id, item_id = _bootstrap_report(client)
+
+  first_update = client.patch(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-review",
+    json={
+      "manual_verdict": "needs_followup",
+      "manual_verdict_category": "evidence_gap",
+      "manual_verdict_note": "Initial note.",
+    },
+  )
+  assert first_update.status_code == 200
+
+  second_update = client.patch(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-review",
+    json={
+      "manual_verdict": "accepted",
+      "manual_verdict_category": "other",
+      "manual_verdict_note": "Latest note.",
+    },
+  )
+  assert second_update.status_code == 200
+
+  history_page = client.get(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews",
+    params={"page": 1, "page_size": 10},
+  )
+  assert history_page.status_code == 200
+  history_entries = history_page.json()["data"]["entries"]
+  latest_entry = history_entries[0]
+  older_entry = history_entries[1]
+
+  edit_older = client.patch(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews/{older_entry['history_id']}",
+    json={
+      "manual_verdict_note": "Initial note updated.",
+    },
+  )
+  assert edit_older.status_code == 200
+  older_payload = edit_older.json()["data"]
+  assert older_payload["entry"]["history_id"] == older_entry["history_id"]
+  assert older_payload["entry"]["manual_verdict_note"] == "Initial note updated."
+  # Editing non-latest history should not change the card's current manual state.
+  assert older_payload["item"]["manual_verdict_note"] == "Latest note."
+
+  edit_latest = client.patch(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews/{latest_entry['history_id']}",
+    json={
+      "manual_verdict_note": "Latest note updated.",
+    },
+  )
+  assert edit_latest.status_code == 200
+  latest_payload = edit_latest.json()["data"]
+  assert latest_payload["entry"]["history_id"] == latest_entry["history_id"]
+  assert latest_payload["entry"]["manual_verdict_note"] == "Latest note updated."
+  assert latest_payload["item"]["manual_verdict_note"] == "Latest note updated."
+
+
+def test_manual_review_history_delete_reconciles_current_card_state(client: TestClient) -> None:
+  report_id, item_id = _bootstrap_report(client)
+
+  first_update = client.patch(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-review",
+    json={
+      "manual_verdict": "needs_followup",
+      "manual_verdict_category": "evidence_gap",
+      "manual_verdict_note": "First note.",
+    },
+  )
+  assert first_update.status_code == 200
+
+  second_update = client.patch(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-review",
+    json={
+      "manual_verdict": "accepted",
+      "manual_verdict_category": "other",
+      "manual_verdict_note": "Second note.",
+    },
+  )
+  assert second_update.status_code == 200
+
+  history_page = client.get(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews",
+    params={"page": 1, "page_size": 10},
+  )
+  assert history_page.status_code == 200
+  history_entries = history_page.json()["data"]["entries"]
+  latest_entry = history_entries[0]
+  older_entry = history_entries[1]
+
+  delete_latest = client.delete(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews/{latest_entry['history_id']}",
+  )
+  assert delete_latest.status_code == 200
+  deleted_payload = delete_latest.json()["data"]
+  assert deleted_payload["deleted_history_id"] == latest_entry["history_id"]
+  # Deleting latest history should roll card state back to next available entry.
+  assert deleted_payload["item"]["manual_verdict"] == older_entry["manual_verdict"]
+  assert deleted_payload["item"]["manual_verdict_category"] == older_entry["manual_verdict_category"]
+  assert deleted_payload["item"]["manual_verdict_note"] == older_entry["manual_verdict_note"]
+
+  delete_older = client.delete(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews/{older_entry['history_id']}",
+  )
+  assert delete_older.status_code == 200
+  cleared_payload = delete_older.json()["data"]
+  assert cleared_payload["deleted_history_id"] == older_entry["history_id"]
+  assert cleared_payload["item"]["manual_verdict"] is None
+  assert cleared_payload["item"]["manual_verdict_category"] is None
+  assert cleared_payload["item"]["manual_verdict_note"] is None
+
+  history_empty = client.get(
+    f"/api/v1/reports/{report_id}/cards/{item_id}/manual-reviews",
+    params={"page": 1, "page_size": 10},
+  )
+  assert history_empty.status_code == 200
+  payload = history_empty.json()["data"]
+  assert payload["total"] == 0
+  assert payload["entries"] == []

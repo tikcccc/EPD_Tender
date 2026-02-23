@@ -4,7 +4,14 @@ from fastapi import APIRouter, Query, Request, status
 
 from app.api.response import ok_response
 from app.schemas.reports import ManualReviewUpdateRequest, ReportIngestRequest
-from app.services.report_service import get_cards, get_manual_review_history, ingest_report, update_manual_review
+from app.services.report_service import (
+  delete_manual_review_history_entry,
+  get_cards,
+  get_manual_review_history,
+  ingest_report,
+  update_manual_review,
+  update_manual_review_history_entry,
+)
 
 router = APIRouter(prefix="/reports", tags=["reports"])
 
@@ -48,3 +55,26 @@ def list_manual_reviews(
 ) -> dict[str, object]:
   result = get_manual_review_history(report_id, item_id, page=page, page_size=page_size)
   return ok_response(request, result.model_dump())
+
+
+@router.patch("/{report_id}/cards/{item_id}/manual-reviews/{history_id}", summary="編輯人工註記歷史")
+def patch_manual_review_history(
+  request: Request,
+  report_id: str,
+  item_id: str,
+  history_id: str,
+  payload: ManualReviewUpdateRequest,
+) -> dict[str, object]:
+  result = update_manual_review_history_entry(report_id, item_id, history_id, payload)
+  return ok_response(request, result.model_dump(), message="manual review history updated")
+
+
+@router.delete("/{report_id}/cards/{item_id}/manual-reviews/{history_id}", summary="刪除人工註記歷史")
+def delete_manual_review_history(
+  request: Request,
+  report_id: str,
+  item_id: str,
+  history_id: str,
+) -> dict[str, object]:
+  result = delete_manual_review_history_entry(report_id, item_id, history_id)
+  return ok_response(request, result.model_dump(), message="manual review history deleted")
