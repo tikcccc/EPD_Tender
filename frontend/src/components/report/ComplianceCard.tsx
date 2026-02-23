@@ -200,8 +200,11 @@ export function ComplianceCard({
   const [historyEntries, setHistoryEntries] = useState<ManualReviewHistoryEntry[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState("");
+  const [remarkPopoverOpen, setRemarkPopoverOpen] = useState(false);
+  const [remarkPopoverPinned, setRemarkPopoverPinned] = useState(false);
   const previousItemIdRef = useRef(item.item_id);
   const skipNextManualNoteSyncRef = useRef(false);
+  const remarkPopoverRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const switchedItem = previousItemIdRef.current !== item.item_id;
@@ -215,6 +218,8 @@ export function ComplianceCard({
       setHistoryTotal(0);
       setHistoryEntries([]);
       setHistoryError("");
+      setRemarkPopoverOpen(false);
+      setRemarkPopoverPinned(false);
     }
 
     setManualVerdict(item.manual_verdict ?? "");
@@ -250,6 +255,40 @@ export function ComplianceCard({
     return () => clearTimeout(timer);
   }, [manualReviewError]);
 
+  useEffect(() => {
+    if (!remarkPopoverPinned) {
+      return;
+    }
+
+    function closeRemarkPopover(): void {
+      setRemarkPopoverPinned(false);
+      setRemarkPopoverOpen(false);
+    }
+
+    function handlePointerDown(event: MouseEvent): void {
+      if (!remarkPopoverRef.current) {
+        return;
+      }
+      if (remarkPopoverRef.current.contains(event.target as Node)) {
+        return;
+      }
+      closeRemarkPopover();
+    }
+
+    function handleKeyDown(event: KeyboardEvent): void {
+      if (event.key === "Escape") {
+        closeRemarkPopover();
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [remarkPopoverPinned]);
+
   function toNullableText(value: string): string | null {
     const normalized = value.trim();
     return normalized.length > 0 ? normalized : null;
@@ -282,17 +321,97 @@ export function ComplianceCard({
     [item.item_id, reportId],
   );
 
+  const historyViewOpen = manualReviewExpanded && manualReviewTab === "history";
+  const shouldLoadHistory = historyViewOpen || remarkPopoverOpen;
+
   useEffect(() => {
-    if (!manualReviewExpanded || manualReviewTab !== "history") {
+    if (!shouldLoadHistory) {
       return;
     }
 
     void loadManualReviewHistory(historyPage);
-  }, [historyPage, loadManualReviewHistory, manualReviewExpanded, manualReviewTab]);
+  }, [historyPage, loadManualReviewHistory, shouldLoadHistory]);
 
   const historyTotalPages = Math.max(1, Math.ceil(historyTotal / MANUAL_HISTORY_PAGE_SIZE));
   const normalizedManualNote = toNullableText(manualNote);
   const isManualNoteEmpty = !normalizedManualNote;
+  const remarkCount = historyTotal > 0 ? historyTotal : item.manual_verdict_note?.trim() ? 1 : 0;
+
+  function toggleRemarkPopoverPin(): void {
+    setRemarkPopoverPinned((previous) => {
+      const nextPinned = !previous;
+      setRemarkPopoverOpen(nextPinned);
+      return nextPinned;
+    });
+  }
+
+  function handleRemarkPopoverMouseEnter(): void {
+    setRemarkPopoverOpen(true);
+  }
+
+  function handleRemarkPopoverMouseLeave(): void {
+    if (remarkPopoverPinned) {
+      return;
+    }
+    setRemarkPopoverOpen(false);
+  }
+
+  function renderManualReviewHistory(extraClassName?: string): JSX.Element {
+    const className = extraClassName ? `c-review-history ${extraClassName}` : "c-review-history";
+
+    return (
+      <div className={className}>
+        {historyLoading ? <p className="c-empty">Loading manual review history...</p> : null}
+        {historyError ? <p className="c-alert">{historyError}</p> : null}
+        {!historyLoading && !historyError && historyEntries.length === 0 ? (
+          <p className="c-empty">No manual review history yet.</p>
+        ) : null}
+        {!historyLoading && !historyError && historyEntries.length > 0 ? (
+          <>
+            <ul className="c-review-history-list">
+              {historyEntries.map((entry) => {
+                const verdictLabel = toManualOptionLabel(entry.manual_verdict ?? "", MANUAL_VERDICT_OPTIONS, "Not set");
+                const categoryLabel = toManualOptionLabel(entry.manual_verdict_category ?? "", MANUAL_CATEGORY_OPTIONS, "Not set");
+                return (
+                  <li key={entry.history_id} className="c-review-history-item">
+                    <div className="c-review-history-item-head">
+                      <span className="c-review-history-item-time">{formatManualReviewTime(entry.edited_at)}</span>
+                      <div className="c-card-meta">
+                        <span className="c-chip">Verdict: {verdictLabel}</span>
+                        <span className="c-chip">Category: {categoryLabel}</span>
+                      </div>
+                    </div>
+                    <p className="c-review-history-item-note">{entry.manual_verdict_note ?? "No remark note."}</p>
+                  </li>
+                );
+              })}
+            </ul>
+            {historyTotal > MANUAL_HISTORY_PAGE_SIZE ? (
+              <div className="c-review-history-pagination">
+                <button
+                  className="c-btn c-btn-secondary"
+                  type="button"
+                  disabled={historyPage <= 1 || historyLoading}
+                  onClick={() => setHistoryPage((page) => Math.max(1, page - 1))}
+                >
+                  Previous
+                </button>
+                <span className="c-review-history-page">Page {historyPage} / {historyTotalPages}</span>
+                <button
+                  className="c-btn c-btn-secondary"
+                  type="button"
+                  disabled={historyPage >= historyTotalPages || historyLoading}
+                  onClick={() => setHistoryPage((page) => Math.min(historyTotalPages, page + 1))}
+                >
+                  Next
+                </button>
+              </div>
+            ) : null}
+          </>
+        ) : null}
+      </div>
+    );
+  }
 
   async function saveManualReview(): Promise<void> {
     if (!normalizedManualNote) {
@@ -327,6 +446,7 @@ export function ComplianceCard({
     if (Object.keys(payload).length === 0) {
       setManualReviewNotice("");
       setManualReviewError("");
+      setManualNote("");
       return;
     }
 
@@ -339,7 +459,7 @@ export function ComplianceCard({
       await onSaveManualReview(item, payload);
       setManualNote("");
       setManualReviewNotice("Save remark successful.");
-      if (manualReviewTab === "history") {
+      if (historyViewOpen || remarkPopoverOpen) {
         setHistoryPage(1);
         void loadManualReviewHistory(1);
       }
@@ -371,6 +491,58 @@ export function ComplianceCard({
             <span className={`c-chip is-severity is-${item.severity}`}>Severity: {severityLabel}</span>
             <span className="c-chip is-confidence">Confidence: {confidenceLabel}</span>
           </div>
+        </div>
+        <div
+          ref={remarkPopoverRef}
+          className="c-card-top-actions"
+          onMouseEnter={handleRemarkPopoverMouseEnter}
+          onMouseLeave={handleRemarkPopoverMouseLeave}
+          onBlur={(event) => {
+            if (remarkPopoverPinned) {
+              return;
+            }
+            const relatedTarget = event.relatedTarget;
+            if (relatedTarget instanceof Node && event.currentTarget.contains(relatedTarget)) {
+              return;
+            }
+            setRemarkPopoverOpen(false);
+          }}
+        >
+          <button
+            type="button"
+            className={`c-remark-trigger${remarkPopoverOpen ? " is-open" : ""}`}
+            onClick={toggleRemarkPopoverPin}
+            aria-label="Open remark history"
+            aria-expanded={remarkPopoverOpen}
+            aria-controls={`remark-popover-${item.item_id}`}
+          >
+            <span>Remark</span>
+            {remarkCount > 0 ? <span className="c-remark-trigger-count">{remarkCount}</span> : null}
+          </button>
+          {remarkPopoverOpen ? (
+            <section
+              id={`remark-popover-${item.item_id}`}
+              className="c-remark-popover"
+              aria-label="Remark history"
+            >
+              <div className="c-remark-popover-head">
+                <p className="c-card-section-label">Remark History</p>
+                {remarkPopoverPinned ? (
+                  <button
+                    type="button"
+                    className="c-link-btn"
+                    onClick={() => {
+                      setRemarkPopoverPinned(false);
+                      setRemarkPopoverOpen(false);
+                    }}
+                  >
+                    Close
+                  </button>
+                ) : null}
+              </div>
+              {renderManualReviewHistory("is-popover")}
+            </section>
+          ) : null}
         </div>
       </div>
 
@@ -530,58 +702,7 @@ export function ComplianceCard({
               </>
             ) : null}
 
-            {manualReviewTab === "history" ? (
-              <div className="c-review-history">
-                {historyLoading ? <p className="c-empty">Loading manual review history...</p> : null}
-                {historyError ? <p className="c-alert">{historyError}</p> : null}
-                {!historyLoading && !historyError && historyEntries.length === 0 ? (
-                  <p className="c-empty">No manual review history yet.</p>
-                ) : null}
-                {!historyLoading && !historyError && historyEntries.length > 0 ? (
-                  <>
-                    <ul className="c-review-history-list">
-                      {historyEntries.map((entry) => {
-                        const verdictLabel = toManualOptionLabel(entry.manual_verdict ?? "", MANUAL_VERDICT_OPTIONS, "Not set");
-                        const categoryLabel = toManualOptionLabel(entry.manual_verdict_category ?? "", MANUAL_CATEGORY_OPTIONS, "Not set");
-                        return (
-                          <li key={entry.history_id} className="c-review-history-item">
-                            <div className="c-review-history-item-head">
-                              <span className="c-review-history-item-time">{formatManualReviewTime(entry.edited_at)}</span>
-                              <div className="c-card-meta">
-                                <span className="c-chip">Verdict: {verdictLabel}</span>
-                                <span className="c-chip">Category: {categoryLabel}</span>
-                              </div>
-                            </div>
-                            <p className="c-review-history-item-note">{entry.manual_verdict_note ?? "No remark note."}</p>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    {historyTotal > MANUAL_HISTORY_PAGE_SIZE ? (
-                      <div className="c-review-history-pagination">
-                        <button
-                          className="c-btn c-btn-secondary"
-                          type="button"
-                          disabled={historyPage <= 1 || historyLoading}
-                          onClick={() => setHistoryPage((page) => Math.max(1, page - 1))}
-                        >
-                          Previous
-                        </button>
-                        <span className="c-review-history-page">Page {historyPage} / {historyTotalPages}</span>
-                        <button
-                          className="c-btn c-btn-secondary"
-                          type="button"
-                          disabled={historyPage >= historyTotalPages || historyLoading}
-                          onClick={() => setHistoryPage((page) => Math.min(historyTotalPages, page + 1))}
-                        >
-                          Next
-                        </button>
-                      </div>
-                    ) : null}
-                  </>
-                ) : null}
-              </div>
-            ) : null}
+            {manualReviewTab === "history" ? renderManualReviewHistory() : null}
           </div>
         ) : null}
       </section>
