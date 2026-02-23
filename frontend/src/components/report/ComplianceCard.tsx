@@ -23,12 +23,6 @@ const REFERENCE_PREVIEW_LIMIT = 120;
 const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._-]+)(?:\s*,[^:\n]+)?\s*:/gi;
 const QUOTED_SEGMENT_PATTERNS = [/"([^"]+)"/g, /“([^”]+)”/g];
 
-const STATUS_LABELS: Record<ReportItem["consistency_status"], string> = {
-  consistent: "Consistent",
-  inconsistent: "Inconsistent",
-  unknown: "Unknown",
-};
-
 function normalizeEvidenceText(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
@@ -132,17 +126,26 @@ export function ComplianceCard({
   return (
     <article className={`c-card is-${item.consistency_status}${isActive ? " is-active" : ""}`}>
       <div className="c-card-top">
-        <div>
-          <p className="c-card-kicker">Check Type: {item.check_type}</p>
-          <h3 className="c-card-title">{item.description}</h3>
+        <div className="c-card-header-content">
+          <h3 className="c-card-title">Compliance Review</h3>
+          <div className="c-card-header-meta">
+            <span className="c-chip is-category">Category: {item.check_type}</span>
+          </div>
         </div>
         <div className="c-card-score">
           <span className={`c-badge is-${item.severity}`}>{item.severity.toUpperCase()}</span>
-          <span className="c-badge is-consistent">{item.confidence_score.toFixed(2)}</span>
+          <span className="c-badge is-score">Confidence {Math.round(item.confidence_score * 100)}%</span>
         </div>
       </div>
 
-      <p className="c-card-summary">{item.reasoning}</p>
+      <section className="c-card-section" aria-label="Description">
+        <p className="c-card-section-label">Description</p>
+        <p className="c-card-section-content">{item.description}</p>
+      </section>
+      <section className="c-card-section" aria-label="Reasoning">
+        <p className="c-card-section-label">Reasoning</p>
+        <p className="c-card-section-content">{item.reasoning}</p>
+      </section>
       <EvidenceReferenceList
         items={referenceItems}
         evidenceText={normalizedEvidence}
@@ -156,9 +159,9 @@ export function ComplianceCard({
       />
 
       <div className="c-card-meta">
-        <span className={`c-chip is-${item.consistency_status}`}>{STATUS_LABELS[item.consistency_status]}</span>
-        {item.keywords.slice(0, 3).map((keyword) => (
-          <span key={keyword} className="c-chip">
+        <span className="c-card-meta-label">Keywords</span>
+        {item.keywords.map((keyword, index) => (
+          <span key={`${keyword}-${index}`} className="c-chip">
             {keyword}
           </span>
         ))}

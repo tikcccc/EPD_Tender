@@ -13,8 +13,8 @@ export function TenderAppShell({
   sidebar,
   workspace,
   title = "EPD Tender Workspace",
-  subtitle = "Standards + Evidence Trace",
-  version = "M1",
+  subtitle,
+  version,
   actions,
 }: TenderAppShellProps) {
   return (
@@ -22,12 +22,12 @@ export function TenderAppShell({
       <section className="l-sidebar">
         <header className="c-topbar">
           <div className="c-brand">
-            <p className="c-brand-kicker">{subtitle}</p>
+            {subtitle ? <p className="c-brand-kicker">{subtitle}</p> : null}
             <h1 className="c-brand-title">{title}</h1>
           </div>
           <div className="c-topbar-actions">
             {actions}
-            <span className="c-badge">{version}</span>
+            {version ? <span className="c-badge">{version}</span> : null}
           </div>
         </header>
         <div className="l-sidebar-scroll">{sidebar}</div>

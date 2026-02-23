@@ -49,7 +49,9 @@ type PdfPageProxy = {
 };
 
 function getRenderScale(zoom: number): number {
-  return Math.max(0.6, Math.min(2.2, zoom / 100));
+  const minScale = 0.6;
+  const maxManualScale = 2.2;
+  return Math.max(minScale, Math.min(maxManualScale, zoom / 100));
 }
 
 export function PdfWorkspace({
@@ -77,7 +79,11 @@ export function PdfWorkspace({
   const loadRequestIdRef = useRef(0);
 
   const manualScale = useMemo(() => getRenderScale(zoom), [zoom]);
-  const loadingMessage = isLoading ? "Resolving evidence and rendering PDF..." : "Loading and rendering PDF...";
+  const isViewerBusy = isLoading || loadingPdf;
+  const loadingTitle = isLoading ? "Resolving evidence..." : "Loading PDF...";
+  const loadingSubtitle = isLoading
+    ? "Locating the best anchor and opening the target page."
+    : "Fetching document data and rendering the page.";
 
   const pdfUrl = useMemo(() => {
     if (!documentId || documentId === "unknown") {
@@ -239,7 +245,9 @@ export function PdfWorkspace({
         if (fitWidth && viewerWidth > 0) {
           const horizontalGutter = 20;
           const targetWidth = Math.max(240, viewerWidth - horizontalGutter);
-          effectiveScale = Math.max(0.6, Math.min(2.2, targetWidth / unscaledViewport.width));
+          const minScale = 0.6;
+          const maxFitScale = 4.5;
+          effectiveScale = Math.max(minScale, Math.min(maxFitScale, targetWidth / unscaledViewport.width));
         }
 
         const viewport = page.getViewport({ scale: effectiveScale });
@@ -317,30 +325,44 @@ export function PdfWorkspace({
     <div className="c-pdf-stage">
       {errorMessage ? <p className="c-alert">{errorMessage}</p> : null}
       {renderError ? <p className="c-alert">{renderError}</p> : null}
-      {isLoading || loadingPdf ? <p className="c-empty">{loadingMessage}</p> : null}
 
-      <section className="c-pdf-viewer-shell c-pdf-viewer-shell-full" aria-live="polite" ref={viewerShellRef}>
-        {pdfUrl ? (
-          <div
-            className="c-pdf-page-wrap"
-            style={{
-              width: canvasSize.width > 0 ? `${canvasSize.width}px` : undefined,
-              minHeight: canvasSize.height > 0 ? `${canvasSize.height}px` : "540px",
-            }}
-          >
-            <canvas className="c-pdf-page-canvas" ref={canvasRef} />
-            {highlightStyles.map((style, index) => (
-              <div
-                key={`${index}-${style.left}-${style.top}-${style.width}-${style.height}`}
-                className="c-pdf-highlight-box"
-                style={style}
-              />
-            ))}
+      <div className="c-pdf-viewer-frame">
+        <section
+          className={`c-pdf-viewer-shell c-pdf-viewer-shell-full${isViewerBusy ? " is-busy" : ""}`}
+          aria-live="polite"
+          ref={viewerShellRef}
+        >
+          {pdfUrl ? (
+            <div
+              className="c-pdf-page-wrap"
+              style={{
+                width: canvasSize.width > 0 ? `${canvasSize.width}px` : undefined,
+                minHeight: canvasSize.height > 0 ? `${canvasSize.height}px` : "540px",
+              }}
+            >
+              <canvas className="c-pdf-page-canvas" ref={canvasRef} />
+              {highlightStyles.map((style, index) => (
+                <div
+                  key={`${index}-${style.left}-${style.top}-${style.width}-${style.height}`}
+                  className="c-pdf-highlight-box"
+                  style={style}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="c-empty">Document not resolved yet.</p>
+          )}
+        </section>
+        {isViewerBusy ? (
+          <div className="c-pdf-loading-overlay" role="status" aria-live="polite" aria-busy="true">
+            <div className="c-pdf-loading-card">
+              <span className="c-pdf-loading-spinner" aria-hidden="true" />
+              <p className="c-pdf-loading-title">{loadingTitle}</p>
+              <p className="c-pdf-loading-subtitle">{loadingSubtitle}</p>
+            </div>
           </div>
-        ) : (
-          <p className="c-empty">Document not resolved yet.</p>
-        )}
-      </section>
+        ) : null}
+      </div>
     </div>
   );
 }

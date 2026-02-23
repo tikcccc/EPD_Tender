@@ -702,7 +702,6 @@ export default function TenderPage() {
 
   return (
     <TenderAppShell
-      version="M2"
       actions={
         <>
           <Link className="c-btn c-btn-secondary" href="/admin/settings">
@@ -718,20 +717,21 @@ export default function TenderPage() {
           <section className="c-section">
             <div className="c-section-header">
               <div>
-                <h2 className="c-section-title">Configuration Source</h2>
-                <p className="c-section-desc">Standards and priorities are loaded from backend NEC template API.</p>
+                <h2 className="c-section-title">Evaluation Scope</h2>
+                <p className="c-section-desc">
+                  This section lists the standards and priority levels used to generate this report.
+                </p>
               </div>
-              <span className="c-badge">Backend API</span>
             </div>
-            {loadingTemplate ? <p className="c-empty">Loading NEC template...</p> : null}
-            {templateError ? <p className="c-alert">{templateError}</p> : null}
+            {loadingTemplate ? <p className="c-empty">Loading evaluation standards...</p> : null}
+            {templateError ? <p className="c-alert">Unable to load evaluation settings right now.</p> : null}
             {template && !templateError ? (
               <>
-                <p className="c-notice">Template: {templateName}</p>
+                <p className="c-notice">Standard set: {templateName}</p>
                 <div className="c-card-meta" style={{ marginTop: "12px" }}>
                   {selectedStandards.map((standard) => (
                     <span key={standard.standard_id} className="c-chip">
-                      P{standard.priority} {standard.name}
+                      Priority {standard.priority} {standard.name}
                     </span>
                   ))}
                 </div>
@@ -761,7 +761,7 @@ export default function TenderPage() {
             {loadingReport ? <p className="c-empty">Loading report cards...</p> : null}
             {reportError ? <p className="c-alert">{reportError}</p> : null}
             {!loadingReport && !reportError && visibleCards.length === 0 ? (
-              <p className="c-empty">No cards match current config and search.</p>
+              <p className="c-empty">No cards match the current filters or search text.</p>
             ) : null}
 
             <div className="c-card-list">
