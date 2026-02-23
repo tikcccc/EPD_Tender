@@ -57,6 +57,7 @@ def test_build_export_file_docx_contains_expected_content() -> None:
 
   assert "EPD Tender Analysis Report" in paragraph_text
   assert "Report ID: rep_pytest_001" in paragraph_text
+  assert "Generated At (HKT):" in paragraph_text
   assert "(PART 1) EMP finalisation timeline must be satisfied." in paragraph_text
   assert "deadline" in table_text
   assert "Deadline Compliance" in table_text
@@ -77,5 +78,6 @@ def test_build_export_file_pdf_contains_expected_content() -> None:
 
   assert "EPD Tender Analysis Report" in extracted_text
   assert "rep_pytest_001" in extracted_text
+  assert "Generated At (HKT):" in extracted_text
   assert "EMP finalisation timeline" in extracted_text
   assert "Deadline Compliance" in extracted_text

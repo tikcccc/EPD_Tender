@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from io import BytesIO
 from xml.sax.saxutils import escape
 
@@ -16,6 +16,7 @@ from app.schemas.reports import ReportItem
 
 
 _FILENAME_RE = re.compile(r"[^a-zA-Z0-9._-]+")
+_HONG_KONG_TZ = timezone(timedelta(hours=8), name="HKT")
 
 
 def _sanitize_file_token(value: str) -> str:
@@ -49,9 +50,13 @@ def _safe_text(text: str) -> str:
   return escape(text).replace("\n", "<br/>")
 
 
+def _current_hong_kong_time() -> str:
+  return datetime.now(_HONG_KONG_TZ).isoformat(timespec="seconds")
+
+
 def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
   ordered_cards = _ordered_cards(payload, cards)
-  now = datetime.now(timezone.utc).isoformat()
+  now = _current_hong_kong_time()
 
   document = Document()
   document.core_properties.title = f"EPD Tender Analysis - {payload.report_id}"
@@ -59,7 +64,7 @@ def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
   document.add_heading("EPD Tender Analysis Report", level=0)
   document.add_paragraph(f"Report ID: {payload.report_id}")
   document.add_paragraph(f"Format: {payload.format.upper()}")
-  document.add_paragraph(f"Generated At (UTC): {now}")
+  document.add_paragraph(f"Generated At (HKT): {now}")
 
   document.add_heading("Selected Standards", level=1)
   if payload.selected_standards:
@@ -105,7 +110,7 @@ def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
 
 def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
   ordered_cards = _ordered_cards(payload, cards)
-  now = datetime.now(timezone.utc).isoformat()
+  now = _current_hong_kong_time()
 
   output = BytesIO()
   doc = SimpleDocTemplate(
@@ -128,7 +133,7 @@ def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
   story.append(Paragraph("EPD Tender Analysis Report", title_style))
   story.append(Paragraph(f"Report ID: {_safe_text(payload.report_id)}", meta_style))
   story.append(Paragraph(f"Format: {_safe_text(payload.format.upper())}", meta_style))
-  story.append(Paragraph(f"Generated At (UTC): {_safe_text(now)}", meta_style))
+  story.append(Paragraph(f"Generated At (HKT): {_safe_text(now)}", meta_style))
   story.append(Spacer(1, 12))
 
   story.append(Paragraph("Selected Standards", heading_style))
