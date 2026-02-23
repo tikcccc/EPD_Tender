@@ -7,6 +7,7 @@
   - 優先級排序（拖拽排序、恢復 NEC 預設）
   - 報告卡片 + PDF 溯源（跳頁 + 高亮 evidence）
   - 輸出報告（Word 或 PDF）
+  - 人工註記（note/remark）與導出一致
 - 非目標（MVP）：
   - 多租戶、複雜權限、審批流、長期歷史版本管理
 
@@ -104,12 +105,14 @@ EPD_Tender/
 - `features/standards`：載入 standard 列表、勾選、套模板
 - `features/priority`：已選 standard 的拖拽排序與重置
 - `features/report`：卡片渲染、篩選、狀態色彩（consistent/major）
+- `features/report-review`：manual verdict/category/note 編輯與保存
 - `features/pdf`：文件切換、頁碼跳轉、高亮框顯示
 - `features/export`：收集當前畫面狀態並發起導出
 
 ### 後端模組
 - `standards`：提供 NEC 模板與預設優先級
 - `reports`：接收與標準化報告 JSON
+- `reports-review`：更新卡片人工註記欄位
 - `evidence`：解析 evidence -> document/page/bbox
 - `exports`：生成固定格式 Word/PDF
 
@@ -127,10 +130,14 @@ EPD_Tender/
   - 呼叫 `POST /api/v1/evidence/resolve`
   - 返回 `document_id/page/bbox`
   - 前端 PDF Viewer 跳頁並高亮
+- 使用者編輯卡片 remark：
+  - 呼叫 `PATCH /api/v1/reports/{report_id}/cards/{item_id}/manual-review`
+  - 返回更新後卡片欄位
+  - 前端即時刷新卡片狀態
 
 3. 導出階段
 - 前端提交目前選定標準與卡片資料
-- 後端生成文檔並返回下載鏈接或檔案流
+- 後端生成文檔並返回下載鏈接或檔案流（包含來源與人工註記）
 
 ## 6. Evidence 溯源架構決策
 - 由後端做定位，前端只負責展示。

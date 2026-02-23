@@ -25,7 +25,7 @@ def _sanitize_file_token(value: str) -> str:
 
 
 def _ordered_cards(payload: ExportRequest, cards: list[ReportItem]) -> list[ReportItem]:
-  if not cards:
+  if not cards or not payload.card_ids:
     return []
 
   by_id = {card.item_id: card for card in cards}
@@ -40,10 +40,7 @@ def _ordered_cards(payload: ExportRequest, cards: list[ReportItem]) -> list[Repo
     ordered.append(card)
     seen.add(card.item_id)
 
-  if ordered:
-    return ordered
-
-  return cards
+  return ordered
 
 
 def _safe_text(text: str) -> str:
@@ -52,6 +49,10 @@ def _safe_text(text: str) -> str:
 
 def _current_hong_kong_time() -> str:
   return datetime.now(_HONG_KONG_TZ).isoformat(timespec="seconds")
+
+
+def _manual_review_value(value: str | None) -> str:
+  return value if value else "N/A"
 
 
 def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
@@ -91,9 +92,15 @@ def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
     document.add_heading(f"{index}. {card.description}", level=2)
     document.add_paragraph(f"Item ID: {card.item_id}")
     document.add_paragraph(f"Check Type: {card.check_type}")
+    document.add_paragraph(f"Source: {card.source}")
     document.add_paragraph(
       f"Status: {card.consistency_status} | Severity: {card.severity} | Confidence: {card.confidence_score:.2f}"
     )
+    document.add_paragraph(
+      f"Manual Verdict: {_manual_review_value(card.manual_verdict)} | "
+      f"Manual Category: {_manual_review_value(card.manual_verdict_category)}"
+    )
+    document.add_paragraph(f"Manual Note: {_manual_review_value(card.manual_verdict_note)}")
     document.add_paragraph(f"Document References: {', '.join(card.document_references)}")
     document.add_paragraph("Evidence:")
     document.add_paragraph(card.evidence)
@@ -175,12 +182,23 @@ def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
       Paragraph(
         (
           f"Item ID: {_safe_text(card.item_id)} | Check Type: {_safe_text(card.check_type)} | "
+          f"Source: {_safe_text(card.source)} | "
           f"Status: {_safe_text(card.consistency_status)} | Severity: {_safe_text(card.severity)} | "
           f"Confidence: {card.confidence_score:.2f}"
         ),
         meta_style,
       )
     )
+    story.append(
+      Paragraph(
+        (
+          f"Manual Verdict: {_safe_text(_manual_review_value(card.manual_verdict))} | "
+          f"Manual Category: {_safe_text(_manual_review_value(card.manual_verdict_category))}"
+        ),
+        meta_style,
+      )
+    )
+    story.append(Paragraph(f"Manual Note: {_safe_text(_manual_review_value(card.manual_verdict_note))}", body_style))
     story.append(Paragraph(f"Document References: {_safe_text(', '.join(card.document_references))}", meta_style))
     story.append(Paragraph(f"Evidence: {_safe_text(card.evidence)}", body_style))
     story.append(Paragraph(f"Reasoning: {_safe_text(card.reasoning)}", body_style))

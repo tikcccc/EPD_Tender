@@ -3,15 +3,28 @@ from __future__ import annotations
 import json
 import threading
 from datetime import datetime, timezone
+from uuid import uuid4
 
 from pydantic import ValidationError
 
 from app.core.config import SEED_REPORT_PATH
 from app.core.errors import ApiError
-from app.schemas.reports import ReportCardsData, ReportIngestData, ReportIngestRequest, ReportItem
+from app.schemas.reports import (
+  ManualReviewHistoryEntry,
+  ManualReviewHistoryListData,
+  ManualReviewUpdateData,
+  ManualReviewUpdateRequest,
+  ReportCardsData,
+  ReportIngestData,
+  ReportIngestRequest,
+  ReportItem,
+)
 
 _REPORTS: dict[str, list[ReportItem]] = {}
+_MANUAL_REVIEW_HISTORY: dict[tuple[str, str], list[ManualReviewHistoryEntry]] = {}
 _REPORTS_LOCK = threading.Lock()
+_MANUAL_VERDICTS = {"accepted", "rejected", "needs_followup"}
+_MANUAL_CATEGORIES = {"evidence_gap", "rule_dispute", "false_positive", "data_issue", "other"}
 
 
 def _next_report_id() -> str:
@@ -57,8 +70,42 @@ def _read_seed_items() -> list[ReportItem]:
   return items
 
 
+def _next_history_id() -> str:
+  stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")[:-3]
+  return f"mrh_{stamp}_{uuid4().hex[:8]}"
+
+
+def _normalize_history_manual_verdict(value: str | None) -> str | None:
+  if value in _MANUAL_VERDICTS:
+    return value
+  return None
+
+
+def _normalize_history_manual_category(value: str | None) -> str | None:
+  if value in _MANUAL_CATEGORIES:
+    return value
+  return None
+
+
+def _reset_manual_review_fields(items: list[ReportItem]) -> list[ReportItem]:
+  # Seed cards should start with empty manual review state.
+  return [
+    item.model_copy(
+      update={
+        "manual_verdict": None,
+        "manual_verdict_category": None,
+        "manual_verdict_note": None,
+      }
+    )
+    for item in items
+  ]
+
+
 def ingest_report(payload: ReportIngestRequest) -> ReportIngestData:
+  using_seed_items = len(payload.report_items) == 0
   items = payload.report_items if payload.report_items else _read_seed_items()
+  if using_seed_items:
+    items = _reset_manual_review_fields(items)
 
   if not items:
     raise ApiError(
@@ -124,4 +171,86 @@ def get_item(report_id: str, item_id: str) -> ReportItem:
     status_code=404,
     code="NOT_FOUND",
     message=f"Item not found: {item_id}",
+  )
+
+
+def update_manual_review(
+  report_id: str,
+  item_id: str,
+  payload: ManualReviewUpdateRequest,
+) -> ManualReviewUpdateData:
+  with _REPORTS_LOCK:
+    cards = _REPORTS.get(report_id)
+    if cards is None:
+      raise ApiError(
+        status_code=404,
+        code="NOT_FOUND",
+        message=f"Report not found: {report_id}",
+      )
+
+    for index, card in enumerate(cards):
+      if card.item_id != item_id:
+        continue
+
+      updates: dict[str, object] = {}
+      if "manual_verdict" in payload.model_fields_set:
+        updates["manual_verdict"] = payload.manual_verdict
+      if "manual_verdict_category" in payload.model_fields_set:
+        updates["manual_verdict_category"] = payload.manual_verdict_category
+      if "manual_verdict_note" in payload.model_fields_set:
+        updates["manual_verdict_note"] = payload.manual_verdict_note
+
+      updated = card.model_copy(update=updates)
+      cards[index] = updated
+      history_key = (report_id, item_id)
+      history_entry = ManualReviewHistoryEntry(
+        history_id=_next_history_id(),
+        report_id=report_id,
+        item_id=item_id,
+        manual_verdict=_normalize_history_manual_verdict(updated.manual_verdict),
+        manual_verdict_category=_normalize_history_manual_category(updated.manual_verdict_category),
+        manual_verdict_note=updated.manual_verdict_note,
+        edited_at=datetime.now(timezone.utc),
+      )
+      history_bucket = _MANUAL_REVIEW_HISTORY.get(history_key, [])
+      history_bucket.insert(0, history_entry)
+      _MANUAL_REVIEW_HISTORY[history_key] = history_bucket
+      return ManualReviewUpdateData(report_id=report_id, item=updated)
+
+  raise ApiError(
+    status_code=404,
+    code="NOT_FOUND",
+    message=f"Item not found: {item_id}",
+  )
+
+
+def get_manual_review_history(
+  report_id: str,
+  item_id: str,
+  *,
+  page: int = 1,
+  page_size: int = 5,
+) -> ManualReviewHistoryListData:
+  cards = _find_report(report_id)
+  if not any(card.item_id == item_id for card in cards):
+    raise ApiError(
+      status_code=404,
+      code="NOT_FOUND",
+      message=f"Item not found: {item_id}",
+    )
+
+  with _REPORTS_LOCK:
+    history_entries = list(_MANUAL_REVIEW_HISTORY.get((report_id, item_id), []))
+
+  total = len(history_entries)
+  start = (page - 1) * page_size
+  end = start + page_size
+
+  return ManualReviewHistoryListData(
+    report_id=report_id,
+    item_id=item_id,
+    page=page,
+    page_size=page_size,
+    total=total,
+    entries=history_entries[start:end],
   )

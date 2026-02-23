@@ -1,11 +1,12 @@
 # Coding Plan
 
 ## 1. 項目目標
-- 交付可用於 EPD Tender AI 的分析展示系統，完整覆蓋 `reference/task.md` 的四大功能：
+- 交付可用於 EPD Tender AI 的分析展示系統，完整覆蓋 `reference/task.md` 的四大功能，並納入人工註記能力（新增於 2026-02-23）：
   - Standard 管理
   - 優先級自定義
   - 報告卡片與 PDF 溯源
   - 報告導出
+  - 卡片 note/remark（人工 verdict/category/note）
 
 ## 2. 範圍定義
 
@@ -14,11 +15,13 @@
 - 讀取結構化 JSON 報告（如 `backend/data/reports/seed-report-cards.json`）。
 - 支援兩份 tender PDF 載入、切換、頁碼跳轉與 evidence 高亮。
 - 支援導出固定格式 Word/PDF（至少一種先落地）。
+- 支援卡片人工註記（manual verdict/category/note）保存與回填。
 
 ### Out of Scope（本期）
 - 用戶登入權限系統
 - 多租戶與跨專案資料隔離
 - 線上協作編輯與審批流
+- 註記版本歷史（diff）與審批工作流
 
 ## 3. 里程碑與交付物
 
@@ -37,6 +40,7 @@
   - Standard 勾選 + NEC 套用
   - 優先級拖拽 + 重置
   - 卡片列表渲染
+  - 卡片 remark 編輯區（UI state + 表單驗證）
 - 退出條件：
   - 可完整走通前端互動，不依賴真實後端
 
@@ -45,12 +49,14 @@
   - standards/reports/evidence 基礎 API
   - PDF 定位服務（page+bbox）
   - 定位降級策略（page-only）
+  - manual review 更新 API（單卡片 patch）
 - 退出條件：
   - 點擊卡片 evidence 可跳到正確文檔且可見高亮
 
 ### M3 - 導出與質量封版（0.5~1 週）
 - 交付物：
   - report export API（Word/PDF）
+  - 導出內容包含來源與人工註記欄位
   - E2E/回歸測試通過
   - 文檔補齊與上線指引
 - 退出條件：
@@ -63,6 +69,7 @@
 - Standards 面板
 - Priority 拖拽列表
 - Report cards 與篩選
+- remark 編輯、清空與保存提示
 - PDF viewer + highlight layer
 - Export 觸發與下載體驗
 
@@ -70,11 +77,13 @@
 - API 框架與中介層（logging/error）
 - 報告 ingest 與 schema 驗證
 - evidence 解析與索引快取
+- manual review patch 與欄位校驗
 - 導出文檔模板與渲染
 
 ### 測試
 - 單元測試
 - API 集成測試
+- manual review 契約與回歸測試
 - Playwright E2E
 - Evidence 準確率回歸
 

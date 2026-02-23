@@ -50,9 +50,9 @@
 | reasoning | string | 是 | 判斷依據 |
 | keywords | string[] | 是 | 至少 1 個 |
 | source | string | 是 | 來源標記 |
-| manual_verdict | string | 否 | 人工校驗結果 |
-| manual_verdict_category | string | 否 | 人工校驗分類 |
-| manual_verdict_note | string | 否 | 人工校驗註記 |
+| manual_verdict | string(enum) | 否 | 人工校驗結果：`accepted/rejected/needs_followup` |
+| manual_verdict_category | string(enum) | 否 | 人工校驗分類：`evidence_gap/rule_dispute/false_positive/data_issue/other` |
+| manual_verdict_note | string | 否 | 人工校驗註記，建議 <= 1000 字 |
 | anchors | EvidenceAnchor[] | 否 | 解析後定位結果 |
 
 ## 3.4 與現有 `backend/data/reports/seed-report-cards.json` 的相容
@@ -143,12 +143,29 @@
 | name | string | 是 | 顯示名 |
 | priority | integer | 是 | 使用者最終順序 |
 
+## 6.3 `ManualReviewUpdateRequest`
+
+用於更新單張卡片的人工註記（note/remark）。
+
+| 欄位 | 型別 | 必填 | 說明 |
+|---|---|---|---|
+| manual_verdict | string(enum) \| null | 否 | `accepted/rejected/needs_followup`；傳 `null` 代表清空 |
+| manual_verdict_category | string(enum) \| null | 否 | `evidence_gap/rule_dispute/false_positive/data_issue/other`；傳 `null` 代表清空 |
+| manual_verdict_note | string \| null | 否 | 註記內容；傳 `null` 代表清空 |
+
+更新規則：
+- request 至少要包含 1 個欄位。
+- 欄位未出現在 request 中視為「不變更」。
+- `manual_verdict_note` 長度上限建議為 1000 字（超限返回 `422 + VALIDATION_ERROR`）。
+
 ## 7. 枚舉字典
 - `consistency_status`: `consistent`, `inconsistent`, `unknown`
 - `severity`: `major`, `minor`, `info`
 - `match_method`: `exact`, `fuzzy`, `manual`
 - `anchor.status`: `resolved_exact`, `resolved_approximate`, `unresolved`
 - `export.format`: `docx`, `pdf`
+- `manual_verdict`: `accepted`, `rejected`, `needs_followup`
+- `manual_verdict_category`: `evidence_gap`, `rule_dispute`, `false_positive`, `data_issue`, `other`
 
 ## 8. 最小合法樣例
 

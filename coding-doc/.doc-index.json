@@ -510,7 +510,7 @@
         {
           "line": 58,
           "level": 2,
-          "text": "3.4 與現有 `reference/test.json` 的相容"
+          "text": "3.4 與現有 `backend/data/reports/seed-report-cards.json` 的相容"
         },
         {
           "line": 63,

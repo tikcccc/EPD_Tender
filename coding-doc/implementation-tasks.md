@@ -66,10 +66,21 @@ Generated from `coding-doc/coding-plan.md` and `coding-doc/acceptance-criteria.m
   - Scope: `frontend/backend/both`
   - Dependencies: `TBD`
   - Verification: add test cases and link evidence
+- [ ] `AC-REM-001` 可對單張卡片新增/編輯 remark
+  - Owner: `TBD`
+  - Scope: `frontend/backend/both`
+  - Dependencies: `TBD`
+  - Verification: add test cases and link evidence
+- [ ] `AC-REM-002` 支援清空 remark 並保留審核狀態一致
+  - Owner: `TBD`
+  - Scope: `frontend/backend/both`
+  - Dependencies: `TBD`
+  - Verification: add test cases and link evidence
 
 ## Integration and Hardening
 
 - [ ] API and data-contract field mapping verified
 - [ ] Evidence jump/highlight fallback verified
 - [ ] Export content matches selected standards and priorities
+- [ ] Manual review fields stay consistent across card UI and export
 - [ ] Regression tests executed

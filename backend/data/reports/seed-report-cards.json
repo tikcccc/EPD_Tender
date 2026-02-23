@@ -17,10 +17,7 @@
       "Environmental Management Plan"
     ],
     "source": "LLM_Discovery_CORRECTED",
-    "severity": "major",
-    "manual_verdict": "consistent",
-    "manual_verdict_category": "checklist_corrected",
-    "manual_verdict_note": "检查项描述已修正: (PART 1) The Contractor shall submit a draft Environmental M..."
+    "severity": "major"
   },
   {
     "item_id": "fecadfd2",

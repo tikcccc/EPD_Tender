@@ -114,7 +114,7 @@
 - 驗收條件：
   - 包含使用者選定 standard 清單
   - 包含最終 priority 順序
-  - 包含所有導出卡片資訊（結論、evidence、來源）
+  - 包含所有導出卡片資訊（結論、evidence、來源、人工註記）
 - 測試案例：
   - TC-EXP-002
   - 前置：調整過 priority 並選擇卡片
@@ -142,3 +142,29 @@
   - 前置：替換模板配置
   - 步驟：刷新頁面並套用模板
   - 期望：採用新模板內容與順序
+
+## 6. 人工註記（Note/Remark）
+
+## AC-REM-001 可對單張卡片新增/編輯 remark
+- 對應需求：新增 PM 需求（2026-02-23）
+- 驗收條件：
+  - 每張卡片可編輯 `manual_verdict`、`manual_verdict_category`、`manual_verdict_note`
+  - 保存成功後卡片即時顯示最新內容
+  - `manual_verdict_note` 超過上限時給出明確錯誤提示
+- 測試案例：
+  - TC-REM-001
+  - 前置：已有 report cards
+  - 步驟：填寫 verdict/category/note 並保存
+  - 期望：保存成功且重新打開仍可見
+
+## AC-REM-002 支援清空 remark 並保留審核狀態一致
+- 對應需求：新增 PM 需求（2026-02-23）
+- 驗收條件：
+  - 可單獨清空 `manual_verdict_note`（不影響其他欄位）
+  - 可清空 `manual_verdict` 與 `manual_verdict_category`
+  - 清空後導出內容與卡片展示一致
+- 測試案例：
+  - TC-REM-002
+  - 前置：卡片已有 remark
+  - 步驟：清空 remark 欄位後保存並導出
+  - 期望：UI 與導出都顯示清空後狀態

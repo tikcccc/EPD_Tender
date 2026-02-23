@@ -159,7 +159,11 @@ Response.data:
       "severity": "major",
       "confidence_score": 0.95,
       "document_references": ["main_coc"],
-      "evidence": "18.3 ..."
+      "evidence": "18.3 ...",
+      "source": "LLM_Discovery_CORRECTED",
+      "manual_verdict": "needs_followup",
+      "manual_verdict_category": "evidence_gap",
+      "manual_verdict_note": "Need legal team to confirm clause wording."
     }
   ]
 }
@@ -245,6 +249,40 @@ Response：
 Response：
 - `200` with `application/pdf`
 
+## 4.8 更新卡片人工註記（note/remark）
+- Method：`PATCH`
+- Path：`/reports/{report_id}/cards/{item_id}/manual-review`
+- 功能：保存人工 verdict/category/note，支援部分更新與清空
+
+Request:
+```json
+{
+  "manual_verdict": "needs_followup",
+  "manual_verdict_category": "evidence_gap",
+  "manual_verdict_note": "Need legal team to confirm clause wording."
+}
+```
+
+清空示例（可選）：
+```json
+{
+  "manual_verdict_note": null
+}
+```
+
+Response.data:
+```json
+{
+  "report_id": "rep_20260213_001",
+  "item": {
+    "item_id": "485804ab",
+    "manual_verdict": "needs_followup",
+    "manual_verdict_category": "evidence_gap",
+    "manual_verdict_note": "Need legal team to confirm clause wording."
+  }
+}
+```
+
 ## 5. 後端 API 規範（執行級）
 
 ## 5.1 驗證規範
@@ -295,3 +333,5 @@ Response：
 - 前端 Evidence 點擊必須以 `item_id + document_id + evidence_text` 調用 resolve。
 - 若返回 `status=resolved_approximate`，前端需顯示「近似定位」標籤。
 - 若返回 `anchors=[]`，前端至少打開對應 PDF 並定位到估計頁碼。
+- 卡片 remark 編輯後需刷新本地卡片狀態，避免導出與 UI 不一致。
+- `manual-review` request 至少包含 1 個欄位；未傳欄位視為不變更。

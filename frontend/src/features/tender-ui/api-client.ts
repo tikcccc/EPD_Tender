@@ -2,6 +2,9 @@ import type {
   ApiEnvelope,
   IngestReportPayload,
   IngestReportResult,
+  ManualReviewHistoryResult,
+  ManualReviewUpdatePayload,
+  ManualReviewUpdateResult,
   NecTemplatePayload,
   ReportCardsResult,
   ResolveEvidencePayload,
@@ -82,6 +85,49 @@ export async function resolveEvidence(payload: ResolveEvidencePayload): Promise<
   });
 
   return parseEnvelope<ResolveEvidenceResult>(response);
+}
+
+export async function updateManualReview(
+  reportId: string,
+  itemId: string,
+  payload: ManualReviewUpdatePayload,
+): Promise<ManualReviewUpdateResult> {
+  const response = await fetch(
+    `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-review`,
+    {
+      method: "PATCH",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  return parseEnvelope<ManualReviewUpdateResult>(response);
+}
+
+export async function fetchManualReviewHistory(
+  reportId: string,
+  itemId: string,
+  page: number,
+  pageSize: number,
+): Promise<ManualReviewHistoryResult> {
+  const query = new URLSearchParams({
+    page: String(page),
+    page_size: String(pageSize),
+  });
+  const response = await fetch(
+    `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-reviews?${query.toString()}`,
+    {
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  return parseEnvelope<ManualReviewHistoryResult>(response);
 }
 
 export async function exportReportFile(payload: {

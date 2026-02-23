@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { TenderAppShell } from "@/components/layout/TenderAppShell";
 import { PdfWorkspace } from "@/components/pdf/PdfWorkspace";
 import { ComplianceCard } from "@/components/report/ComplianceCard";
@@ -13,11 +13,13 @@ import {
   fetchReportCards,
   ingestReport,
   resolveEvidence,
+  updateManualReview,
 } from "@/features/tender-ui/api-client";
 import type {
   DocumentReference,
   EvidenceAnchor,
   EvidenceWorkspaceState,
+  ManualReviewUpdatePayload,
   MatchStatus,
   NecTemplatePayload,
   ReportItem,
@@ -322,6 +324,7 @@ export default function TenderPage() {
   const [zoom, setZoom] = useState(125);
   const [fitWidthMode, setFitWidthMode] = useState(true);
   const [exportNotice, setExportNotice] = useState("");
+  const autoResolvedReportIdRef = useRef<string>("");
 
   const standardsCatalog = useMemo(() => template?.standards ?? [], [template]);
 
@@ -595,6 +598,11 @@ export default function TenderPage() {
       return;
     }
 
+    if (autoResolvedReportIdRef.current === reportId) {
+      return;
+    }
+
+    autoResolvedReportIdRef.current = reportId;
     const firstItem = reportItems[0];
     void focusEvidence(firstItem);
     // Only run when initial report load finishes.
@@ -691,11 +699,22 @@ export default function TenderPage() {
       anchor.click();
       URL.revokeObjectURL(url);
 
-      setExportNotice(`Exported ${visibleCards.length} cards from report ${reportId}.`);
+      setExportNotice("");
     } catch (error) {
       const message = error instanceof Error ? error.message : "Export failed.";
       setExportNotice(message);
     }
+  }
+
+  async function saveManualReview(item: ReportItem, payload: ManualReviewUpdatePayload): Promise<void> {
+    if (!reportId) {
+      throw new Error("Report is not ready yet.");
+    }
+
+    const result = await updateManualReview(reportId, item.item_id, payload);
+    setReportItems((previous) =>
+      previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)),
+    );
   }
 
   const templateName = template?.name ?? "N/A";
@@ -770,6 +789,7 @@ export default function TenderPage() {
                   key={item.item_id}
                   item={item}
                   isActive={item.item_id === activeItemId}
+                  reportId={reportId}
                   activeDocumentId={
                     item.item_id === activeItemId && !isManualViewerMode ? workspaceState.document_id : undefined
                   }
@@ -777,6 +797,7 @@ export default function TenderPage() {
                   documentLabels={documentLabels}
                   documentFileNames={documentFileNames}
                   onEvidenceClick={(card, options) => void focusEvidence(card, options)}
+                  onSaveManualReview={(card, payload) => saveManualReview(card, payload)}
                 />
               ))}
             </div>

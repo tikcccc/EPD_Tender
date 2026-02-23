@@ -36,6 +36,7 @@
 - 拖拽排序後 priority 重新計算
 - 卡片渲染完整欄位
 - evidence 點擊後 PDF 跳頁與高亮顯示
+- 卡片 remark（manual_verdict/category/note）新增、編輯、清空
 
 ## 3.2 E2E 範圍
 - P0（每次 CI 必跑）：
@@ -56,12 +57,16 @@
 - `/reports/ingest`：合法/非法 JSON 驗證
 - `/evidence/resolve`：exact/fuzzy/unresolved 三種路徑
 - `/exports/report`：導出欄位完整性與格式正確性
+- `/reports/{report_id}/cards/{item_id}/manual-review`：部分更新、清空與持久化
 
 ## 4.3 異常測試
 - document map 缺失
 - PDF 文件不存在
 - evidence 空字串或超長字串
 - 導出模板缺失
+- manual review payload 空物件
+- manual review enum 非法值
+- manual review note 長度超限
 
 ## 5. Evidence 定位準確率測試
 
@@ -94,6 +99,7 @@
   - 是否包含所有選中 cards
 - 內容測試：
   - 關鍵文本與 UI 一致
+  - remark 欄位（manual_verdict/category/note）與 UI 一致
 - 格式測試：
   - docx/pdf 可正常開啟
   - 模板標題、章節、表格欄位完整

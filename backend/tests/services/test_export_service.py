@@ -23,6 +23,9 @@ def _sample_card() -> ReportItem:
     keywords=["EMP", "45 days"],
     source="pytest",
     severity="major",
+    manual_verdict="needs_followup",
+    manual_verdict_category="evidence_gap",
+    manual_verdict_note="Need legal team confirmation for this clause.",
   )
 
 
@@ -58,6 +61,9 @@ def test_build_export_file_docx_contains_expected_content() -> None:
   assert "EPD Tender Analysis Report" in paragraph_text
   assert "Report ID: rep_pytest_001" in paragraph_text
   assert "Generated At (HKT):" in paragraph_text
+  assert "Source: pytest" in paragraph_text
+  assert "Manual Verdict: needs_followup | Manual Category: evidence_gap" in paragraph_text
+  assert "Manual Note: Need legal team confirmation for this clause." in paragraph_text
   assert "(PART 1) EMP finalisation timeline must be satisfied." in paragraph_text
   assert "deadline" in table_text
   assert "Deadline Compliance" in table_text
@@ -79,5 +85,34 @@ def test_build_export_file_pdf_contains_expected_content() -> None:
   assert "EPD Tender Analysis Report" in extracted_text
   assert "rep_pytest_001" in extracted_text
   assert "Generated At (HKT):" in extracted_text
+  assert "Source: pytest" in extracted_text
+  assert "Manual Verdict: needs_followup | Manual Category: evidence_gap" in extracted_text
+  assert "Manual Note: Need legal team confirmation for this clause." in extracted_text
   assert "EMP finalisation timeline" in extracted_text
   assert "Deadline Compliance" in extracted_text
+
+
+def test_build_export_file_docx_with_empty_card_ids_exports_no_cards() -> None:
+  request = _sample_request("docx")
+  request.card_ids = []
+  card = _sample_card()
+
+  _, _, content = build_export_file(request, [card])
+  document = Document(BytesIO(content))
+  paragraph_text = "\n".join(paragraph.text for paragraph in document.paragraphs)
+
+  assert "No cards selected for export." in paragraph_text
+  assert "(PART 1) EMP finalisation timeline must be satisfied." not in paragraph_text
+
+
+def test_build_export_file_pdf_with_empty_card_ids_exports_no_cards() -> None:
+  request = _sample_request("pdf")
+  request.card_ids = []
+  card = _sample_card()
+
+  _, _, content = build_export_file(request, [card])
+  with fitz.open(stream=content, filetype="pdf") as document:
+    extracted_text = "\n".join(page.get_text("text") for page in document)
+
+  assert "No cards selected for export." in extracted_text
+  assert "EMP finalisation timeline" not in extracted_text

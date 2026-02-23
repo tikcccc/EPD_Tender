@@ -1,6 +1,13 @@
 export type Severity = "major" | "minor" | "info";
 export type ConsistencyStatus = "consistent" | "inconsistent" | "unknown";
 export type MatchStatus = "resolved_exact" | "resolved_approximate" | "unresolved";
+export type ManualVerdict = "accepted" | "rejected" | "needs_followup";
+export type ManualVerdictCategory =
+  | "evidence_gap"
+  | "rule_dispute"
+  | "false_positive"
+  | "data_issue"
+  | "other";
 
 export interface ReportItem {
   item_id: string;
@@ -142,6 +149,36 @@ export interface ResolveEvidenceResult {
   document_id: string;
   file_name: string;
   anchors: EvidenceAnchor[];
+}
+
+export interface ManualReviewUpdatePayload {
+  manual_verdict?: ManualVerdict | null;
+  manual_verdict_category?: ManualVerdictCategory | null;
+  manual_verdict_note?: string | null;
+}
+
+export interface ManualReviewUpdateResult {
+  report_id: string;
+  item: ReportItem;
+}
+
+export interface ManualReviewHistoryEntry {
+  history_id: string;
+  report_id: string;
+  item_id: string;
+  manual_verdict: ManualVerdict | null;
+  manual_verdict_category: ManualVerdictCategory | null;
+  manual_verdict_note: string | null;
+  edited_at: string;
+}
+
+export interface ManualReviewHistoryResult {
+  report_id: string;
+  item_id: string;
+  page: number;
+  page_size: number;
+  total: number;
+  entries: ManualReviewHistoryEntry[];
 }
 
 export interface ApiEnvelope<T> {

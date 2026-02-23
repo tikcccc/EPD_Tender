@@ -1,9 +1,3 @@
-为支持 EPD Tender AI 项目，需上线一个前端页面(如果必要可以加入後端），用于展示同事已完成的 Tender 分析报告（reference/test.json）。
-
-tender是兩個pdf在reference
-
-code.html的靜態的原型參考頁面，開發的頁面UI要base on 這個原型
-
 该页面需满足以下核心功能：
 Standard 管理
 展示所有可用 Standard 列表
