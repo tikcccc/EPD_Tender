@@ -35,7 +35,7 @@
 
 .l-workspace-canvas {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   height: 100vh;
   min-height: 0;
   overflow-y: auto;

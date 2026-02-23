@@ -5,12 +5,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { TenderAppShell } from "@/components/layout/TenderAppShell";
 import { PdfWorkspace } from "@/components/pdf/PdfWorkspace";
 import { ComplianceCard } from "@/components/report/ComplianceCard";
+import { WorkspaceBottomBar } from "@/components/toolbar/WorkspaceBottomBar";
 import { WorkspaceToolbar } from "@/components/toolbar/WorkspaceToolbar";
 import {
   exportReportFile,
   fetchNecTemplate,
   fetchReportCards,
-  getApiBaseUrl,
   ingestReport,
   resolveEvidence,
 } from "@/features/tender-ui/api-client";
@@ -144,9 +144,14 @@ function resolveReferenceId(
   return buildReferenceId(documentId, segmentIndex >= 0 ? segmentIndex : 0);
 }
 
-function getCandidateDocumentIds(item: ReportItem, defaultDocumentId: string): string[] {
+function getCandidateDocumentIds(
+  item: ReportItem,
+  defaultDocumentId: string,
+  documentMap: Record<string, DocumentReference>,
+): string[] {
   const references = item.document_references.map((reference) => reference.trim()).filter(Boolean);
-  const candidateIds = references.length > 0 ? references : [defaultDocumentId];
+  const mappedReferences = references.filter((documentId) => Boolean(documentMap[documentId]));
+  const candidateIds = mappedReferences.length > 0 ? mappedReferences : [defaultDocumentId];
 
   return Array.from(new Set(candidateIds));
 }
@@ -215,8 +220,21 @@ function pickBestResolveCandidate(candidates: ResolveCandidate[]): ResolveCandid
 function toToolbarDocumentOptions(documents: DocumentReference[]): ToolbarDocumentOption[] {
   return documents.map((document) => ({
     documentId: document.document_id,
-    label: document.display_name,
+    label: document.file_name || document.display_name,
   }));
+}
+
+function mergeDocumentReferences(base: DocumentReference[], extras: DocumentReference[]): DocumentReference[] {
+  const merged = new Map<string, DocumentReference>();
+  base.forEach((document) => {
+    merged.set(document.document_id, document);
+  });
+  extras.forEach((document) => {
+    if (!merged.has(document.document_id)) {
+      merged.set(document.document_id, document);
+    }
+  });
+  return Array.from(merged.values());
 }
 
 function toApproximateState(
@@ -224,7 +242,10 @@ function toApproximateState(
   documentMap: Record<string, DocumentReference>,
   defaultDocument: DocumentReference,
 ): EvidenceWorkspaceState {
-  const documentId = item.document_references[0] ?? defaultDocument.document_id;
+  const preferredDocumentId =
+    item.document_references.map((reference) => reference.trim()).find((documentId) => Boolean(documentMap[documentId])) ??
+    defaultDocument.document_id;
+  const documentId = preferredDocumentId;
   const document = documentMap[documentId] ?? defaultDocument;
 
   return {
@@ -295,6 +316,7 @@ export default function TenderPage() {
   const [activeReferenceId, setActiveReferenceId] = useState<string>("");
   const [workspaceDocuments, setWorkspaceDocuments] = useState<DocumentReference[]>([FALLBACK_DOCUMENT]);
   const [switchingDocument, setSwitchingDocument] = useState(false);
+  const [isManualViewerMode, setIsManualViewerMode] = useState(false);
   const [viewerPage, setViewerPage] = useState(1);
   const [viewerPageCount, setViewerPageCount] = useState(0);
   const [zoom, setZoom] = useState(125);
@@ -371,11 +393,6 @@ export default function TenderPage() {
     });
   }, [reportItems, searchText, selectedOrder.length, selectedCheckTypes]);
 
-  const activeCard = useMemo(
-    () => reportItems.find((item) => item.item_id === activeItemId) ?? null,
-    [reportItems, activeItemId],
-  );
-
   useEffect(() => {
     let disposed = false;
 
@@ -399,8 +416,10 @@ export default function TenderPage() {
         if (!disposed) {
           const map = toDocumentMap(necTemplate);
           const initialDocument = necTemplate.documents[0] ?? FALLBACK_DOCUMENT;
+          const initialWorkspaceDocuments = necTemplate.documents.length > 0 ? necTemplate.documents : [FALLBACK_DOCUMENT];
 
           setTemplate(necTemplate);
+          setWorkspaceDocuments(initialWorkspaceDocuments);
           setSelectedOrder(defaultOrder);
           setReportId(ingestResult.report_id);
           setReportItems(cardsResult.cards);
@@ -445,19 +464,18 @@ export default function TenderPage() {
       fromDocumentSwitcher?: boolean;
     },
   ): Promise<void> {
+    setIsManualViewerMode(false);
     setActiveItemId(item.item_id);
 
     const evidenceByDocument = extractEvidenceByDocument(item);
-    const candidateDocumentIds = getCandidateDocumentIds(item, defaultDocument.document_id);
+    const candidateDocumentIds = getCandidateDocumentIds(item, defaultDocument.document_id, documentMap);
     const candidateDocuments = candidateDocumentIds.map((documentId) =>
       toDocumentReference(documentId, documentMap, defaultDocument),
     );
-    setWorkspaceDocuments(candidateDocuments);
+    const baseWorkspaceDocuments = template?.documents?.length ? template.documents : [defaultDocument];
+    setWorkspaceDocuments(mergeDocumentReferences(baseWorkspaceDocuments, candidateDocuments));
 
-    const preferredDocumentId =
-      options?.forcedDocumentId && candidateDocumentIds.includes(options.forcedDocumentId)
-        ? options.forcedDocumentId
-        : candidateDocumentIds[0];
+    const preferredDocumentId = options?.forcedDocumentId?.trim() || candidateDocumentIds[0];
     const preferredDocument = toDocumentReference(preferredDocumentId, documentMap, defaultDocument);
     const preferredEvidenceSegments = evidenceByDocument.get(preferredDocumentId);
     const preferredEvidence =
@@ -614,14 +632,33 @@ export default function TenderPage() {
   }, [workspaceDocuments, workspaceState.document_id]);
 
   function handleDocumentChange(documentId: string): void {
-    if (!activeCard) {
+    if (documentId === workspaceState.document_id) {
       return;
     }
 
-    void focusEvidence(activeCard, {
-      forcedDocumentId: documentId,
-      fromDocumentSwitcher: true,
-    });
+    const mappedDocument = documentMap[documentId];
+    if (!mappedDocument) {
+      setWorkspaceState((previous) => ({
+        ...previous,
+        error: `Document mapping not found: ${documentId}`,
+      }));
+      return;
+    }
+
+    const selectedDocument = mappedDocument;
+    setIsManualViewerMode(true);
+    setActiveReferenceId("");
+    setWorkspaceState((previous) => ({
+      ...previous,
+      document_id: selectedDocument.document_id,
+      file_name: selectedDocument.file_name,
+      display_name: selectedDocument.display_name,
+      page: 1,
+      bbox: null,
+      bboxes: null,
+      loading: false,
+      error: undefined,
+    }));
   }
 
   function openWorkspacePdf(): void {
@@ -629,7 +666,7 @@ export default function TenderPage() {
       return;
     }
 
-    const url = `${getApiBaseUrl()}/api/v1/documents/${encodeURIComponent(workspaceState.document_id)}/file#page=${viewerPage}`;
+    const url = `/api/documents/${encodeURIComponent(workspaceState.document_id)}/file#page=${viewerPage}`;
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
@@ -733,8 +770,10 @@ export default function TenderPage() {
                   key={item.item_id}
                   item={item}
                   isActive={item.item_id === activeItemId}
-                  activeDocumentId={item.item_id === activeItemId ? workspaceState.document_id : undefined}
-                  activeReferenceId={item.item_id === activeItemId ? activeReferenceId : undefined}
+                  activeDocumentId={
+                    item.item_id === activeItemId && !isManualViewerMode ? workspaceState.document_id : undefined
+                  }
+                  activeReferenceId={item.item_id === activeItemId && !isManualViewerMode ? activeReferenceId : undefined}
                   documentLabels={documentLabels}
                   documentFileNames={documentFileNames}
                   onEvidenceClick={(card, options) => void focusEvidence(card, options)}
@@ -749,16 +788,32 @@ export default function TenderPage() {
       workspace={
         <>
           <WorkspaceToolbar
-            displayName={workspaceState.display_name}
             fileName={workspaceState.file_name}
             currentDocumentId={currentToolbarDocumentId}
             documentOptions={toolbarDocumentOptions}
             currentPage={viewerPage}
             pageCount={viewerPageCount}
-            zoom={zoom}
-            fitWidth={fitWidthMode}
             isDocumentSwitching={switchingDocument || workspaceState.loading}
             onDocumentChange={handleDocumentChange}
+            onOpenDocument={openWorkspacePdf}
+          />
+          <PdfWorkspace
+            documentId={workspaceState.document_id}
+            currentPage={viewerPage}
+            highlightPage={workspaceState.page}
+            bbox={workspaceState.bbox}
+            bboxes={workspaceState.bboxes ?? null}
+            zoom={zoom}
+            fitWidth={fitWidthMode}
+            isLoading={workspaceState.loading}
+            errorMessage={workspaceState.error}
+            onPageCountChange={handlePageCountChange}
+          />
+          <WorkspaceBottomBar
+            currentPage={viewerPage}
+            pageCount={viewerPageCount}
+            zoom={zoom}
+            fitWidth={fitWidthMode}
             onPrevPage={() => setViewerPage((value) => Math.max(1, value - 1))}
             onNextPage={() =>
               setViewerPage((value) => {
@@ -787,20 +842,6 @@ export default function TenderPage() {
               setFitWidthMode(false);
               setZoom((value) => Math.max(60, value - 10));
             }}
-            onOpenDocument={openWorkspacePdf}
-          />
-          <PdfWorkspace
-            documentId={workspaceState.document_id}
-            currentPage={viewerPage}
-            highlightPage={workspaceState.page}
-            bbox={workspaceState.bbox}
-            bboxes={workspaceState.bboxes ?? null}
-            zoom={zoom}
-            fitWidth={fitWidthMode}
-            isApproximate={workspaceState.match_status !== "resolved_exact"}
-            isLoading={workspaceState.loading}
-            errorMessage={workspaceState.error}
-            onPageCountChange={handlePageCountChange}
           />
         </>
       }

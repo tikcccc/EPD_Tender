@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getApiBaseUrl } from "@/features/tender-ui/api-client";
 import type { BBox } from "@/features/tender-ui/types";
 
 type PdfWorkspaceProps = {
@@ -10,7 +9,6 @@ type PdfWorkspaceProps = {
   bboxes: BBox[] | null;
   zoom: number;
   fitWidth: boolean;
-  isApproximate: boolean;
   isLoading: boolean;
   errorMessage?: string;
   onPageCountChange?: (pageCount: number) => void;
@@ -62,7 +60,6 @@ export function PdfWorkspace({
   bboxes,
   zoom,
   fitWidth,
-  isApproximate,
   isLoading,
   errorMessage,
   onPageCountChange,
@@ -80,13 +77,14 @@ export function PdfWorkspace({
   const loadRequestIdRef = useRef(0);
 
   const manualScale = useMemo(() => getRenderScale(zoom), [zoom]);
+  const loadingMessage = isLoading ? "Resolving evidence and rendering PDF..." : "Loading and rendering PDF...";
 
   const pdfUrl = useMemo(() => {
     if (!documentId || documentId === "unknown") {
       return "";
     }
 
-    return `${getApiBaseUrl()}/api/v1/documents/${encodeURIComponent(documentId)}/file`;
+    return `/api/documents/${encodeURIComponent(documentId)}/file`;
   }, [documentId]);
 
   useEffect(() => {
@@ -317,10 +315,9 @@ export function PdfWorkspace({
 
   return (
     <div className="c-pdf-stage">
-      {isApproximate ? <p className="c-notice">Approximate anchor match for this evidence card.</p> : null}
       {errorMessage ? <p className="c-alert">{errorMessage}</p> : null}
       {renderError ? <p className="c-alert">{renderError}</p> : null}
-      {isLoading || loadingPdf ? <p className="c-empty">Resolving evidence and rendering PDF...</p> : null}
+      {isLoading || loadingPdf ? <p className="c-empty">{loadingMessage}</p> : null}
 
       <section className="c-pdf-viewer-shell c-pdf-viewer-shell-full" aria-live="polite" ref={viewerShellRef}>
         {pdfUrl ? (

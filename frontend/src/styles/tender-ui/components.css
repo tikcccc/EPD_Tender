@@ -590,7 +590,7 @@
 
 .c-toolbar {
   align-items: center;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border-bottom: 1px solid var(--color-border);
   display: flex;
   gap: var(--space-4);
@@ -602,6 +602,7 @@
 .c-toolbar-doc {
   display: grid;
   gap: 2px;
+  flex: 1;
   min-width: 0;
 }
 
@@ -610,6 +611,9 @@
   font-weight: var(--fw-bold);
   line-height: var(--lh-tight);
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .c-toolbar-subtitle {
@@ -617,18 +621,47 @@
   font-size: var(--fs-12);
   line-height: var(--lh-tight);
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.c-toolbar-actions {
+.c-toolbar-top-actions {
   align-items: center;
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--space-2);
+  flex-shrink: 0;
 }
 
 .c-toolbar-doc-select {
-  max-width: 300px;
-  min-width: 210px;
+  max-width: 360px;
+  min-width: 200px;
+  width: clamp(200px, 28vw, 360px);
+}
+
+.c-workspace-bottombar {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  min-height: 56px;
+  padding: var(--space-2) var(--space-5);
+}
+
+.c-workspace-bottombar-group {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.c-workspace-bottombar-divider {
+  background: var(--color-border);
+  height: 24px;
+  width: 1px;
 }
 
 .c-toolbar-btn {
@@ -643,6 +676,10 @@
 
 .c-toolbar-btn:hover {
   background: var(--color-primary-soft);
+}
+
+.c-toolbar-btn.is-compact {
+  min-width: 42px;
 }
 
 .c-zoom-value {
@@ -958,13 +995,30 @@
   }
 
   .c-toolbar {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
   }
 
-  .c-toolbar-actions {
+  .c-toolbar-top-actions {
+    justify-content: flex-end;
+    width: auto;
+    flex-wrap: nowrap;
+  }
+
+  .c-toolbar-doc-select {
+    max-width: 320px;
+    min-width: 180px;
+    width: clamp(180px, 34vw, 320px);
+  }
+
+  .c-workspace-bottombar {
+    flex-wrap: wrap;
     justify-content: flex-start;
-    width: 100%;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .c-workspace-bottombar-divider {
+    display: none;
   }
 
   .c-pdf-stage {
@@ -989,5 +1043,24 @@
 
   .c-admin-fields-2col {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .c-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .c-toolbar-top-actions {
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .c-toolbar-doc-select {
+    max-width: none;
+    min-width: 0;
+    width: 100%;
   }
 }
