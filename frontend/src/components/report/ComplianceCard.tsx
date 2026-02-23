@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { TruncatedTooltip } from "@/components/common/TruncatedTooltip";
 import { EvidenceReferenceList } from "@/components/report/EvidenceReferenceList";
 import type { ReportItem } from "@/features/tender-ui/types";
 
@@ -126,11 +127,9 @@ export function ComplianceCard({
   return (
     <article className={`c-card is-${item.consistency_status}${isActive ? " is-active" : ""}`}>
       <div className="c-card-top">
-        <div className="c-card-header-content">
+        <div>
+          <p className="c-card-kicker">Category: {item.check_type}</p>
           <h3 className="c-card-title">Compliance Review</h3>
-          <div className="c-card-header-meta">
-            <span className="c-chip is-category">Category: {item.check_type}</span>
-          </div>
         </div>
         <div className="c-card-score">
           <span className={`c-badge is-${item.severity}`}>{item.severity.toUpperCase()}</span>
@@ -140,11 +139,23 @@ export function ComplianceCard({
 
       <section className="c-card-section" aria-label="Description">
         <p className="c-card-section-label">Description</p>
-        <p className="c-card-section-content">{item.description}</p>
+        <TruncatedTooltip
+          text={item.description}
+          wrapperClassName="c-card-section-content-wrap"
+          triggerClassName="c-card-section-content c-card-section-content-truncate"
+          tooltipClassName="c-card-section-tooltip"
+          focusable
+        />
       </section>
       <section className="c-card-section" aria-label="Reasoning">
         <p className="c-card-section-label">Reasoning</p>
-        <p className="c-card-section-content">{item.reasoning}</p>
+        <TruncatedTooltip
+          text={item.reasoning}
+          wrapperClassName="c-card-section-content-wrap"
+          triggerClassName="c-card-section-content c-card-section-content-truncate"
+          tooltipClassName="c-card-section-tooltip"
+          focusable
+        />
       </section>
       <EvidenceReferenceList
         items={referenceItems}
