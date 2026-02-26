@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from io import BytesIO
 
 import fitz
 from docx import Document
 
 from app.schemas.exports import ExportRequest, SelectedStandard
-from app.schemas.reports import ReportItem
+from app.schemas.reports import ManualReviewHistoryEntry, ReportItem
 from app.services.export_service import build_export_file
 
 
@@ -44,6 +45,31 @@ def _sample_request(fmt: str) -> ExportRequest:
   )
 
 
+def _sample_manual_history() -> dict[str, list[ManualReviewHistoryEntry]]:
+  return {
+    "item-001": [
+      ManualReviewHistoryEntry(
+        history_id="mrh-002",
+        report_id="rep_pytest_001",
+        item_id="item-001",
+        manual_verdict="needs_followup",
+        manual_verdict_category="evidence_gap",
+        manual_verdict_note="Need legal team confirmation for this clause.",
+        edited_at=datetime(2026, 2, 26, 10, 30, tzinfo=timezone.utc),
+      ),
+      ManualReviewHistoryEntry(
+        history_id="mrh-001",
+        report_id="rep_pytest_001",
+        item_id="item-001",
+        manual_verdict="accepted",
+        manual_verdict_category="false_positive",
+        manual_verdict_note="Initial review accepted this item.",
+        edited_at=datetime(2026, 2, 26, 9, 0, tzinfo=timezone.utc),
+      ),
+    ]
+  }
+
+
 def test_build_export_file_docx_contains_expected_content() -> None:
   request = _sample_request("docx")
   card = _sample_card()
@@ -66,11 +92,12 @@ def test_build_export_file_docx_contains_expected_content() -> None:
   assert "Category: Deadline" in paragraph_text
   assert "Severity: Major" in paragraph_text
   assert "Confidence: 0.96" in paragraph_text
-  assert "Manual Review:" in paragraph_text
   assert "Referenced Sources: main_coc" in paragraph_text
-  assert "Source: pytest" in paragraph_text
-  assert "Manual Verdict: Needs Followup | Manual Category: Evidence Gap" in paragraph_text
-  assert "Manual Note: Need legal team confirmation for this clause." in paragraph_text
+  assert "Manual Review History:" in paragraph_text
+  assert "No manual review history." in paragraph_text
+  assert "Source: pytest" not in paragraph_text
+  assert "Manual Verdict:" not in paragraph_text
+  assert "Manual Note:" not in paragraph_text
   assert "(PART 1) EMP finalisation timeline must be satisfied." in paragraph_text
   assert "deadline" in table_text
   assert "Deadline Compliance" in table_text
@@ -97,13 +124,47 @@ def test_build_export_file_pdf_contains_expected_content() -> None:
   assert "Category: Deadline" in extracted_text
   assert "Severity: Major" in extracted_text
   assert "Confidence: 0.96" in extracted_text
-  assert "Manual Review:" in extracted_text
   assert "Referenced Sources: main_coc" in extracted_text
-  assert "Source: pytest" in extracted_text
-  assert "Manual Verdict: Needs Followup | Manual Category: Evidence Gap" in extracted_text
-  assert "Manual Note: Need legal team confirmation for this clause." in extracted_text
+  assert "Manual Review History:" in extracted_text
+  assert "No manual review history." in extracted_text
+  assert "Source: pytest" not in extracted_text
+  assert "Manual Verdict:" not in extracted_text
+  assert "Manual Note:" not in extracted_text
   assert "EMP finalisation timeline" in extracted_text
   assert "Deadline Compliance" in extracted_text
+
+
+def test_build_export_file_docx_includes_all_manual_review_history_entries() -> None:
+  request = _sample_request("docx")
+  card = _sample_card()
+  manual_history = _sample_manual_history()
+
+  _, _, content = build_export_file(request, [card], manual_history)
+  document = Document(BytesIO(content))
+  paragraph_text = "\n".join(paragraph.text for paragraph in document.paragraphs)
+
+  assert "Manual Review History:" in paragraph_text
+  assert "1. Edited At (HKT):" in paragraph_text
+  assert "2. Edited At (HKT):" in paragraph_text
+  assert "Note: Need legal team confirmation for this clause." in paragraph_text
+  assert "Note: Initial review accepted this item." in paragraph_text
+
+
+def test_build_export_file_pdf_includes_all_manual_review_history_entries() -> None:
+  request = _sample_request("pdf")
+  card = _sample_card()
+  manual_history = _sample_manual_history()
+
+  _, _, content = build_export_file(request, [card], manual_history)
+  with fitz.open(stream=content, filetype="pdf") as document:
+    extracted_text = "\n".join(page.get_text("text") for page in document)
+  normalized_text = " ".join(extracted_text.split())
+
+  assert "Manual Review History:" in extracted_text
+  assert "1. Edited At (HKT):" in extracted_text
+  assert "2. Edited At (HKT):" in extracted_text
+  assert "Need legal team confirmation for this clause." in normalized_text
+  assert "Initial review accepted this item." in normalized_text
 
 
 def test_build_export_file_docx_with_empty_card_ids_exports_no_cards() -> None:

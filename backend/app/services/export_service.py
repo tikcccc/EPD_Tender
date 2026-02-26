@@ -12,7 +12,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from app.schemas.exports import ExportRequest
-from app.schemas.reports import ReportItem
+from app.schemas.reports import ManualReviewHistoryEntry, ReportItem
 
 
 _FILENAME_RE = re.compile(r"[^a-zA-Z0-9._-]+")
@@ -56,10 +56,6 @@ def _current_hong_kong_time() -> str:
   return datetime.now(_HONG_KONG_TZ).isoformat(timespec="seconds")
 
 
-def _manual_review_value(value: str | None) -> str:
-  return value if value else "N/A"
-
-
 def _format_label(value: str) -> str:
   normalized = value.strip()
   if not normalized:
@@ -79,7 +75,24 @@ def _review_title(consistency_status: str) -> str:
   return _REVIEW_TITLE_BY_STATUS.get(consistency_status, "Consistency Review")
 
 
-def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
+def _format_history_time(timestamp: datetime) -> str:
+  return timestamp.astimezone(_HONG_KONG_TZ).isoformat(timespec="seconds")
+
+
+def _history_for_item(
+  manual_review_history: dict[str, list[ManualReviewHistoryEntry]] | None,
+  item_id: str,
+) -> list[ManualReviewHistoryEntry]:
+  if not manual_review_history:
+    return []
+  return manual_review_history.get(item_id, [])
+
+
+def _build_docx(
+  payload: ExportRequest,
+  cards: list[ReportItem],
+  manual_review_history: dict[str, list[ManualReviewHistoryEntry]] | None,
+) -> bytes:
   ordered_cards = _ordered_cards(payload, cards)
   now = _current_hong_kong_time()
 
@@ -114,6 +127,7 @@ def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
 
   for index, card in enumerate(ordered_cards, start=1):
     title = _review_title(card.consistency_status)
+    history_entries = _history_for_item(manual_review_history, card.item_id)
     document.add_heading(f"{index}. {title}", level=2)
     document.add_paragraph(f"Item ID: {card.item_id}")
     document.add_paragraph(f"Title: {title}")
@@ -130,20 +144,30 @@ def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
     document.add_paragraph(f"Referenced Sources: {', '.join(card.document_references)}")
     if card.keywords:
       document.add_paragraph(f"Keywords: {', '.join(card.keywords)}")
-    document.add_paragraph("Manual Review:")
-    document.add_paragraph(
-      f"Manual Verdict: {_format_optional_label(card.manual_verdict)} | "
-      f"Manual Category: {_format_optional_label(card.manual_verdict_category)}"
-    )
-    document.add_paragraph(f"Manual Note: {_manual_review_value(card.manual_verdict_note)}")
-    document.add_paragraph(f"Source: {card.source}")
+    document.add_paragraph("Manual Review History:")
+    if history_entries:
+      for history_index, entry in enumerate(history_entries, start=1):
+        document.add_paragraph(
+          (
+            f"{history_index}. Edited At (HKT): {_format_history_time(entry.edited_at)} | "
+            f"Verdict: {_format_optional_label(entry.manual_verdict)} | "
+            f"Category: {_format_optional_label(entry.manual_verdict_category)} | "
+            f"Note: {entry.manual_verdict_note or 'N/A'}"
+          )
+        )
+    else:
+      document.add_paragraph("No manual review history.")
 
   output = BytesIO()
   document.save(output)
   return output.getvalue()
 
 
-def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
+def _build_pdf(
+  payload: ExportRequest,
+  cards: list[ReportItem],
+  manual_review_history: dict[str, list[ManualReviewHistoryEntry]] | None,
+) -> bytes:
   ordered_cards = _ordered_cards(payload, cards)
   now = _current_hong_kong_time()
 
@@ -205,6 +229,7 @@ def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
 
   for index, card in enumerate(ordered_cards, start=1):
     title = _review_title(card.consistency_status)
+    history_entries = _history_for_item(manual_review_history, card.item_id)
     story.append(Spacer(1, 6))
     story.append(Paragraph(f"{index}. {_safe_text(title)}", heading_style))
     story.append(Paragraph(f"Item ID: {_safe_text(card.item_id)}", meta_style))
@@ -222,33 +247,43 @@ def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
     story.append(Paragraph(f"Referenced Sources: {_safe_text(', '.join(card.document_references))}", meta_style))
     if card.keywords:
       story.append(Paragraph(f"Keywords: {_safe_text(', '.join(card.keywords))}", meta_style))
-    story.append(Paragraph("Manual Review:", meta_style))
-    story.append(
-      Paragraph(
-        (
-          f"Manual Verdict: {_safe_text(_format_optional_label(card.manual_verdict))} | "
-          f"Manual Category: {_safe_text(_format_optional_label(card.manual_verdict_category))}"
-        ),
-        meta_style,
-      )
-    )
-    story.append(Paragraph(f"Manual Note: {_safe_text(_manual_review_value(card.manual_verdict_note))}", body_style))
-    story.append(Paragraph(f"Source: {_safe_text(card.source)}", meta_style))
+    story.append(Paragraph("Manual Review History:", meta_style))
+    if history_entries:
+      for history_index, entry in enumerate(history_entries, start=1):
+        story.append(
+          Paragraph(
+            _safe_text(
+              (
+                f"{history_index}. Edited At (HKT): {_format_history_time(entry.edited_at)} | "
+                f"Verdict: {_format_optional_label(entry.manual_verdict)} | "
+                f"Category: {_format_optional_label(entry.manual_verdict_category)} | "
+                f"Note: {entry.manual_verdict_note or 'N/A'}"
+              )
+            ),
+            body_style,
+          )
+        )
+    else:
+      story.append(Paragraph("No manual review history.", body_style))
 
   doc.build(story)
   return output.getvalue()
 
 
-def build_export_file(payload: ExportRequest, cards: list[ReportItem]) -> tuple[str, str, bytes]:
+def build_export_file(
+  payload: ExportRequest,
+  cards: list[ReportItem],
+  manual_review_history: dict[str, list[ManualReviewHistoryEntry]] | None = None,
+) -> tuple[str, str, bytes]:
   safe_report_id = _sanitize_file_token(payload.report_id)
 
   if payload.format == "pdf":
     media_type = "application/pdf"
     file_name = f"tender-analysis-{safe_report_id}.pdf"
-    content = _build_pdf(payload, cards)
+    content = _build_pdf(payload, cards, manual_review_history)
   else:
     media_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     file_name = f"tender-analysis-{safe_report_id}.docx"
-    content = _build_docx(payload, cards)
+    content = _build_docx(payload, cards, manual_review_history)
 
   return file_name, media_type, content
