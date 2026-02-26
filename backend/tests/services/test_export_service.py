@@ -61,8 +61,15 @@ def test_build_export_file_docx_contains_expected_content() -> None:
   assert "EPD Tender Analysis Report" in paragraph_text
   assert "Report ID: rep_pytest_001" in paragraph_text
   assert "Generated At (HKT):" in paragraph_text
+  assert "Title: Consistency Review" in paragraph_text
+  assert "Status: Consistent" in paragraph_text
+  assert "Category: Deadline" in paragraph_text
+  assert "Severity: Major" in paragraph_text
+  assert "Confidence: 0.96" in paragraph_text
+  assert "Manual Review:" in paragraph_text
+  assert "Referenced Sources: main_coc" in paragraph_text
   assert "Source: pytest" in paragraph_text
-  assert "Manual Verdict: needs_followup | Manual Category: evidence_gap" in paragraph_text
+  assert "Manual Verdict: Needs Followup | Manual Category: Evidence Gap" in paragraph_text
   assert "Manual Note: Need legal team confirmation for this clause." in paragraph_text
   assert "(PART 1) EMP finalisation timeline must be satisfied." in paragraph_text
   assert "deadline" in table_text
@@ -85,8 +92,15 @@ def test_build_export_file_pdf_contains_expected_content() -> None:
   assert "EPD Tender Analysis Report" in extracted_text
   assert "rep_pytest_001" in extracted_text
   assert "Generated At (HKT):" in extracted_text
+  assert "Title: Consistency Review" in extracted_text
+  assert "Status: Consistent" in extracted_text
+  assert "Category: Deadline" in extracted_text
+  assert "Severity: Major" in extracted_text
+  assert "Confidence: 0.96" in extracted_text
+  assert "Manual Review:" in extracted_text
+  assert "Referenced Sources: main_coc" in extracted_text
   assert "Source: pytest" in extracted_text
-  assert "Manual Verdict: needs_followup | Manual Category: evidence_gap" in extracted_text
+  assert "Manual Verdict: Needs Followup | Manual Category: Evidence Gap" in extracted_text
   assert "Manual Note: Need legal team confirmation for this clause." in extracted_text
   assert "EMP finalisation timeline" in extracted_text
   assert "Deadline Compliance" in extracted_text

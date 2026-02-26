@@ -17,6 +17,11 @@ from app.schemas.reports import ReportItem
 
 _FILENAME_RE = re.compile(r"[^a-zA-Z0-9._-]+")
 _HONG_KONG_TZ = timezone(timedelta(hours=8), name="HKT")
+_REVIEW_TITLE_BY_STATUS = {
+  "consistent": "Consistency Review",
+  "inconsistent": "Inconsistency Review",
+  "unknown": "Consistency Review",
+}
 
 
 def _sanitize_file_token(value: str) -> str:
@@ -55,6 +60,25 @@ def _manual_review_value(value: str | None) -> str:
   return value if value else "N/A"
 
 
+def _format_label(value: str) -> str:
+  normalized = value.strip()
+  if not normalized:
+    return "N/A"
+
+  parts = re.split(r"[\s_-]+", normalized)
+  return " ".join(part.capitalize() for part in parts if part)
+
+
+def _format_optional_label(value: str | None) -> str:
+  if not value:
+    return "N/A"
+  return _format_label(value)
+
+
+def _review_title(consistency_status: str) -> str:
+  return _REVIEW_TITLE_BY_STATUS.get(consistency_status, "Consistency Review")
+
+
 def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
   ordered_cards = _ordered_cards(payload, cards)
   now = _current_hong_kong_time()
@@ -89,26 +113,30 @@ def _build_docx(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
     document.add_paragraph("No cards selected for export.")
 
   for index, card in enumerate(ordered_cards, start=1):
-    document.add_heading(f"{index}. {card.description}", level=2)
+    title = _review_title(card.consistency_status)
+    document.add_heading(f"{index}. {title}", level=2)
     document.add_paragraph(f"Item ID: {card.item_id}")
-    document.add_paragraph(f"Check Type: {card.check_type}")
-    document.add_paragraph(f"Source: {card.source}")
-    document.add_paragraph(
-      f"Status: {card.consistency_status} | Severity: {card.severity} | Confidence: {card.confidence_score:.2f}"
-    )
-    document.add_paragraph(
-      f"Manual Verdict: {_manual_review_value(card.manual_verdict)} | "
-      f"Manual Category: {_manual_review_value(card.manual_verdict_category)}"
-    )
-    document.add_paragraph(f"Manual Note: {_manual_review_value(card.manual_verdict_note)}")
-    document.add_paragraph(f"Document References: {', '.join(card.document_references)}")
-    document.add_paragraph("Evidence:")
-    document.add_paragraph(card.evidence)
+    document.add_paragraph(f"Title: {title}")
+    document.add_paragraph(f"Status: {_format_label(card.consistency_status)}")
+    document.add_paragraph(f"Category: {_format_label(card.check_type)}")
+    document.add_paragraph(f"Severity: {_format_label(card.severity)}")
+    document.add_paragraph(f"Confidence: {card.confidence_score:.2f}")
+    document.add_paragraph("Description:")
+    document.add_paragraph(card.description)
     document.add_paragraph("Reasoning:")
     document.add_paragraph(card.reasoning)
-
+    document.add_paragraph("Evidence:")
+    document.add_paragraph(card.evidence)
+    document.add_paragraph(f"Referenced Sources: {', '.join(card.document_references)}")
     if card.keywords:
       document.add_paragraph(f"Keywords: {', '.join(card.keywords)}")
+    document.add_paragraph("Manual Review:")
+    document.add_paragraph(
+      f"Manual Verdict: {_format_optional_label(card.manual_verdict)} | "
+      f"Manual Category: {_format_optional_label(card.manual_verdict_category)}"
+    )
+    document.add_paragraph(f"Manual Note: {_manual_review_value(card.manual_verdict_note)}")
+    document.add_paragraph(f"Source: {card.source}")
 
   output = BytesIO()
   document.save(output)
@@ -176,35 +204,36 @@ def _build_pdf(payload: ExportRequest, cards: list[ReportItem]) -> bytes:
     story.append(Paragraph("No cards selected for export.", body_style))
 
   for index, card in enumerate(ordered_cards, start=1):
+    title = _review_title(card.consistency_status)
     story.append(Spacer(1, 6))
-    story.append(Paragraph(f"{index}. {_safe_text(card.description)}", heading_style))
+    story.append(Paragraph(f"{index}. {_safe_text(title)}", heading_style))
+    story.append(Paragraph(f"Item ID: {_safe_text(card.item_id)}", meta_style))
+    story.append(Paragraph(f"Title: {_safe_text(title)}", meta_style))
+    story.append(Paragraph(f"Status: {_safe_text(_format_label(card.consistency_status))}", meta_style))
+    story.append(Paragraph(f"Category: {_safe_text(_format_label(card.check_type))}", meta_style))
+    story.append(Paragraph(f"Severity: {_safe_text(_format_label(card.severity))}", meta_style))
+    story.append(Paragraph(f"Confidence: {card.confidence_score:.2f}", meta_style))
+    story.append(Paragraph("Description:", meta_style))
+    story.append(Paragraph(_safe_text(card.description), body_style))
+    story.append(Paragraph("Reasoning:", meta_style))
+    story.append(Paragraph(_safe_text(card.reasoning), body_style))
+    story.append(Paragraph("Evidence:", meta_style))
+    story.append(Paragraph(_safe_text(card.evidence), body_style))
+    story.append(Paragraph(f"Referenced Sources: {_safe_text(', '.join(card.document_references))}", meta_style))
+    if card.keywords:
+      story.append(Paragraph(f"Keywords: {_safe_text(', '.join(card.keywords))}", meta_style))
+    story.append(Paragraph("Manual Review:", meta_style))
     story.append(
       Paragraph(
         (
-          f"Item ID: {_safe_text(card.item_id)} | Check Type: {_safe_text(card.check_type)} | "
-          f"Source: {_safe_text(card.source)} | "
-          f"Status: {_safe_text(card.consistency_status)} | Severity: {_safe_text(card.severity)} | "
-          f"Confidence: {card.confidence_score:.2f}"
-        ),
-        meta_style,
-      )
-    )
-    story.append(
-      Paragraph(
-        (
-          f"Manual Verdict: {_safe_text(_manual_review_value(card.manual_verdict))} | "
-          f"Manual Category: {_safe_text(_manual_review_value(card.manual_verdict_category))}"
+          f"Manual Verdict: {_safe_text(_format_optional_label(card.manual_verdict))} | "
+          f"Manual Category: {_safe_text(_format_optional_label(card.manual_verdict_category))}"
         ),
         meta_style,
       )
     )
     story.append(Paragraph(f"Manual Note: {_safe_text(_manual_review_value(card.manual_verdict_note))}", body_style))
-    story.append(Paragraph(f"Document References: {_safe_text(', '.join(card.document_references))}", meta_style))
-    story.append(Paragraph(f"Evidence: {_safe_text(card.evidence)}", body_style))
-    story.append(Paragraph(f"Reasoning: {_safe_text(card.reasoning)}", body_style))
-
-    if card.keywords:
-      story.append(Paragraph(f"Keywords: {_safe_text(', '.join(card.keywords))}", meta_style))
+    story.append(Paragraph(f"Source: {_safe_text(card.source)}", meta_style))
 
   doc.build(story)
   return output.getvalue()
