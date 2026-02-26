@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { TruncatedTooltip } from "@/components/common/TruncatedTooltip";
 import { EvidenceReferenceList } from "@/components/report/EvidenceReferenceList";
 import { fetchManualReviewHistory } from "@/features/tender-ui/api-client";
 import type {
@@ -42,6 +41,11 @@ const MANUAL_NOTE_MAX_LENGTH = 1000;
 const MANUAL_HISTORY_PAGE_SIZE = 5;
 const MANUAL_REVIEW_NOTICE_AUTO_HIDE_MS = 2500;
 const MANUAL_REVIEW_ERROR_AUTO_HIDE_MS = 3000;
+const REVIEW_TITLE_BY_STATUS: Record<ReportItem["consistency_status"], string> = {
+  consistent: "Consistency Review",
+  inconsistent: "Inconsistency Review",
+  unknown: "Consistency Review",
+};
 
 const MANUAL_VERDICT_OPTIONS: Array<{ value: ManualVerdict; label: string }> = [
   { value: "accepted", label: "Accepted" },
@@ -168,6 +172,8 @@ export function ComplianceCard({
   const normalizedEvidence = item.evidence.replace(/\s+/g, " ").trim();
   const severityLabel = `${item.severity.charAt(0).toUpperCase()}${item.severity.slice(1)}`;
   const confidenceLabel = item.confidence_score.toFixed(2);
+  const consistencyLabel = `${item.consistency_status.charAt(0).toUpperCase()}${item.consistency_status.slice(1)}`;
+  const reviewTitle = REVIEW_TITLE_BY_STATUS[item.consistency_status] ?? "Consistency Review";
   const checkTypeLabel = useMemo(() => formatCheckTypeLabel(item.check_type), [item.check_type]);
   const evidenceByDocument = useMemo(() => extractReferenceEvidenceByDocument(item), [item]);
   const referenceItems = useMemo(() => {
@@ -649,8 +655,11 @@ export function ComplianceCard({
     <article className={`c-card is-${item.consistency_status}${isActive ? " is-active" : ""}`}>
       <div className="c-card-top">
         <div className="c-card-heading">
-          <h3 className="c-card-title">Compliance Review</h3>
+          <div className="c-card-title-row">
+            <h3 className="c-card-title">{reviewTitle}</h3>
+          </div>
           <div className="c-card-tags">
+            <span className={`c-chip is-status is-${item.consistency_status}`}>Status: {consistencyLabel}</span>
             <span className="c-chip is-category">Category: {checkTypeLabel}</span>
             <span className={`c-chip is-severity is-${item.severity}`}>Severity: {severityLabel}</span>
             <span className="c-chip is-confidence">Confidence: {confidenceLabel}</span>
@@ -712,23 +721,11 @@ export function ComplianceCard({
 
       <section className="c-card-section" aria-label="Description">
         <p className="c-card-section-label">Description</p>
-        <TruncatedTooltip
-          text={item.description}
-          wrapperClassName="c-card-section-content-wrap"
-          triggerClassName="c-card-section-content c-card-section-content-truncate"
-          tooltipClassName="c-card-section-tooltip"
-          focusable
-        />
+        <p className="c-card-section-content">{item.description}</p>
       </section>
       <section className="c-card-section" aria-label="Reasoning">
         <p className="c-card-section-label">Reasoning</p>
-        <TruncatedTooltip
-          text={item.reasoning}
-          wrapperClassName="c-card-section-content-wrap"
-          triggerClassName="c-card-section-content c-card-section-content-truncate"
-          tooltipClassName="c-card-section-tooltip"
-          focusable
-        />
+        <p className="c-card-section-content">{item.reasoning}</p>
       </section>
       <EvidenceReferenceList
         items={referenceItems}

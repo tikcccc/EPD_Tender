@@ -339,7 +339,14 @@
   margin: 0;
 }
 
+.c-card-title-row {
+  align-items: baseline;
+  display: flex;
+  gap: var(--space-2);
+}
+
 .c-card-tags {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -1191,6 +1198,20 @@
   gap: var(--space-1);
   min-height: 24px;
   padding: 0 8px;
+}
+
+.c-chip.is-status {
+  font-weight: var(--fw-semibold);
+  padding: 0 10px;
+}
+
+.c-chip.is-status::before {
+  background: currentColor;
+  border-radius: 999px;
+  content: "";
+  height: 6px;
+  opacity: 0.7;
+  width: 6px;
 }
 
 .c-chip.is-category {
