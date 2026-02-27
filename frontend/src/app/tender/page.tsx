@@ -79,6 +79,31 @@ function normalizeEvidenceText(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
+function normalizeKeyword(text: string): string {
+  return text.trim().toLowerCase();
+}
+
+function matchesKeywordFuzzySearch(keywords: string[], searchText: string): boolean {
+  const query = normalizeKeyword(searchText);
+  if (!query) {
+    return true;
+  }
+
+  const normalizedKeywords = keywords.map(normalizeKeyword).filter(Boolean);
+  if (normalizedKeywords.length === 0) {
+    return false;
+  }
+
+  if (normalizedKeywords.some((keyword) => keyword.includes(query))) {
+    return true;
+  }
+
+  const queryTokens = query.split(/\s+/).filter(Boolean);
+  return queryTokens.every((token) =>
+    normalizedKeywords.some((keyword) => keyword.includes(token) || token.includes(keyword)),
+  );
+}
+
 function extractQuotedSegments(text: string): string[] {
   const segments: string[] = [];
 
@@ -381,7 +406,7 @@ export default function TenderPage() {
   }, [selectedOrder, standardMap]);
 
   const visibleCards = useMemo(() => {
-    const keyword = searchText.trim().toLowerCase();
+    const keyword = searchText.trim();
     return reportItems.filter((item) => {
       if (selectedOrder.length > 0 && selectedCheckTypes.size > 0 && !selectedCheckTypes.has(item.check_type)) {
         return false;
@@ -396,10 +421,7 @@ export default function TenderPage() {
         return true;
       }
 
-      const searchBase = [item.item_id, item.description, item.reasoning, item.evidence, item.check_type]
-        .join(" ")
-        .toLowerCase();
-      return searchBase.includes(keyword);
+      return matchesKeywordFuzzySearch(item.keywords, keyword);
     });
   }, [reportItems, reviewTypeFilter, searchText, selectedOrder.length, selectedCheckTypes]);
 
@@ -803,7 +825,7 @@ export default function TenderPage() {
                 className="c-search-input"
                 type="search"
                 value={searchText}
-                placeholder="Search cards by id, evidence, description..."
+                placeholder="Search cards by keywords (fuzzy)..."
                 onChange={(event) => setSearchText(event.target.value)}
               />
               <select
