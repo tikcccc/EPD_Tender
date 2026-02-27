@@ -825,7 +825,7 @@ export default function TenderPage() {
                 className="c-search-input"
                 type="search"
                 value={searchText}
-                placeholder="Search cards by keywords (fuzzy)..."
+                placeholder="Search cards by keywords..."
                 onChange={(event) => setSearchText(event.target.value)}
               />
               <select
