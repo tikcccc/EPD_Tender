@@ -280,6 +280,17 @@
   margin-bottom: var(--space-3);
 }
 
+.c-card-filters {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: minmax(0, 1fr) 220px;
+  margin-bottom: var(--space-3);
+}
+
+.c-card-filters .c-search-input {
+  margin-bottom: 0;
+}
+
 .c-card-list {
   display: grid;
   gap: var(--space-3);
@@ -1442,6 +1453,10 @@
   }
 
   .c-admin-fields-2col {
+    grid-template-columns: 1fr;
+  }
+
+  .c-card-filters {
     grid-template-columns: 1fr;
   }
 }

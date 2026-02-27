@@ -301,6 +301,7 @@ export default function TenderPage() {
   const [reportError, setReportError] = useState<string>("");
 
   const [searchText, setSearchText] = useState("");
+  const [reviewTypeFilter, setReviewTypeFilter] = useState<"all" | "consistency" | "compliance">("all");
   const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
 
   const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>({
@@ -386,6 +387,11 @@ export default function TenderPage() {
         return false;
       }
 
+      const statusDomain = item.status_domain === "compliance" ? "compliance" : "consistency";
+      if (reviewTypeFilter !== "all" && statusDomain !== reviewTypeFilter) {
+        return false;
+      }
+
       if (!keyword) {
         return true;
       }
@@ -395,7 +401,7 @@ export default function TenderPage() {
         .toLowerCase();
       return searchBase.includes(keyword);
     });
-  }, [reportItems, searchText, selectedOrder.length, selectedCheckTypes]);
+  }, [reportItems, reviewTypeFilter, searchText, selectedOrder.length, selectedCheckTypes]);
 
   useEffect(() => {
     let disposed = false;
@@ -792,13 +798,25 @@ export default function TenderPage() {
               <span className="c-badge">{visibleCards.length} cards</span>
             </div>
 
-            <input
-              className="c-search-input"
-              type="search"
-              value={searchText}
-              placeholder="Search cards by id, evidence, description..."
-              onChange={(event) => setSearchText(event.target.value)}
-            />
+            <div className="c-card-filters">
+              <input
+                className="c-search-input"
+                type="search"
+                value={searchText}
+                placeholder="Search cards by id, evidence, description..."
+                onChange={(event) => setSearchText(event.target.value)}
+              />
+              <select
+                className="c-select-input"
+                value={reviewTypeFilter}
+                aria-label="Filter cards by review type"
+                onChange={(event) => setReviewTypeFilter(event.target.value as "all" | "consistency" | "compliance")}
+              >
+                <option value="all">All Review Types</option>
+                <option value="consistency">Consistency Review</option>
+                <option value="compliance">Compliance Review</option>
+              </select>
+            </div>
 
             {loadingReport ? <p className="c-empty">Loading report cards...</p> : null}
             {reportError ? <p className="c-alert">{reportError}</p> : null}
