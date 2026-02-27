@@ -20,6 +20,38 @@ _FROM_PREFIX_RE = re.compile(r"^from\s+[^:]{0,240}:\s*", re.IGNORECASE)
 _LEADING_CLAUSE_RE = re.compile(r"^\s*(?:\([a-z]\)\s*)?(\d{1,3}(?:\.\d+){1,3})(?![\d-])", re.IGNORECASE)
 _CLAUSE_LABEL_RE = re.compile(r"\bClause\s+(\d{1,3}(?:\.\d+){0,3})\b", re.IGNORECASE)
 _GENERIC_CLAUSE_RE = re.compile(r"(?:^|[\s\"'(])(\d{1,3}(?:\.\d+){1,3})(?![\d-])")
+_STANDALONE_CLAUSE_LINE_RE = re.compile(r"^\s*(\d{1,3}(?:\.\d+){1,3})\s*$", re.IGNORECASE)
+_HIGHLIGHT_TOKEN_RE = re.compile(r"[A-Za-z0-9]+(?:\.[0-9]+)?")
+_HIGHLIGHT_STOPWORDS = {
+  "the",
+  "and",
+  "for",
+  "with",
+  "that",
+  "this",
+  "shall",
+  "include",
+  "including",
+  "following",
+  "without",
+  "within",
+  "under",
+  "from",
+  "into",
+  "onto",
+  "upon",
+  "of",
+  "to",
+  "by",
+  "in",
+  "on",
+  "or",
+  "as",
+  "at",
+  "is",
+  "are",
+  "be",
+}
 
 
 @dataclass(slots=True)
@@ -538,6 +570,54 @@ def _center_y(rect: tuple[float, float, float, float]) -> float:
   return (rect[1] + rect[3]) / 2.0
 
 
+def _rect_width(rect: tuple[float, float, float, float]) -> float:
+  return rect[2] - rect[0]
+
+
+def _vertical_overlap_ratio(
+  a: tuple[float, float, float, float],
+  b: tuple[float, float, float, float],
+) -> float:
+  inter = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
+  if inter <= 0:
+    return 0.0
+  union = max(a[3], b[3]) - min(a[1], b[1])
+  if union <= 0:
+    return 0.0
+  return inter / union
+
+
+def _rect_area(rect: tuple[float, float, float, float]) -> float:
+  return max(0.0, rect[2] - rect[0]) * max(0.0, rect[3] - rect[1])
+
+
+def _rect_contains(
+  outer: tuple[float, float, float, float],
+  inner: tuple[float, float, float, float],
+  *,
+  padding: float = 1.5,
+) -> bool:
+  return (
+    inner[0] >= outer[0] - padding
+    and inner[1] >= outer[1] - padding
+    and inner[2] <= outer[2] + padding
+    and inner[3] <= outer[3] + padding
+  )
+
+
+def _prune_redundant_rects(rects: list[tuple[float, float, float, float]]) -> list[tuple[float, float, float, float]]:
+  if len(rects) <= 1:
+    return rects
+
+  keep: list[tuple[float, float, float, float]] = []
+  for rect in sorted(rects, key=_rect_area, reverse=True):
+    if any(_rect_contains(existing, rect) and _rect_width(existing) >= _rect_width(rect) * 1.2 for existing in keep):
+      continue
+    keep.append(rect)
+
+  return sorted(keep, key=lambda rect: (rect[1], rect[0]))
+
+
 def _group_rects(rects: list[tuple[float, float, float, float]]) -> list[list[tuple[float, float, float, float]]]:
   if not rects:
     return []
@@ -578,6 +658,229 @@ def _select_best_rect_group(
     ),
   )
   return sorted(selected, key=lambda rect: (rect[1], rect[0]))
+
+
+def _extract_highlight_tokens(text: str) -> set[str]:
+  tokens: set[str] = set()
+  for match in _HIGHLIGHT_TOKEN_RE.finditer(text):
+    token = match.group(0).strip().lower()
+    if len(token) < 3:
+      continue
+    if token in _HIGHLIGHT_STOPWORDS:
+      continue
+    tokens.add(token)
+  return tokens
+
+
+def _extract_standalone_clause_line_token(text: str) -> str | None:
+  match = _STANDALONE_CLAUSE_LINE_RE.match(text)
+  if not match:
+    return None
+  return _normalize_clause_token(match.group(1))
+
+
+def _rect_group_quality(group: list[tuple[float, float, float, float]]) -> tuple[int, int, float]:
+  meaningful = sum(1 for rect in group if _rect_width(rect) >= 40.0)
+  return (meaningful, len(group), _rect_width(_union_bbox(group)))
+
+
+def _is_fragmented_highlight_group(group: list[tuple[float, float, float, float]]) -> bool:
+  if not group:
+    return True
+  meaningful, _, _ = _rect_group_quality(group)
+  has_narrow = any(_rect_width(rect) < 20.0 for rect in group)
+  return meaningful <= 1 or has_narrow
+
+
+def _append_short_tail_lines(
+  *,
+  page_entries: list[IndexedLine],
+  base_group: list[tuple[float, float, float, float]],
+  evidence_tokens: set[str],
+  target_clause: str | None,
+) -> list[tuple[float, float, float, float]]:
+  if not base_group or not evidence_tokens:
+    return base_group
+
+  merged = sorted(base_group, key=lambda rect: (rect[1], rect[0]))
+  existing = {rect for rect in merged}
+  union = _union_bbox(merged)
+  avg_height = max(8.0, sum((rect[3] - rect[1]) for rect in merged) / len(merged))
+  cursor_bottom = union[3]
+
+  candidates = sorted(
+    (
+      entry
+      for entry in page_entries
+      if entry.bbox not in existing and entry.bbox[1] >= union[1] - avg_height * 0.2
+    ),
+    key=lambda entry: (entry.bbox[1], entry.bbox[0]),
+  )
+
+  for entry in candidates:
+    y_gap = entry.bbox[1] - cursor_bottom
+    if y_gap < -avg_height * 0.2:
+      continue
+    if y_gap > avg_height * 1.3:
+      break
+
+    clause_token = _extract_standalone_clause_line_token(entry.text)
+    if target_clause and clause_token and clause_token != target_clause:
+      break
+
+    tokens = _extract_highlight_tokens(entry.text)
+    overlap = len(tokens & evidence_tokens)
+    if overlap < 1:
+      break
+
+    if len(tokens) <= 3 or _rect_width(entry.bbox) <= 140.0:
+      merged.append(entry.bbox)
+      existing.add(entry.bbox)
+      cursor_bottom = max(cursor_bottom, entry.bbox[3])
+      continue
+
+    # Avoid swallowing the next long sentence when we only need a short tail fragment.
+    break
+
+  return sorted(merged, key=lambda rect: (rect[1], rect[0]))
+
+
+def _complete_partial_line_matches(
+  *,
+  page_entries: list[IndexedLine],
+  base_group: list[tuple[float, float, float, float]],
+  evidence_tokens: set[str],
+) -> list[tuple[float, float, float, float]]:
+  if not base_group or not evidence_tokens:
+    return base_group
+
+  merged = sorted(base_group, key=lambda rect: (rect[1], rect[0]))
+  existing = {rect for rect in merged}
+  additions: list[tuple[float, float, float, float]] = []
+
+  for rect in merged:
+    # We only try to complete likely partial line matches.
+    if _rect_width(rect) >= 260.0:
+      continue
+
+    best_candidate: tuple[float, float, float, tuple[float, float, float, float]] | None = None
+    for entry in page_entries:
+      candidate = entry.bbox
+      if candidate in existing:
+        continue
+      if _vertical_overlap_ratio(candidate, rect) < 0.55:
+        continue
+      if _rect_width(candidate) <= _rect_width(rect) * 1.35:
+        continue
+
+      overlap = len(_extract_highlight_tokens(entry.text) & evidence_tokens)
+      if overlap < 2:
+        continue
+      token_count = max(1, len(_extract_highlight_tokens(entry.text)))
+      coverage = overlap / token_count
+      if token_count >= 5 and coverage < 0.6:
+        continue
+
+      key = (
+        float(overlap),
+        _rect_width(candidate),
+        -abs(_center_y(candidate) - _center_y(rect)),
+      )
+      if best_candidate is None or key > best_candidate[:3]:
+        best_candidate = (key[0], key[1], key[2], candidate)
+
+    if best_candidate is not None:
+      additions.append(best_candidate[3])
+
+  for candidate in additions:
+    existing.add(candidate)
+
+  return sorted(existing, key=lambda rect: (rect[1], rect[0]))
+
+
+def _expand_rect_group_with_token_overlap(
+  *,
+  pdf_path: Path,
+  page: int,
+  base_group: list[tuple[float, float, float, float]],
+  evidence_text: str,
+  anchor_bbox: tuple[float, float, float, float],
+) -> list[tuple[float, float, float, float]]:
+  if not base_group:
+    return []
+
+  evidence_tokens = _extract_highlight_tokens(evidence_text)
+  if len(evidence_tokens) < 3:
+    return base_group
+
+  page_entries = [entry for entry in _get_index(pdf_path) if entry.page == page]
+  if not page_entries:
+    return base_group
+
+  base_completed = _complete_partial_line_matches(
+    page_entries=page_entries,
+    base_group=base_group,
+    evidence_tokens=evidence_tokens,
+  )
+
+  target_clause = _extract_leading_clause_token(evidence_text)
+  base_with_tail = _append_short_tail_lines(
+    page_entries=page_entries,
+    base_group=base_completed,
+    evidence_tokens=evidence_tokens,
+    target_clause=target_clause,
+  )
+
+  # Broad token-overlap expansion is only needed when the base match is fragmented.
+  if not _is_fragmented_highlight_group(base_with_tail):
+    return _prune_redundant_rects(base_with_tail)
+
+  union = _union_bbox(base_with_tail)
+  avg_height = max(8.0, sum((rect[3] - rect[1]) for rect in base_with_tail) / len(base_with_tail))
+  y_min = union[1] - avg_height * 1.2
+  y_max = union[3] + avg_height * 3.5
+
+  if target_clause:
+    next_clause_y: float | None = None
+    for entry in page_entries:
+      clause_token = _extract_standalone_clause_line_token(entry.text)
+      if not clause_token or clause_token == target_clause:
+        continue
+
+      if entry.bbox[1] <= union[1]:
+        continue
+
+      if next_clause_y is None or entry.bbox[1] < next_clause_y:
+        next_clause_y = entry.bbox[1]
+
+    if next_clause_y is not None:
+      y_max = min(y_max, next_clause_y - avg_height * 0.25)
+
+  candidate_rects: list[tuple[float, float, float, float]] = []
+  for entry in page_entries:
+    center_y = _center_y(entry.bbox)
+    if center_y < y_min or center_y > y_max:
+      continue
+
+    overlap = len(_extract_highlight_tokens(entry.text) & evidence_tokens)
+    if overlap >= 2:
+      candidate_rects.append(entry.bbox)
+
+  if not candidate_rects:
+    return _prune_redundant_rects(base_with_tail)
+
+  groups = _group_rects(candidate_rects)
+  expanded_group = _select_best_rect_group(
+    groups,
+    anchor_bbox=anchor_bbox,
+    needle_length=len(evidence_text),
+  )
+  if not expanded_group:
+    return _prune_redundant_rects(base_with_tail)
+
+  if _rect_group_quality(expanded_group) > _rect_group_quality(base_with_tail):
+    return _prune_redundant_rects(expanded_group)
+  return _prune_redundant_rects(base_with_tail)
 
 
 def _resolve_highlight_bboxes(
@@ -629,6 +932,14 @@ def _resolve_highlight_bboxes(
             best_match = selected_group
 
       if best_match:
+        # Expand fragmented matches when minor punctuation/symbol mismatch exists.
+        best_match = _expand_rect_group_with_token_overlap(
+          pdf_path=pdf_path,
+          page=page,
+          base_group=best_match,
+          evidence_text=evidence_text,
+          anchor_bbox=best_entry.bbox,
+        )
         return best_match
   except Exception:
     # Locator must remain fault-tolerant even when PDF text search fails.

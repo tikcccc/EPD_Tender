@@ -212,7 +212,6 @@ export function ComplianceCard({
           evidenceText.length > REFERENCE_PREVIEW_LIMIT
             ? `${evidenceText.slice(0, REFERENCE_PREVIEW_LIMIT).trimEnd()}...`
             : evidenceText;
-        const segmentSuffix = effectiveEvidence.length > 1 ? ` [${segmentIndex + 1}]` : "";
         const referenceId = `${documentId}:${segmentIndex}`;
         const isReferenceActive = activeReferenceId
           ? activeReferenceId === referenceId
@@ -221,7 +220,7 @@ export function ComplianceCard({
         return {
           id: referenceId,
           documentId,
-          label: `${fileName} (${displayName})${segmentSuffix}`,
+          label: `${fileName} (${displayName})`,
           preview,
           evidenceText,
           isActive: isReferenceActive,

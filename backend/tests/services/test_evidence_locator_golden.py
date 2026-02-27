@@ -111,3 +111,85 @@ def test_multiline_sentence_returns_multiple_bboxes() -> None:
   assert result.status in {"resolved_exact", "resolved_approximate"}
   assert result.bboxes is not None
   assert len(result.bboxes) >= 2
+
+
+def test_symbol_mismatch_still_highlights_context_lines() -> None:
+  evidence_text = (
+    "The mandatory BIM Standards and Guidelines to be adopted in the project shall include the following: "
+    "1. CIC BIM Standards General (August 2019); (Version 2 December 2020) and (Version 2.1 2021), by the CIC."
+  )
+  pdf_path = resolve_document_path("EP_SP_307-24-Tender_Documents_Volume_3b_v3")
+  result = locate_evidence(pdf_path, evidence_text)
+
+  assert result.status in {"resolved_exact", "resolved_approximate"}
+  assert result.page == 215
+  assert result.bboxes is not None
+  assert len(result.bboxes) >= 2
+
+  # Avoid degenerate highlight cases that only capture list index markers like "1".
+  assert any((bbox[1] > 170.0 and (bbox[2] - bbox[0]) > 120.0) for bbox in result.bboxes)
+
+
+def test_clause_highlight_does_not_spill_to_next_clause() -> None:
+  evidence_text = (
+    "18.3 The Contractor shall finalise the EMP within 45 days of the date of the Letter of Acceptance "
+    "and submit 3 hard copies of the EMP and a soft copy in Microsoft Word format to the Supervising Officer."
+  )
+  pdf_path = resolve_document_path("main_coc")
+  result = locate_evidence(pdf_path, evidence_text, clause_keyword="18.3")
+
+  assert result.status in {"resolved_exact", "resolved_approximate"}
+  assert result.page == 49
+  assert result.bboxes is not None
+  assert len(result.bboxes) >= 2
+  # 18.4 starts around y ~= 582 on this page; 18.3 highlight should stay above it.
+  assert all(bbox[1] < 575.0 for bbox in result.bboxes)
+
+
+def test_sentence_match_does_not_swallow_following_paragraph_lines() -> None:
+  evidence_text = (
+    "The Contractor shall submit a draft Design and Works Plan for the certification by the Design Checker "
+    "and consent by the Supervising Officer."
+  )
+  pdf_path = resolve_document_path("I-EP_SP_174_20-ER-0")
+  result = locate_evidence(pdf_path, evidence_text, clause_keyword="1.27.2")
+
+  assert result.status in {"resolved_exact", "resolved_approximate"}
+  assert result.page == 104
+  assert result.bboxes is not None
+  assert len(result.bboxes) >= 2
+  # Keep highlight on the target sentence lines and avoid spilling into the next paragraph block.
+  assert max(bbox[3] for bbox in result.bboxes) < 325.0
+
+
+def test_clause_182_symbol_gap_keeps_middle_line_highlight() -> None:
+  evidence_text = (
+    "18.2 If the Supervising Officer is of the opinion that the draft EMP does not meet the requirements of the "
+    "Contract, he shall request the Contractor to revise the draft EMP by notice in writing and the Contractor "
+    "shall revise the draft EMP and re-submit within days of the date of the notice."
+  )
+  pdf_path = resolve_document_path("main_coc")
+  result = locate_evidence(pdf_path, evidence_text, clause_keyword="18.2")
+
+  assert result.status in {"resolved_exact", "resolved_approximate"}
+  assert result.page == 49
+  assert result.bboxes is not None
+  assert len(result.bboxes) >= 4
+  # The long middle line around y ~= 492 should be highlighted with a meaningful width.
+  assert any(488.0 <= bbox[1] <= 500.0 and (bbox[2] - bbox[0]) > 320.0 for bbox in result.bboxes)
+
+
+def test_operation_plan_sentence_does_not_expand_to_next_sentence() -> None:
+  evidence_text = (
+    "The Contractor shall submit a draft Operation Plan in accordance with Clause 59 of the Conditions of Contract "
+    "for the certification by the Design Checker and consent by the Supervising Officer."
+  )
+  pdf_path = resolve_document_path("I-EP_SP_174_20-ER-0")
+  result = locate_evidence(pdf_path, evidence_text, clause_keyword="1.27.3")
+
+  assert result.status in {"resolved_exact", "resolved_approximate"}
+  assert result.page == 109
+  assert result.bboxes is not None
+  assert len(result.bboxes) >= 2
+  # The next sentence starts on the same visual line; avoid promoting to full long-line highlight.
+  assert not any(294.0 <= bbox[1] <= 306.0 and (bbox[2] - bbox[0]) > 320.0 for bbox in result.bboxes)
