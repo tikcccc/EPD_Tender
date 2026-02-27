@@ -1,0 +1,23 @@
+{
+    "item_id": "GS_Version_Update_003",
+    "compliance_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "4.1 The Specifications consist of the following: (a) The General Specification (GS) for Civil Engineering Works, 2020 Edition (The Government of the Hong Kong Special Administrative Region), together with its Amendments No. 1/2021, 2/2021, 3/2021, 1/2022, 2/2022, 3/2022, 4/2022, 1/2023, 1/2024, 2/2024 and 1/2025. [1], [2]",
+    "reasoning": "The General Particulars (GP) of Volume 3a reference the 'General Specification for Civil Engineering Works 2020 Edition'. It is essential to verify that this reference incorporates the most recent Corrigenda (such as 1/2025) relevant to the tender gazette date to ensure the technical standards are current and legally compliant. [3]",
+    "document_references": [
+      "EP_SP_307-24-Tender_Documents_Volume_3a_v2"
+    ],
+    "check_type": "specification_update",
+    "description": "Verify that the reference to the 'General Specification for Civil Engineering Works 2020 Edition' in Vol 3a GP includes the latest Corrigenda (e.g., 1/2025) applicable to the tender gazette date. [3]",
+    "keywords": [
+      "General Specification",
+      "Civil Engineering Works 2020",
+      "Corrigenda 1/2025",
+      "tender gazette date"
+    ],
+    "source": "LLM_Discovery_REVERSE_ENGINEERED",
+    "severity": "minor",
+    "manual_verdict": "consistent",
+    "manual_verdict_category": "verified",
+    "manual_verdict_note": "The original tender document in Clause 4.1(a) explicitly lists all amendments up to 1/2025, satisfying the verification requirement. [2]"
+}

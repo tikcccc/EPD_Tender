@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import AliasChoices, BaseModel, Field, field_validator, model_validator
 
 from app.schemas.evidence import EvidenceAnchor
 
@@ -13,10 +13,32 @@ Severity = Literal["major", "minor", "info"]
 ManualVerdict = Literal["accepted", "rejected", "needs_followup"]
 ManualVerdictCategory = Literal["evidence_gap", "rule_dispute", "false_positive", "data_issue", "other"]
 
+_STATUS_NORMALIZATION_MAP = {
+  "consistent": "consistent",
+  "compliant": "consistent",
+  "compliance": "consistent",
+  "inconsistent": "inconsistent",
+  "non_compliant": "inconsistent",
+  "noncompliant": "inconsistent",
+  "non_compliance": "inconsistent",
+  "noncompliance": "inconsistent",
+  "unknown": "unknown",
+}
+
+
+def _normalize_consistency_status(value: object) -> object:
+  if not isinstance(value, str):
+    return value
+
+  key = value.strip().lower().replace("-", "_").replace(" ", "_")
+  return _STATUS_NORMALIZATION_MAP.get(key, value)
+
 
 class ReportItem(BaseModel):
   item_id: str
-  consistency_status: ConsistencyStatus
+  consistency_status: ConsistencyStatus = Field(
+    validation_alias=AliasChoices("consistency_status", "compliance_status")
+  )
   confidence_score: float = Field(ge=0, le=1)
   evidence: str
   reasoning: str
@@ -31,6 +53,11 @@ class ReportItem(BaseModel):
   manual_verdict_category: str | None = None
   manual_verdict_note: str | None = None
   anchors: list[EvidenceAnchor] | None = None
+
+  @field_validator("consistency_status", mode="before")
+  @classmethod
+  def _normalize_status(cls, value: object) -> object:
+    return _normalize_consistency_status(value)
 
 
 class ReportIngestRequest(BaseModel):
