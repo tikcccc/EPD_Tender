@@ -25,6 +25,7 @@ import type {
   NecTemplatePayload,
   ReportItem,
   ResolveEvidenceResult,
+  Severity,
   SelectedStandard,
 } from "@/features/tender-ui/types";
 
@@ -35,6 +36,12 @@ const FALLBACK_DOCUMENT: DocumentReference = {
 };
 const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._-]+)(?:\s*,[^:\n]+)?\s*:/gi;
 const QUOTED_SEGMENT_PATTERNS = [/"([^"]+)"/g, /“([^”]+)”/g];
+const SEVERITY_ORDER: Severity[] = ["major", "minor", "info"];
+const SEVERITY_LABELS: Record<Severity, string> = {
+  major: "Major",
+  minor: "Minor",
+  info: "Info",
+};
 
 type ResolveCandidate = {
   order: number;
@@ -77,6 +84,19 @@ function toDocumentMap(template: NecTemplatePayload | null): Record<string, Docu
 
 function normalizeEvidenceText(text: string): string {
   return text.replace(/\s+/g, " ").trim();
+}
+
+function formatCheckTypeLabel(checkType: string): string {
+  const normalized = checkType.trim();
+  if (!normalized) {
+    return "N/A";
+  }
+
+  return normalized
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
 }
 
 function normalizeKeyword(text: string): string {
@@ -327,6 +347,8 @@ export default function TenderPage() {
 
   const [searchText, setSearchText] = useState("");
   const [reviewTypeFilter, setReviewTypeFilter] = useState<"all" | "consistency" | "compliance">("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [severityFilter, setSeverityFilter] = useState<"all" | Severity>("all");
   const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
 
   const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>({
@@ -394,6 +416,17 @@ export default function TenderPage() {
     return set;
   }, [selectedOrder, standardMap]);
 
+  const categoryOptions = useMemo(() => {
+    return Array.from(new Set(reportItems.map((item) => item.check_type.trim()).filter(Boolean))).sort((a, b) =>
+      a.localeCompare(b),
+    );
+  }, [reportItems]);
+
+  const severityOptions = useMemo(() => {
+    const presentSeverities = new Set(reportItems.map((item) => item.severity));
+    return SEVERITY_ORDER.filter((severity) => presentSeverities.has(severity));
+  }, [reportItems]);
+
   const selectedStandards = useMemo<SelectedStandard[]>(() => {
     return selectedOrder.map((standardId, index) => {
       const standard = standardMap.get(standardId);
@@ -417,13 +450,21 @@ export default function TenderPage() {
         return false;
       }
 
+      if (categoryFilter !== "all" && item.check_type !== categoryFilter) {
+        return false;
+      }
+
+      if (severityFilter !== "all" && item.severity !== severityFilter) {
+        return false;
+      }
+
       if (!keyword) {
         return true;
       }
 
       return matchesKeywordFuzzySearch(item.keywords, keyword);
     });
-  }, [reportItems, reviewTypeFilter, searchText, selectedOrder.length, selectedCheckTypes]);
+  }, [categoryFilter, reportItems, reviewTypeFilter, searchText, selectedOrder.length, selectedCheckTypes, severityFilter]);
 
   useEffect(() => {
     let disposed = false;
@@ -837,6 +878,32 @@ export default function TenderPage() {
                 <option value="all">All Review Types</option>
                 <option value="consistency">Consistency Review</option>
                 <option value="compliance">Compliance Review</option>
+              </select>
+              <select
+                className="c-select-input"
+                value={categoryFilter}
+                aria-label="Filter cards by category"
+                onChange={(event) => setCategoryFilter(event.target.value)}
+              >
+                <option value="all">All Categories</option>
+                {categoryOptions.map((category) => (
+                  <option key={category} value={category}>
+                    {formatCheckTypeLabel(category)}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="c-select-input"
+                value={severityFilter}
+                aria-label="Filter cards by severity"
+                onChange={(event) => setSeverityFilter(event.target.value as "all" | Severity)}
+              >
+                <option value="all">All Severities</option>
+                {severityOptions.map((severity) => (
+                  <option key={severity} value={severity}>
+                    {SEVERITY_LABELS[severity]}
+                  </option>
+                ))}
               </select>
             </div>
 

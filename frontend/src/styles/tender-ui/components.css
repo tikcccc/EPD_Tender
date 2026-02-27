@@ -283,7 +283,7 @@
 .c-card-filters {
   display: grid;
   gap: var(--space-2);
-  grid-template-columns: minmax(0, 1fr) 220px;
+  grid-template-columns: minmax(0, 1fr) repeat(3, minmax(150px, 220px));
   margin-bottom: var(--space-3);
 }
 
