@@ -61,6 +61,10 @@
   margin-bottom: var(--space-3);
 }
 
+.c-section-header.is-collapsed {
+  margin-bottom: 0;
+}
+
 .c-section-title {
   font-size: var(--fs-16);
   font-weight: var(--fw-semibold);

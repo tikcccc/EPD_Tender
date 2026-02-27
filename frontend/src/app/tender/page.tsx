@@ -349,6 +349,7 @@ export default function TenderPage() {
   const [reviewTypeFilter, setReviewTypeFilter] = useState<"all" | "consistency" | "compliance">("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [severityFilter, setSeverityFilter] = useState<"all" | Severity>("all");
+  const [evaluationScopeExpanded, setEvaluationScopeExpanded] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
 
   const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>({
@@ -826,27 +827,43 @@ export default function TenderPage() {
       sidebar={
         <div className="c-sidebar-stack">
           <section className="c-section">
-            <div className="c-section-header">
+            <div className={`c-section-header${evaluationScopeExpanded ? "" : " is-collapsed"}`}>
               <div>
                 <h2 className="c-section-title">Evaluation Scope</h2>
                 <p className="c-section-desc">
                   This section lists the standards and priority levels used to generate this report.
                 </p>
               </div>
+              <button
+                className="c-link-btn c-review-toggle"
+                type="button"
+                onClick={() => setEvaluationScopeExpanded((value) => !value)}
+                aria-expanded={evaluationScopeExpanded}
+                aria-controls="evaluation-scope-panel"
+              >
+                {evaluationScopeExpanded ? "Collapse" : "Expand"}
+                <span className={`c-review-toggle-chevron${evaluationScopeExpanded ? " is-open" : ""}`} aria-hidden="true">
+                  ▾
+                </span>
+              </button>
             </div>
-            {loadingTemplate ? <p className="c-empty">Loading evaluation standards...</p> : null}
-            {templateError ? <p className="c-alert">Unable to load evaluation settings right now.</p> : null}
-            {template && !templateError ? (
-              <>
-                <p className="c-notice">Standard set: {templateName}</p>
-                <div className="c-card-meta" style={{ marginTop: "12px" }}>
-                  {selectedStandards.map((standard) => (
-                    <span key={standard.standard_id} className="c-chip">
-                      Priority {standard.priority} {standard.name}
-                    </span>
-                  ))}
-                </div>
-              </>
+            {evaluationScopeExpanded ? (
+              <div id="evaluation-scope-panel">
+                {loadingTemplate ? <p className="c-empty">Loading evaluation standards...</p> : null}
+                {templateError ? <p className="c-alert">Unable to load evaluation settings right now.</p> : null}
+                {template && !templateError ? (
+                  <>
+                    <p className="c-notice">Standard set: {templateName}</p>
+                    <div className="c-card-meta" style={{ marginTop: "12px" }}>
+                      {selectedStandards.map((standard) => (
+                        <span key={standard.standard_id} className="c-chip">
+                          Priority {standard.priority} {standard.name}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+              </div>
             ) : null}
           </section>
 
