@@ -1,5 +1,6 @@
 export type Severity = "major" | "minor" | "info";
 export type ConsistencyStatus = "consistent" | "inconsistent" | "unknown";
+export type StatusDomain = "consistency" | "compliance";
 export type MatchStatus = "resolved_exact" | "resolved_approximate" | "unresolved";
 export type ManualVerdict = "accepted" | "rejected" | "needs_followup";
 export type ManualVerdictCategory =
@@ -12,6 +13,7 @@ export type ManualVerdictCategory =
 export interface ReportItem {
   item_id: string;
   consistency_status: ConsistencyStatus;
+  status_domain?: StatusDomain;
   confidence_score: number;
   evidence: string;
   reasoning: string;

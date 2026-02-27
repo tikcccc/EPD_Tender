@@ -14,14 +14,14 @@
       "name": "Document Completeness",
       "default_priority": 2,
       "enabled_by_default": true,
-      "check_types": ["deadline"]
+      "check_types": ["deadline", "pricing_structure", "specification_update"]
     },
     {
       "standard_id": "design_checker",
       "name": "Design Checker Workflow",
       "default_priority": 3,
       "enabled_by_default": true,
-      "check_types": ["deadline"]
+      "check_types": ["deadline", "technical_alignment"]
     },
     {
       "standard_id": "consent_path",

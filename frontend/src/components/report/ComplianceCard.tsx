@@ -7,6 +7,7 @@ import type {
   ManualVerdict,
   ManualVerdictCategory,
   ReportItem,
+  StatusDomain,
 } from "@/features/tender-ui/types";
 
 type ComplianceCardProps = {
@@ -41,10 +42,29 @@ const MANUAL_NOTE_MAX_LENGTH = 1000;
 const MANUAL_HISTORY_PAGE_SIZE = 5;
 const MANUAL_REVIEW_NOTICE_AUTO_HIDE_MS = 2500;
 const MANUAL_REVIEW_ERROR_AUTO_HIDE_MS = 3000;
-const REVIEW_TITLE_BY_STATUS: Record<ReportItem["consistency_status"], string> = {
-  consistent: "Consistency Review",
-  inconsistent: "Inconsistency Review",
-  unknown: "Consistency Review",
+const REVIEW_TITLE_BY_DOMAIN_STATUS: Record<StatusDomain, Record<ReportItem["consistency_status"], string>> = {
+  consistency: {
+    consistent: "Consistency Review",
+    inconsistent: "Inconsistency Review",
+    unknown: "Consistency Review",
+  },
+  compliance: {
+    consistent: "Compliance Review",
+    inconsistent: "Non-compliance Review",
+    unknown: "Compliance Review",
+  },
+};
+const STATUS_LABEL_BY_DOMAIN_STATUS: Record<StatusDomain, Record<ReportItem["consistency_status"], string>> = {
+  consistency: {
+    consistent: "Consistent",
+    inconsistent: "Inconsistent",
+    unknown: "Unknown",
+  },
+  compliance: {
+    consistent: "Compliant",
+    inconsistent: "Non-compliant",
+    unknown: "Unknown",
+  },
 };
 
 const MANUAL_VERDICT_OPTIONS: Array<{ value: ManualVerdict; label: string }> = [
@@ -172,8 +192,9 @@ export function ComplianceCard({
   const normalizedEvidence = item.evidence.replace(/\s+/g, " ").trim();
   const severityLabel = `${item.severity.charAt(0).toUpperCase()}${item.severity.slice(1)}`;
   const confidenceLabel = item.confidence_score.toFixed(2);
-  const consistencyLabel = `${item.consistency_status.charAt(0).toUpperCase()}${item.consistency_status.slice(1)}`;
-  const reviewTitle = REVIEW_TITLE_BY_STATUS[item.consistency_status] ?? "Consistency Review";
+  const statusDomain: StatusDomain = item.status_domain === "compliance" ? "compliance" : "consistency";
+  const consistencyLabel = STATUS_LABEL_BY_DOMAIN_STATUS[statusDomain][item.consistency_status] ?? "Unknown";
+  const reviewTitle = REVIEW_TITLE_BY_DOMAIN_STATUS[statusDomain][item.consistency_status] ?? "Consistency Review";
   const checkTypeLabel = useMemo(() => formatCheckTypeLabel(item.check_type), [item.check_type]);
   const evidenceByDocument = useMemo(() => extractReferenceEvidenceByDocument(item), [item]);
   const referenceItems = useMemo(() => {

@@ -17,10 +17,29 @@ from app.schemas.reports import ManualReviewHistoryEntry, ReportItem
 
 _FILENAME_RE = re.compile(r"[^a-zA-Z0-9._-]+")
 _HONG_KONG_TZ = timezone(timedelta(hours=8), name="HKT")
-_REVIEW_TITLE_BY_STATUS = {
-  "consistent": "Consistency Review",
-  "inconsistent": "Inconsistency Review",
-  "unknown": "Consistency Review",
+_REVIEW_TITLE_BY_DOMAIN_STATUS = {
+  "consistency": {
+    "consistent": "Consistency Review",
+    "inconsistent": "Inconsistency Review",
+    "unknown": "Consistency Review",
+  },
+  "compliance": {
+    "consistent": "Compliance Review",
+    "inconsistent": "Non-compliance Review",
+    "unknown": "Compliance Review",
+  },
+}
+_STATUS_LABEL_BY_DOMAIN_STATUS = {
+  "consistency": {
+    "consistent": "Consistent",
+    "inconsistent": "Inconsistent",
+    "unknown": "Unknown",
+  },
+  "compliance": {
+    "consistent": "Compliant",
+    "inconsistent": "Non-compliant",
+    "unknown": "Unknown",
+  },
 }
 
 
@@ -71,8 +90,20 @@ def _format_optional_label(value: str | None) -> str:
   return _format_label(value)
 
 
-def _review_title(consistency_status: str) -> str:
-  return _REVIEW_TITLE_BY_STATUS.get(consistency_status, "Consistency Review")
+def _normalized_status_domain(status_domain: str | None) -> str:
+  return "compliance" if status_domain == "compliance" else "consistency"
+
+
+def _review_title(consistency_status: str, status_domain: str | None) -> str:
+  domain = _normalized_status_domain(status_domain)
+  domain_titles = _REVIEW_TITLE_BY_DOMAIN_STATUS[domain]
+  return domain_titles.get(consistency_status, domain_titles["unknown"])
+
+
+def _status_label(consistency_status: str, status_domain: str | None) -> str:
+  domain = _normalized_status_domain(status_domain)
+  domain_labels = _STATUS_LABEL_BY_DOMAIN_STATUS[domain]
+  return domain_labels.get(consistency_status, _format_label(consistency_status))
 
 
 def _format_history_time(timestamp: datetime) -> str:
@@ -126,12 +157,12 @@ def _build_docx(
     document.add_paragraph("No cards selected for export.")
 
   for index, card in enumerate(ordered_cards, start=1):
-    title = _review_title(card.consistency_status)
+    title = _review_title(card.consistency_status, card.status_domain)
     history_entries = _history_for_item(manual_review_history, card.item_id)
     document.add_heading(f"{index}. {title}", level=2)
     document.add_paragraph(f"Item ID: {card.item_id}")
     document.add_paragraph(f"Title: {title}")
-    document.add_paragraph(f"Status: {_format_label(card.consistency_status)}")
+    document.add_paragraph(f"Status: {_status_label(card.consistency_status, card.status_domain)}")
     document.add_paragraph(f"Category: {_format_label(card.check_type)}")
     document.add_paragraph(f"Severity: {_format_label(card.severity)}")
     document.add_paragraph(f"Confidence: {card.confidence_score:.2f}")
@@ -228,13 +259,13 @@ def _build_pdf(
     story.append(Paragraph("No cards selected for export.", body_style))
 
   for index, card in enumerate(ordered_cards, start=1):
-    title = _review_title(card.consistency_status)
+    title = _review_title(card.consistency_status, card.status_domain)
     history_entries = _history_for_item(manual_review_history, card.item_id)
     story.append(Spacer(1, 6))
     story.append(Paragraph(f"{index}. {_safe_text(title)}", heading_style))
     story.append(Paragraph(f"Item ID: {_safe_text(card.item_id)}", meta_style))
     story.append(Paragraph(f"Title: {_safe_text(title)}", meta_style))
-    story.append(Paragraph(f"Status: {_safe_text(_format_label(card.consistency_status))}", meta_style))
+    story.append(Paragraph(f"Status: {_safe_text(_status_label(card.consistency_status, card.status_domain))}", meta_style))
     story.append(Paragraph(f"Category: {_safe_text(_format_label(card.check_type))}", meta_style))
     story.append(Paragraph(f"Severity: {_safe_text(_format_label(card.severity))}", meta_style))
     story.append(Paragraph(f"Confidence: {card.confidence_score:.2f}", meta_style))

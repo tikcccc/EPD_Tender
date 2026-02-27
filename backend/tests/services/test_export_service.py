@@ -134,6 +134,18 @@ def test_build_export_file_pdf_contains_expected_content() -> None:
   assert "Deadline Compliance" in extracted_text
 
 
+def test_build_export_file_docx_uses_compliance_labels_when_status_domain_is_compliance() -> None:
+  request = _sample_request("docx")
+  card = _sample_card().model_copy(update={"status_domain": "compliance"})
+
+  _, _, content = build_export_file(request, [card])
+  document = Document(BytesIO(content))
+  paragraph_text = "\n".join(paragraph.text for paragraph in document.paragraphs)
+
+  assert "Title: Compliance Review" in paragraph_text
+  assert "Status: Compliant" in paragraph_text
+
+
 def test_build_export_file_docx_includes_all_manual_review_history_entries() -> None:
   request = _sample_request("docx")
   card = _sample_card()

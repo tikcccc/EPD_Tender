@@ -137,7 +137,8 @@
     "manual_verdict": "consistent",
     "manual_verdict_category": "verified",
     "manual_verdict_note": "Appendix M [3] correctly implements the DBO-specific pricing structure [4], but the analyst emphasizes the need for a explicit disclaimer to prevent interpretation conflicts with the main Price List [2].",
-    "consistency_status": "consistent"
+    "consistency_status": "consistent",
+    "status_domain": "compliance"
   },
   {
     "item_id": "GS_Version_Update_003",
@@ -160,7 +161,8 @@
     "manual_verdict": "consistent",
     "manual_verdict_category": "verified",
     "manual_verdict_note": "The original tender document in Clause 4.1(a) explicitly lists all amendments up to 1/2025, satisfying the verification requirement. [2]",
-    "consistency_status": "consistent"
+    "consistency_status": "consistent",
+    "status_domain": "compliance"
   },
   {
     "item_id": "BIM_Standards_Alignment_002",
@@ -186,6 +188,7 @@
     "manual_verdict": "consistent",
     "manual_verdict_category": "verified",
     "manual_verdict_note": "The original tender documents explicitly reference CIC BIM Standards Version 2.1 and local facilities upkeep guides across Volumes 1, 3a, and 3b, providing a consistent technical basis for the analyst's verification requirement.",
-    "consistency_status": "consistent"
+    "consistency_status": "consistent",
+    "status_domain": "compliance"
   }
 ]

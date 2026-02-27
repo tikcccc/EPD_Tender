@@ -25,6 +25,7 @@ def test_report_item_accepts_compliance_status_alias() -> None:
   item = ReportItem.model_validate(payload)
 
   assert item.consistency_status == "consistent"
+  assert item.status_domain == "compliance"
 
 
 def test_report_item_normalizes_compliance_value_on_consistency_field() -> None:
@@ -34,6 +35,7 @@ def test_report_item_normalizes_compliance_value_on_consistency_field() -> None:
   item = ReportItem.model_validate(payload)
 
   assert item.consistency_status == "consistent"
+  assert item.status_domain == "compliance"
 
 
 def test_report_item_normalizes_non_compliant_value() -> None:
@@ -43,3 +45,13 @@ def test_report_item_normalizes_non_compliant_value() -> None:
   item = ReportItem.model_validate(payload)
 
   assert item.consistency_status == "inconsistent"
+  assert item.status_domain == "compliance"
+
+
+def test_report_item_defaults_to_consistency_domain_for_consistent_value() -> None:
+  payload = _base_payload()
+  payload["consistency_status"] = "consistent"
+
+  item = ReportItem.model_validate(payload)
+
+  assert item.status_domain == "consistency"

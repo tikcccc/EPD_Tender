@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 import json
-from functools import lru_cache
 
 from app.core.config import NEC_TEMPLATE_PATH
 from app.core.errors import ApiError
 from app.schemas.templates import DocumentReference, NecTemplateData
 
 
-@lru_cache(maxsize=1)
 def get_nec_template() -> NecTemplateData:
   if not NEC_TEMPLATE_PATH.exists():
     raise ApiError(
