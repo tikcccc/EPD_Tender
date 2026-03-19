@@ -1,6 +1,6 @@
 {
   "doc_dir": "/home/tikhong/EPD_Tender/coding-doc",
-  "files_count": 10,
+  "files_count": 11,
   "files": [
     {
       "file": "/home/tikhong/EPD_Tender/coding-doc/acceptance-criteria.md",
@@ -596,6 +596,188 @@
           "line": 170,
           "level": 2,
           "text": "8. 最小合法樣例"
+        }
+      ]
+    },
+    {
+      "file": "/home/tikhong/EPD_Tender/coding-doc/external-report-json-format.md",
+      "title": "Raw Report Input JSON Format",
+      "heading_count": 35,
+      "headings": [
+        {
+          "line": 1,
+          "level": 1,
+          "text": "Raw Report Input JSON Format"
+        },
+        {
+          "line": 3,
+          "level": 2,
+          "text": "1. 範圍"
+        },
+        {
+          "line": 17,
+          "level": 2,
+          "text": "2. 先說結論"
+        },
+        {
+          "line": 50,
+          "level": 2,
+          "text": "3. Top-Level 格式要求"
+        },
+        {
+          "line": 52,
+          "level": 3,
+          "text": "3.1 正確格式"
+        },
+        {
+          "line": 61,
+          "level": 3,
+          "text": "3.2 欄位說明"
+        },
+        {
+          "line": 68,
+          "level": 3,
+          "text": "3.3 不要誤用完整包裝格式"
+        },
+        {
+          "line": 92,
+          "level": 3,
+          "text": "3.4 `report_items` 不能空"
+        },
+        {
+          "line": 101,
+          "level": 2,
+          "text": "4. `report_items[]` 欄位要求"
+        },
+        {
+          "line": 105,
+          "level": 3,
+          "text": "4.1 最小必填欄位"
+        },
+        {
+          "line": 121,
+          "level": 3,
+          "text": "4.2 可選欄位"
+        },
+        {
+          "line": 131,
+          "level": 3,
+          "text": "4.3 枚舉值要求"
+        },
+        {
+          "line": 150,
+          "level": 3,
+          "text": "4.4 相容寫法"
+        },
+        {
+          "line": 174,
+          "level": 2,
+          "text": "5. `document_references` 要求"
+        },
+        {
+          "line": 178,
+          "level": 3,
+          "text": "5.1 必須填系統內的 `document_id`"
+        },
+        {
+          "line": 201,
+          "level": 3,
+          "text": "5.2 多文件情況"
+        },
+        {
+          "line": 213,
+          "level": 2,
+          "text": "6. `evidence` 格式要求"
+        },
+        {
+          "line": 224,
+          "level": 3,
+          "text": "6.1 單文件 evidence：推薦格式"
+        },
+        {
+          "line": 242,
+          "level": 3,
+          "text": "6.2 單文件 evidence：也可接受的格式"
+        },
+        {
+          "line": 255,
+          "level": 3,
+          "text": "6.3 多文件 evidence：推薦格式"
+        },
+        {
+          "line": 272,
+          "level": 3,
+          "text": "6.4 系統目前能識別的 evidence pattern"
+        },
+        {
+          "line": 288,
+          "level": 3,
+          "text": "6.5 引號格式建議"
+        },
+        {
+          "line": 307,
+          "level": 3,
+          "text": "6.6 `evidence` 內容應該放什麼"
+        },
+        {
+          "line": 327,
+          "level": 3,
+          "text": "6.7 最不推薦的 evidence 寫法"
+        },
+        {
+          "line": 340,
+          "level": 3,
+          "text": "6.8 多個文件但 evidence 沒分段的問題"
+        },
+        {
+          "line": 359,
+          "level": 2,
+          "text": "7. `anchors` 在 raw input 裡的地位"
+        },
+        {
+          "line": 375,
+          "level": 2,
+          "text": "8. 建議的 raw JSON 範例"
+        },
+        {
+          "line": 377,
+          "level": 3,
+          "text": "8.1 單文件範例"
+        },
+        {
+          "line": 401,
+          "level": 3,
+          "text": "8.2 多文件範例"
+        },
+        {
+          "line": 425,
+          "level": 2,
+          "text": "9. 不建議的 raw JSON 寫法"
+        },
+        {
+          "line": 427,
+          "level": 3,
+          "text": "9.1 把檔名塞進 `document_references`"
+        },
+        {
+          "line": 437,
+          "level": 3,
+          "text": "9.2 把摘要塞進 `evidence`"
+        },
+        {
+          "line": 447,
+          "level": 3,
+          "text": "9.3 多文件但沒有 marker"
+        },
+        {
+          "line": 465,
+          "level": 2,
+          "text": "10. 實際可執行的轉換規則"
+        },
+        {
+          "line": 477,
+          "level": 2,
+          "text": "11. 依據"
         }
       ]
     },

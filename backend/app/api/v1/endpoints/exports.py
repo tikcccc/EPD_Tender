@@ -8,7 +8,7 @@ from fastapi.responses import StreamingResponse
 from app.schemas.exports import ExportRequest
 from app.schemas.reports import ManualReviewHistoryEntry
 from app.services.export_service import build_export_file
-from app.services.report_service import get_cards, get_manual_review_history
+from app.services.report_service import get_all_cards, get_manual_review_history
 
 router = APIRouter(prefix="/exports", tags=["exports"])
 _EXPORT_HISTORY_PAGE_SIZE = 200
@@ -31,8 +31,8 @@ def _collect_manual_review_history(report_id: str, item_ids: list[str]) -> dict[
 
 @router.post("/report", summary="生成輸出報告")
 def export_report(payload: ExportRequest) -> StreamingResponse:
-  cards_data = get_cards(payload.report_id)
-  existing_item_ids = {card.item_id for card in cards_data.cards}
+  cards = get_all_cards(payload.report_id)
+  existing_item_ids = {card.item_id for card in cards}
   selected_item_ids: list[str] = []
   seen: set[str] = set()
   for card_id in payload.card_ids:
@@ -42,7 +42,7 @@ def export_report(payload: ExportRequest) -> StreamingResponse:
     selected_item_ids.append(card_id)
 
   manual_review_history = _collect_manual_review_history(payload.report_id, selected_item_ids)
-  file_name, media_type, content = build_export_file(payload, cards_data.cards, manual_review_history)
+  file_name, media_type, content = build_export_file(payload, cards, manual_review_history)
 
   headers = {
     "Content-Disposition": f'attachment; filename="{file_name}"',

@@ -1,0 +1,546 @@
+[
+  {
+    "item_id": "GCT_GCT34",
+    "consistency_status": "not_found",
+    "confidence_score": 0.630601,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 34 Tenderer’s consent and authorization on conviction records\nThe tenderer shall submit with the tender a duly signed letter in the form set out in Appendix E to these General Conditions of Tender giving consent to the Major Works Project Management Office of Highways Department to obtain from all relevant government departments/bureaux, authorizing such relevant government departments/bureaux to release and make available to the Major Works Project Management Office of Highways Department\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 7. Company/Business Organisation Status\n\n7.1 The Tenderer shall provide the following details relating to itself in the Information Schedule:\n\n(a) name and principal place of business of the Tenderer;   \n(b) length of business experience;   \n(c) shareholders/partners/proprietor of the Tenderer and their percentage of ownership;   \n(d) names of the following: (i) managing director and other directors; (ii) partners; or (iii) sole proprietor;\n\n(e) a copy of a valid business registration certific\"",
+    "reasoning": "The tender clause GCT34 specifically requires the tenderer to submit a signed consent letter authorizing the release of conviction records under a defined list of Hong Kong ordinances related to environmental, safety, labor, and regulatory compliance. Neither Candidate 1 (clause_id=7) nor Candidate 2 (clause_id=16) addresses this subject matter. Candidate 1 focuses on corporate registration and organizational status documentation, while Candidate 2 outlines grounds for government disqualification, including bankruptcy, false statements, or intellectual property infringements—but not conviction record disclosures or consent mechanisms. Therefore, no candidate is substantively relevant to the specific requirement in GCT34.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT34",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT14",
+    "consistency_status": "modified",
+    "confidence_score": 0.57943475,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 14 Erratic pricing\n(1) Without prejudice to the generality of the other General Conditions of Tender and Special\nConditions of Tender, the Client may regard a tender as not being the most advantageous, irrespective of whether or not it is the lowest tender or the tender with the highest overall score, if in the Client’s opinion:\n(a) the activity schedule of the tender have been priced erratically whether or not such erratic pricing is the result of the application of Appendix F to these Ge\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 17. Award of Contract\n\n17.1 Subject to the other provisions of the Tender Documents, the Government will normally award the Contract to the Tenderer which the Government has determined to be capable of fulfilling the terms of the Contract and complies with the following evaluation criteria:\n\n(a) where the Tender Documents do not contain any Marking Scheme, (i) the Tenderer has passed the completeness check, (ii) the Tenderer and its Tender conform with all the essential requirements stipulated\"",
+    "reasoning": "GCT14 addresses the Client's discretion to reject a tender based on 'erratic pricing' that poses financial risk, even if it is the lowest-priced or highest-scoring bid. This directly relates to contract award criteria and evaluation methodology, which is the core subject of Candidate 17 ('Award of Contract'). While Candidate 17 outlines standard award procedures (e.g., lowest price or best value under a marking scheme), it does not include provisions allowing rejection due to erratic pricing patterns or financial risk from inconsistent unit pricing. GCT14 thus modifies the standard award process by introducing an additional, discretionary disqualification ground not present in Candidate 17. Candidates 5 (pricing format rules) and 11 (counter-proposals) are less relevant: Candidate 5 governs how prices are quoted but not their substantive reasonableness or risk implications; Candidate 11 concerns bid modifications, not pricing anomalies. Therefore, Candidate 17 is the most subject-matter relevant, but GCT14 deviates from it by adding a non-standard evaluation criterion.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT14",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT4",
+    "consistency_status": "uncertain",
+    "confidence_score": 0.6727338,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 4 Submission of tender (Formula Approach)\n(1) The following documents shall be enclosed in a sealed envelope addressed, endorsed and deposited as required by the Gazette Notification or Letter of Invitation to Tender or the Tender Notice:\n(a) One set of the documents referred to in Clause GCT 2(b) above with:\n(i) The Form of Tender in hard copy format duly signed. (ii) The Contract Data Part two in hard copy format duly completed and signed. (iii) The activity schedule in either hard copy\" From BD-TERMS-2 (January 2026) (Eng).md: \"# Tender Submission:\n\n(a) Paper-based Tendering\n\nThe Tender (and where the two-envelope system is applicable, comprising the Technical and Price Proposals) shall be completed in writing on hardcopy (and if so expressly requested in the Terms of Tender (Supplement) also on softcopy) and shall be submitted in triplicate (i.e. three sets of identical documents) in accordance with the “Lodging of Tender” section of the Tender Form. The Tenderer shall ensure that all the three sets of Tenders submitt\"",
+    "reasoning": "model returned non-JSON response",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT4",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT20",
+    "consistency_status": "modified",
+    "confidence_score": 0.58028305,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 20 Management of Subcontractors\n(1) The tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate an outline Subcontractor Management Plan (SMP) which shall contain information as required in the Guidelines on Scope and Contents of the Subcontractor Management Plan at Appendix B to the additional conditions of contract. The outline SMP submitted shall not form part of t\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 8. Sub-contractors\n\n8.1 If any obligations of the Contractor are proposed to be performed by a sub-contractor, the Tenderer shall submit information of the subcontractor in Table B of the Information Schedule (“Sub-contractor Table”). Details of the obligations to be performed by the proposed subcontractor shall also be submitted.\n\n8.2 However, where it is stated that no sub-contracting shall be allowed in the Terms of Tender (Supplement) or elsewhere in the Tender Documents, the Tenderer shal\"",
+    "reasoning": "Candidate 1 (clause_id=8) addresses subcontractor management by requiring submission of subcontractor information and outlining conditions for subcontracting, which aligns with the subject matter of GCT20. However, GCT20 specifically mandates submission of an outline Subcontractor Management Plan (SMP) per Appendix B guidelines upon request under GCT25, and clarifies that the SMP is not part of the contract. Candidate 1 focuses on listing subcontractors in a table, obtaining undertakings, and disqualification risks, but does not mention an SMP or reference to Appendix B guidelines. Thus, while both clauses concern subcontractor oversight, GCT20 introduces distinct procedural and documentation requirements not present in Candidate 1, indicating a 'modified' compliance status.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT20",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT19",
+    "consistency_status": "not_found",
+    "confidence_score": 0.6118493,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 19 Copyright\n(1) The documents, plans, drawings or other materials forming part of the tender documents shall only be used by a tenderer or any person authorized or licensed by the tenderer for the purpose of preparing its tender. All other rights in the aforesaid materials are reserved by the relevant copyright owners. The tenderer shall be liable to the Client for breach of the foregoing by any such person as if the breach were committed by the tenderer.\n(2) The tenderer shall indemnify\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 28. Licence to use the materials submitted by Tenderers\n\nA Tender once submitted will become the property of the Government. Tenders of unsuccessful Tenderer may be destroyed in accordance with Paragraph 22 of the Terms of Tender. In consideration of the Government considering its Tender, without prejudice to all other rights and powers of the Government under the Tender Documents (including in particular its right to disclose information in the Tenders) and under the Contract, each Tenderer h\"",
+    "reasoning": "The tender clause GCT19 addresses the tenderer's obligations regarding the use of the client's copyrighted materials (e.g., plans, drawings) provided in the tender documents, including restrictions on use, liability for breaches by authorized persons, and a requirement to provide a letter of indemnity. In contrast, Candidate 1 (clause_id=28) concerns the government’s license to use intellectual property submitted by tenderers in their tenders—i.e., it governs rights granted by the tenderer to the client over the tenderer’s own IP. The subject matter is inverse: GCT19 protects the client’s pre-existing IP from misuse by tenderers, while Candidate 1 grants the client rights to use the tenderer’s submitted IP. Therefore, no relevant standard candidate matches the subject matter of GCT19.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT19",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT27",
+    "consistency_status": "not_found",
+    "confidence_score": 0.58150065,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 27\nStatement of convictions under the Immigration Ordinance (Cap. 115)\n(1) A tender will not be considered if, during the 12-month period prior to the date set for the close of tender, or if this has been extended, the extended date, the tenderer has had three or more convictions in respect of separate incidents under Sections 17I or 38A of the Immigration Ordinance (Cap. 115) for employing illegal workers or for having illegal workers on any site under the tenderer’s control, whether or n\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "The tender clause GCT27 specifically addresses disqualification based on multiple convictions under Sections 17I or 38A of the Immigration Ordinance (Cap. 115) related to employing illegal workers, including detailed reporting requirements and joint venture implications. None of the candidate clauses address immigration-related convictions or employment of illegal workers. Candidate 16 covers general grounds for disqualification but focuses on insolvency, false statements, and intellectual property infringement—not immigration violations. Candidate 7 pertains to company registration and organizational details, and Candidate 29 addresses collusion and competition law. Therefore, no candidate is substantively relevant to the subject matter of GCT27.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT27",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT21",
+    "consistency_status": "modified",
+    "confidence_score": 0.64226794,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 21 Essential submissions\nWithout prejudice to other General Conditions of Tender or Special Conditions of Tender providing for invalidating a tender submitted by a tenderer, the failure of a tenderer to submit with its tender any of the following on or before the original date set for the close of tender or, if this has been extended, the extended date shall render its tender invalid:\n(i) the Form of Tender required under Clause GCT 4(1)(a)(i);   \n(ii) the activity schedule required under\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 3. Tender Preparation and Submission\n\n3.1 Unless otherwise specified in the Terms of Tender (Supplement), the Tenderer must bid for all Items specified in the Price Schedule by submitting the Unit Price for each such Item. Where a Tenderer fails to do so, its Tender will not be considered further.\n\n3.2 A complete list of all proposals, documents and information which are required to be submitted is set out in the Completeness Check Schedule. These proposals, documents and information to be sub\"",
+    "reasoning": "Candidate 1 (clause_id=3) is the most relevant because it addresses mandatory submission requirements and consequences of non-submission (e.g., tender not being considered further), which aligns with GCT21’s focus on essential submissions whose omission invalidates the tender. However, GCT21 specifies a distinct set of required documents—including the Form of Tender, activity schedule, lead participant nomination for unincorporated JVs, and JV work-value breakdown—none of which are explicitly listed in Candidate 1. While both clauses share the same structural intent (invalidation due to missing submissions), the specific required items differ, indicating that GCT21 modifies the general framework in Candidate 1 by adding or substituting particular submission obligations tied to joint ventures and specific forms referenced in other clauses (GCT 4, SCT 5). Candidate 2 concerns counter-proposals and modifications to tender terms, which is unrelated to submission completeness.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT21",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT9",
+    "consistency_status": "compliant",
+    "confidence_score": 0.5894798,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 9 Qualification of tender\nAny qualification of the tender may cause the tender to be disqualified.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "Candidate 16 (Government Discretion) directly addresses grounds for disqualifying a tenderer, including submission of false or incomplete information, which aligns with the core intent of GCT9—that any qualification of the tender may lead to disqualification. While GCT9 is more general, Candidate 16 provides specific examples of disqualifying conduct that fall under the umbrella of 'qualification' (e.g., inaccurate statements). Candidate 9 concerns cancellation of the entire tender exercise, not disqualification of individual tenders, making it irrelevant. GCT9 is consistent with the discretionary disqualification authority in Candidate 16, hence compliant.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT9",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT5",
+    "consistency_status": "modified",
+    "confidence_score": 0.59024894,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 5 Financial Information\nThe tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate the financial information set out in Appendix B to these General Conditions of Tender. The information shall be used for tender assessment only and shall not form part of this contract.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 19. Financial Vetting\n\n19.1 If the Total Estimated Service Price payable by the Government to the successful Tenderer exceeds HK\\$15 million, the Tenderer has to demonstrate its financial capability before it can be considered for the award of the Contract. For this purpose, the Tenderer is required to submit the following documents for financial vetting:\n\n(a) originals (or copies certified by its auditors) of the audited accounts of the Tenderer, and the audited consolidated accounts of the g\"",
+    "reasoning": "Candidate 19 (Financial Vetting) is the most subject-matter relevant because it specifically addresses the submission of detailed financial information by tenderers for assessment purposes, aligning with GCT5’s requirement to provide financial information from Appendix B upon request. However, GCT5 is broader and more procedural—it references a request mechanism under GCT25 and limits use of the information to tender assessment without incorporation into the contract—whereas Candidate 19 prescribes specific thresholds (HK$15M), document types, and audit requirements not mentioned in GCT5. Thus, GCT5 modifies the standard by omitting financial thresholds and detailed documentation rules, instead deferring to an appendix and a separate clause for process.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT5",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT29",
+    "consistency_status": "not_found",
+    "confidence_score": 0.6017763,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 29\nOne tender only for holding companies, subsidiaries or related parties\n(1) Unless otherwise provided in the Special Conditions of Tender, no tenderer is permitted to submit more than one tender for each contract.\n(2) (a) A holding company and all of its subsidiaries shall be allowed to submit only one tender from any one of the companies in the group. (b) The existence of a holding-subsidiary relationship shall be determined as at the date set for the close of tender, or if this has bee\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "The tender clause GCT29 addresses restrictions on multiple tender submissions by holding companies, subsidiaries, and related parties, focusing on corporate relationships and control as defined under the Companies Ordinance (Cap. 622). Neither Candidate 1 (Government Discretion, clause_id=16) nor Candidate 2 (Financial Vetting, clause_id=19) pertains to this subject matter. Candidate 1 deals with grounds for disqualification such as insolvency, misrepresentation, or intellectual property infringement, while Candidate 2 concerns financial capability verification for high-value contracts. Neither contains provisions about limiting tender submissions within corporate groups or defining related-party relationships for tender eligibility. Therefore, no relevant standard clause candidate matches the subject matter of GCT29.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT29",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT17",
+    "consistency_status": "not_found",
+    "confidence_score": 0.6045563,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 17 Unreasonably low bids\nWithout prejudice to the generality of other General Conditions of Tender and Special Conditions of Tender, the Client may reject a tender which in the opinion of the Client is unreasonably low in terms of price and may therefore affect the tenderer’s capability to carry out and complete this contract and/or deliver work of the quality required in accordance with the terms of this contract.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 17. Award of Contract\n\n17.1 Subject to the other provisions of the Tender Documents, the Government will normally award the Contract to the Tenderer which the Government has determined to be capable of fulfilling the terms of the Contract and complies with the following evaluation criteria:\n\n(a) where the Tender Documents do not contain any Marking Scheme, (i) the Tenderer has passed the completeness check, (ii) the Tenderer and its Tender conform with all the essential requirements stipulated\"",
+    "reasoning": "The tender clause GCT17 specifically addresses the Client's right to reject tenders deemed 'unreasonably low' due to concerns about the tenderer’s ability to perform the contract or deliver required quality. None of the candidate clauses address this concept. Candidate 1 (clause_id=17) deals with general award criteria and lowest-price evaluation but does not mention rejection of unreasonably low bids. Candidate 2 (clause_id=16) outlines grounds for disqualification (e.g., bankruptcy, false statements, IP infringement) but not price reasonableness. Candidate 3 (clause_id=5) governs price formatting and inclusivity of quoted prices, not bid acceptability based on abnormally low pricing. Therefore, no candidate matches the subject matter of GCT17.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT17",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT28",
+    "consistency_status": "not_found",
+    "confidence_score": 0.640077,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 28\nStatement of convictions under the Employment Ordinance (Cap. 57)\n(1) A tender will not be considered if, during the 12-month period prior to the date set for the close of tender, or if this has been extended, the extended date, the tenderer has had three or more convictions in respect of separate incidents under the Employment Ordinance (Cap. 57) on any site under the tenderer’s control, whether or not it has been formally suspended as a result of such convictions. If the tenderer is a\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "The tender clause GCT28 specifically addresses convictions under the Employment Ordinance (Cap. 57) and imposes disqualification criteria and disclosure obligations related to labor law compliance. Candidate 16 deals with general grounds for disqualification (e.g., insolvency, false statements, intellectual property infringement) but does not mention employment-related convictions or the Employment Ordinance. Candidate 7 focuses on corporate documentation and business status, with no reference to legal convictions or compliance with employment legislation. Neither candidate covers the subject matter of GCT28, which is unique in its focus on recent employment law violations as a basis for tender ineligibility.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT28",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT6",
+    "consistency_status": "modified",
+    "confidence_score": 0.6533302,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 6 Unauthorised alterations\nAny unauthorised alteration or erasure or obliteration to the text of the documents may cause the tender to be disqualified.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "Candidate 16 (Government Discretion) is the most relevant because it enumerates specific grounds on which the Government may disqualify a tenderer, including submission of false, inaccurate, or forged documents (subclause 16.1(b)). The tender clause GCT6 addresses disqualification due to unauthorised alterations to tender documents, which conceptually aligns with the integrity concerns in 16.1(b), though it is not explicitly listed. Candidate 22 deals with document retention and destruction for unsuccessful tenderers and is unrelated to disqualification for document tampering. Since GCT6 introduces a distinct disqualification ground not verbatim present in Candidate 16 but within its general scope of discretionary disqualification for document integrity issues, the clause is considered 'modified'—it extends or specifies the standard provision without contradicting it.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT6",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT8",
+    "consistency_status": "modified",
+    "confidence_score": 0.5893568,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 8 Clarification of documents\nShould the tenderer for any reason whatsoever be in doubt about the precise meaning of any item or figure contained in the documents it shall seek clarification from the Project Manager designate.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 12. Request for Information\n\n12.1 In the event that the Government determines that:\n\n(a) clarification in relation to any part of the Tender is necessary; or (b) a document or a piece of information, other than those specified in Paragraph 3.3 of the Terms of Tender, is missing from any Tender, it may, but is not obliged to, request the Tenderer concerned to make the necessary clarification, or submit the required document or information. The Tenderer shall within five (5) working days from th\"",
+    "reasoning": "Candidate 12 (Request for Information) is the most relevant because it addresses procedures for seeking and providing clarifications on tender documents, aligning with GCT8's focus on resolving doubts about document content. However, GCT8 places the initiative on the tenderer to proactively seek clarification from the Project Manager designate if in doubt, whereas Candidate 12 frames clarification as a discretionary action initiated by the Government when it deems necessary or when information is missing. This represents a role reversal: GCT8 mandates tenderer-initiated clarification, while Candidate 12 describes government-initiated requests. Thus, the tender clause modifies the standard process by shifting responsibility and initiation to the tenderer, resulting in a 'modified' compliance status.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT8",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT11",
+    "consistency_status": "not_found",
+    "confidence_score": 0.6030093,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 11 Correction rules for tender errors\nWithout prejudice to other General Conditions of Tender and Special Conditions of Tender, if errors and/or omissions are found in a tender during tender examination, such errors and/or omissions shall be dealt with in accordance with the principles and rules contained in Appendix F to these General Conditions of Tender.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 11. Counter-Proposals\n\n11.1 The Tenderer must not submit any proposal that has the effect of varying or modifying (a) any essential requirements specified in the Tender Documents; (b) all provisions in the Tender Documents concerning the preparation, submission and evaluation of Tenders and award of Contract which shall mean all provisions in all Tender Documents (excluding only (but subject to (c) below) (i) those provisions which are not identified as essential requirements in the Service Sp\"",
+    "reasoning": "The tender clause GCT11 specifically addresses the correction of errors and omissions discovered during tender examination, referencing Appendix F for detailed rules. Neither Candidate 1 (clause_id=11) nor Candidate 2 (clause_id=1) deals with error correction procedures. Candidate 1 concerns counter-proposals and modifications to tender requirements, while Candidate 2 covers general invitation-to-tender provisions and tenderer responsibilities regarding document review. Neither aligns with the subject matter of error/omission handling during evaluation, so no relevant standard clause is present among the candidates.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT11",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT30",
+    "consistency_status": "not_found",
+    "confidence_score": 0.57651484,
+    "evidence": "From I-HY_2022_14-ACC-00: \"GCT 30 Admission, promotion and confirmation to the List of Approved Contractors for Public Works / the List of Approved Suppliers of Materials and Specialist Contractors for Public Works\nA tender submitted by a contractor who has applied for admission or promotion to the category, class and/or group specified in the tender invitation or, in relation to a contract for which tenders are invited from confirmed contractors only, a tender submitted by a contractor who has applied for confirmed statu\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "The tender clause GCT30 specifically governs eligibility criteria related to a contractor's admission, promotion, confirmation, or probationary status on the List of Approved Contractors, including quantitative limits on contract value/number and compliance with the Contractor Management Handbook (CMH). None of the candidate clauses address this subject matter: Candidate 16 covers government discretion to disqualify tenders on grounds like insolvency or IP infringement; Candidate 19 addresses financial vetting requirements for high-value contracts; and Candidate 24 concerns post-award performance monitoring. These are materially distinct from the administrative and eligibility framework described in GCT30.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT30",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT15",
+    "consistency_status": "modified",
+    "confidence_score": 0.64198154,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# GCT 15 Tender addenda\nShould the Client require any amendments, clarifications, or adjustments to be made to the tender documents for the purpose of tendering, the Project Manager designate will issue to every tenderer numbered addenda giving full details D such amendments etc. and the tender documents shall be taken as having been amended, clarified or adjusted accordingly upon the issue of these addenda. The tenderer shall acknowledge receipt of these addenda.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 2. Supplementary Information/Tender Addenda\n\n2.1 All supplementary information or tender addenda to the Tender Documents will be provided in writing by the Government and forwarded to all potential Tenderers who have registered with the Government when obtaining a copy of the Tender Documents.\n\n2.2 The Tenderer may also download any supplementary information or tender addenda to the Tender Documents from the Specified Electronic Tendering Platform if it is the Registered User.\"",
+    "reasoning": "Candidate 1 (clause_id=2) is the most relevant because it directly addresses the issuance of tender addenda and supplementary information by the procuring entity to all tenderers, aligning with GCT15's focus on formal amendments/clarifications issued by the Project Manager designate. However, GCT15 imposes an additional requirement not present in Candidate 1: tenderers must acknowledge receipt of addenda. Candidate 2 (clause_id=12) deals with post-submission requests for clarification or missing documents from individual tenderers, which is a different procedural stage and purpose than pre-submission addenda issued universally. Thus, while the core subject matter matches Candidate 1, the acknowledgment obligation constitutes a modification.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT15",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT33",
+    "consistency_status": "compliant",
+    "confidence_score": 0.6119901,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# GCT 33 Tender cost\nThe Client shall not in any circumstances be liable for any costs, expenses and damages incurred or suffered by the tenderers in connection with the preparation and submission of their tenders, in the event that this tender exercise is cancelled on any ground, including on the ground that funds are not available under Special Conditions of Tender Clause SCT 10.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 25. Cost of Tender\n\nEach Tenderer shall submit its Tender at its own cost and expense. The Government shall not be liable for any costs and expenses whatsoever incurred by a Tenderer in connection with the preparation or submission of its Tender and the doing of all acts required for the purpose of this Invitation to Tender, including all costs and expenses relating to (a) communication or negotiations with or providing presentation or demonstration to the Government, (b) site visits or survey\"",
+    "reasoning": "Candidate 1 (clause_id=25) directly addresses the allocation of tender preparation and submission costs to the tenderer and explicitly states that the Government (Client) is not liable for any such costs—aligning precisely with the subject matter of GCT33. While GCT33 adds specificity by referencing cancellation due to unavailability of funds under SCT 10, this is a contextual elaboration rather than a substantive deviation; the core principle of non-liability for tender costs remains consistent with clause 25. Candidate 2 (clause_id=9) concerns the Government’s right to cancel the tender process but does not address cost liability, making it less relevant. Therefore, clause 25 is the best match, and GCT33 is compliant with it.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT33",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT3",
+    "consistency_status": "modified",
+    "confidence_score": 0.5792898,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"# GCT 3 Relevant documents not issued\nThe following documents are not issued to tenderers:\n(a) Standard documents, namely:\n(i) NEC4 Engineering and Construction Contract (June 2017, with amendments October 2020) published by Thomas Telford Ltd.,   \n(ii) General Specification for Civil Engineering Works, 2020 Edition (the Government of the Hong Kong Special Administrative Region) and the Corrigendum together with any latest amendment issued up to and including the day before the closing date of t\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 1. Invitation to Tender\n\n1.1 Tenders are invited for the provision of the Items summarised in the Terms of Tender (Supplement) subject to and in accordance with the Tender Documents.\n\n1.2 The Standard Terms and Conditions (Reference No. BD-TERMS-2 (January 2026)) comprising the Interpretation, the Terms of Tender and the General Conditions of Contract may be downloaded from the website at https://pcms2.gld.gov.hk. In addition to the aforesaid Tender Documents comprised in the Standard Terms an\"",
+    "reasoning": "The tender clause GCT3 addresses the non-issuance of certain standard and reference documents to tenderers, specifying which documents are excluded but available for inspection, along with details on where and how they can be accessed. Candidate 1 (clause_id=1) is the most relevant because it deals with the invitation to tender and the handling of Tender Documents, including instructions on how to obtain or access them (e.g., downloading from a website or collecting from the Procuring Department). However, GCT3 modifies this general approach by explicitly listing specific documents that are *not issued* but only available for inspection by appointment—a more restrictive access method than the broader availability described in Candidate 1. This constitutes a 'modified' status: the core subject matter (access to tender documents) aligns, but the mechanism and scope differ. Candidate 31 is unrelated, as it concerns environmental protection measures.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT3",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT16",
+    "consistency_status": "modified",
+    "confidence_score": 0.69338596,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 16 Tender clarifications\n(1) The Client will not consider any clarification or information submitted by a tenderer after close of tender irrespective of whether or not the clarification or information is submitted at the invitation of the Client if such clarification or information would alter the tender in substance or give the tenderer an advantage over the other tenderers.\n(2) Without prejudice to the generality of sub-clause (1) of this Clause, where the Project Manager designate has a\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 12. Request for Information\n\n12.1 In the event that the Government determines that:\n\n(a) clarification in relation to any part of the Tender is necessary; or (b) a document or a piece of information, other than those specified in Paragraph 3.3 of the Terms of Tender, is missing from any Tender, it may, but is not obliged to, request the Tenderer concerned to make the necessary clarification, or submit the required document or information. The Tenderer shall within five (5) working days from th\"",
+    "reasoning": "Candidate 12 (Request for Information) is the most relevant because it addresses post-submission requests for clarification or missing information, aligns with the tender’s focus on permissible post-closing submissions, and includes consequences for non-compliance—mirroring GCT16’s structure. However, GCT16 introduces specific concepts not present in Candidate 12, such as 'Excepted Information,' explicit invalidation triggers tied to specific clauses (e.g., GCT 26(3), GCT 29(4), GCT 34(1)), and a nuanced distinction between allowable clarifications and those that alter the tender substantively. Candidate 12 lacks this granularity and does not define excepted categories or reference specific contractual annexes. Thus, while the core subject matter overlaps, GCT16 modifies and expands upon Candidate 12’s framework.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT16",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT23",
+    "consistency_status": "not_found",
+    "confidence_score": 0.6193012,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# GCT 23 Alternative tenders or designs uninvited\nAlternative tenders or designs for which no invitation has been made shall not be considered.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 23. New Information\n\nA Tenderer should inform the Government in writing immediately of any factor which might affect its ability to meet any requirements of the Tender Documents. The Government reserves the right not to consider a Tenderer’s Tender further if the Tenderer’s continued ability to meet such requirements is in doubt.\"",
+    "reasoning": "The tender clause GCT23 explicitly addresses the non-consideration of uninvited alternative tenders or designs. None of the candidate clauses address this subject matter: Candidate 23 concerns disclosure of new information affecting tenderer eligibility, Candidate 22 deals with document retention for unsuccessful tenderers, and Candidate 9 covers cancellation of the tender exercise. Since no candidate clause pertains to the submission or consideration of alternative tenders or designs, there is no relevant match.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT23",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT10",
+    "consistency_status": "modified",
+    "confidence_score": 0.63291126,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# GCT 10 Errors in tender submission\nIn the event of a tenderer discovering an error in its tender after it has been deposited, attention in writing may be drawn to the error and an amendment submitted which, provided that the amendment shall have been deposited before the time fixed for receipt of tenders, shall be accepted.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 23. New Information\n\nA Tenderer should inform the Government in writing immediately of any factor which might affect its ability to meet any requirements of the Tender Documents. The Government reserves the right not to consider a Tenderer’s Tender further if the Tenderer’s continued ability to meet such requirements is in doubt.\"",
+    "reasoning": "Candidate 23 addresses the obligation of a tenderer to notify the Government in writing about factors affecting its ability to meet tender requirements, which aligns more closely with GCT10’s focus on post-submission error notification than Candidate 10 (which concerns general written commitments). However, GCT10 specifically permits amendment of errors if submitted before the tender deadline—a procedural detail not covered in Candidate 23. Thus, while the core duty to disclose issues is shared, GCT10 introduces an additional allowance for correction, making it a modified version of Candidate 23.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT10",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT32",
+    "consistency_status": "compliant",
+    "confidence_score": 0.76342416,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# GCT 32 Ethical commitment\n(1) The tenderer shall not, and shall procure that its employees, agents and subcontractors shall not, offer, solicit or accept an advantage as defined in the Prevention of Bribery Ordinance, Cap. 201 in connection with the tendering and execution of this contract.\n(2) Failure to so procure or any act of offering, soliciting or accepting advantage referred to in (1) above committed by the tenderer or by an employee, agent or subcontractor of the tenderer shall, withou\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 30. Warning against Bribery\n\n30.1 The offer of an advantage to any public officer with a view to influencing the award of the Contract, or as a reward for or otherwise on account of such award, is an offence under the Prevention of Bribery Ordinance (Chapter 201 of the Laws of Hong Kong). Any such act committed by a Tenderer or any of its officers, directors, employees or agents will render its Tender null and void.\n\n30.2 The successful Tenderer shall inform its officers, directors, employees\"",
+    "reasoning": "The tender clause GCT32 fully aligns with the standard clause by prohibiting offering, soliciting, or accepting advantages under the Prevention of Bribery Ordinance (Cap. 201) and specifying that violations by the tenderer or its employees, agents, or subcontractors will invalidate the tender. It also includes the obligation to procure compliance from relevant parties, which effectively implements the standard’s requirement to inform and caution them.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT32",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT18",
+    "consistency_status": "modified",
+    "confidence_score": 0.61661696,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# GCT 18 Site investigation information\n(1) Site investigation information as listed in Clause GCT 3(b) of these General Conditions of Tender is available for inspection by appointment at the Project Manager designate’s office during normal office hours for the information of the tenderer. Any site investigation information, if issued, is to be returned to the Project Manager designate’s office after submission of the tender.\n(2) Neither the Client nor its agents or representatives accept any re\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 25. Cost of Tender\n\nEach Tenderer shall submit its Tender at its own cost and expense. The Government shall not be liable for any costs and expenses whatsoever incurred by a Tenderer in connection with the preparation or submission of its Tender and the doing of all acts required for the purpose of this Invitation to Tender, including all costs and expenses relating to (a) communication or negotiations with or providing presentation or demonstration to the Government, (b) site visits or survey\"",
+    "reasoning": "Candidate 25 (Cost of Tender) is the most relevant because it addresses the tenderer's responsibility for costs related to site visits and investigations, aligning with GCT18’s emphasis that the tenderer must conduct its own inquiries at its own expense and that the Client disclaims responsibility for the accuracy of provided site information. However, GCT18 includes additional procedural details—such as inspection by appointment, return of documents post-submission, and reference to Clause GCT 3(b)—that are not present in Candidate 25. Thus, while the core risk allocation and cost responsibility principles match, the tender clause adds specific administrative requirements, making it a 'modified' version rather than fully compliant.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT18",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT7",
+    "consistency_status": "modified",
+    "confidence_score": 0.54963756,
+    "evidence": "From I-HY_2022_14-PS-APP-C1-00: \"# GCT 7 Discrepancies in the documents\nThe tenderer shall check the numbers of pages of all documents against page numbers given in summaries, and should it find any discrepancy or indistinctness, it must inform the Project Manager designate and have the same rectified.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 12. Request for Information\n\n12.1 In the event that the Government determines that:\n\n(a) clarification in relation to any part of the Tender is necessary; or (b) a document or a piece of information, other than those specified in Paragraph 3.3 of the Terms of Tender, is missing from any Tender, it may, but is not obliged to, request the Tenderer concerned to make the necessary clarification, or submit the required document or information. The Tenderer shall within five (5) working days from th\"",
+    "reasoning": "Candidate 12 ('Request for Information') is the most relevant because it addresses how discrepancies, missing information, or ambiguities in tender submissions should be handled—including the process for the Government to request clarification and the tenderer’s obligation to respond. While GCT7 places the onus on the tenderer to proactively identify and report discrepancies in document pagination and seek rectification from the Project Manager, Candidate 12 focuses on the Government’s discretionary right to request missing or clarifying information and the tenderer’s duty to respond. The core subject—handling inconsistencies or gaps in tender documentation—is aligned, but the procedural emphasis differs: GCT7 is proactive and tenderer-initiated, whereas Candidate 12 is reactive and Government-initiated. Thus, GCT7 modifies the standard approach by shifting responsibility to the tenderer and specifying a particular type of discrepancy (page numbering). Candidate 31 on environmental protection is irrelevant.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT7",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-C1-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT25",
+    "consistency_status": "not_found",
+    "confidence_score": 0.6509034,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# GCT 25 Submission of further information\nThe tenderer shall upon written request by the Project Manager designate (which may be issued at any time after the tender closing date) submit to the Project Manager designate within 7 days of the date of issue of the written request or within reasonable time upon the written request the following documents:\n(a) Financial information as referred to in Clause GCT 5;   \n(b) Outline Subcontractor Management Plan as referred to in Clause GCT 20(1);   \n(c)\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 8. Sub-contractors\n\n8.1 If any obligations of the Contractor are proposed to be performed by a sub-contractor, the Tenderer shall submit information of the subcontractor in Table B of the Information Schedule (“Sub-contractor Table”). Details of the obligations to be performed by the proposed subcontractor shall also be submitted.\n\n8.2 However, where it is stated that no sub-contracting shall be allowed in the Terms of Tender (Supplement) or elsewhere in the Tender Documents, the Tenderer shal\"",
+    "reasoning": "The tender clause GCT25 governs the post-submission obligation of a tenderer to provide additional documents upon written request by the Project Manager, covering a broad range of items including financial information, subcontractor and environmental management plans, joint venture undertakings, ISO certification, conviction statements, and documentary evidence. Candidate 1 (clause_id=8) focuses specifically on subcontractor disclosure and undertakings during the initial tender submission phase, not on post-closing requests for multiple document types. Candidate 2 (clause_id=19) addresses financial vetting requirements based on contract value thresholds and prescribes specific audited financial documents—but only as part of pre-award eligibility, not as responsive submissions after tender closing. Neither candidate captures the procedural mechanism, scope, or conditional triggers (e.g., 'upon written request... at any time after tender closing') described in GCT25. Therefore, no candidate is sufficiently relevant to serve as a standard match.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT25",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT13",
+    "consistency_status": "compliant",
+    "confidence_score": 0.6361711,
+    "evidence": "From I-HY_2022_14-FTR-00: \"# GCT 13 Tender negotiation\nThe Client reserves the right to negotiate with any tenderer about the terms of the offer.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 15. Negotiations\n\nThe Government reserves the right to negotiate with any Tenderer in relation to the Tenderer’s Tender and/or the Contract.\"",
+    "reasoning": "Candidate 1 (clause_id=15) directly addresses the Government's right to negotiate with tenderers regarding their tenders or the resulting contract, which aligns precisely with the subject matter of GCT13 ('The Client reserves the right to negotiate with any tenderer about the terms of the offer'). The wording differs slightly (e.g., 'Client' vs. 'Government'), but this is a standard substitution based on party naming conventions and does not alter the legal meaning. No substantive modification or deviation is present; thus, the clause is compliant.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT13",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT12",
+    "consistency_status": "compliant",
+    "confidence_score": 0.63007975,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# GCT 12 Tenders in Hong Kong dollars\nUnless otherwise provided, the tender shall be in Hong Kong dollars.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 5. Prices\n\n5.1 Unless otherwise provided for in the Tender Documents, the Tenderer shall quote the Unit Price for each Item in the Price Schedule in Hong Kong dollars or (if expressly permitted) the Permissible Currency. The quotations shall be subject to the following deeming provisions:\n\n(a) the Unit Price quoted by the Tenderer for an Item shall be allinclusive of all amounts chargeable for the performance by the Tenderer of all obligations as stated in the Contract for or concerning or in\"",
+    "reasoning": "Candidate 1 (clause_id=5) directly addresses the currency of tender pricing, specifying that tenders must be quoted in Hong Kong dollars unless otherwise provided—aligning precisely with GCT12’s requirement. Candidate 2 (clause_id=19) concerns financial vetting thresholds and documentation, which is unrelated to currency specification. GCT12 is a concise restatement of the core principle in clause 5.1 regarding use of Hong Kong dollars, without introducing conflicting or additional conditions, thus it is compliant.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT12",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT34~2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.62856066,
+    "evidence": "From I-HY_2022_14-GCT-00: \"GCT 34   \nGCT 35\nIndex Page Tenderer’s consent and authorization on conviction records GCT/12 Contingency sums, provisional sums and forecast total of the Prices GCT/13\nAPPENDICES\nAppendix A Appendix B\nRequirements for Tender Submission in Electronic Format   \nFinancial Information Required to be Submitted in Tender for Public   \nWorks Contracts   \nLetter of Indemnity   \nLetter of Indemnity (For Incorporated Joint Venture)   \nConfirmation Letter for Anti-collusion   \nLetter of Tenderer’s Consent\" From BD-TERMS-2 (January 2026) (Eng).md: \"# Tender Submission:\n\n(a) Paper-based Tendering\n\nThe Tender (and where the two-envelope system is applicable, comprising the Technical and Price Proposals) shall be completed in writing on hardcopy (and if so expressly requested in the Terms of Tender (Supplement) also on softcopy) and shall be submitted in triplicate (i.e. three sets of identical documents) in accordance with the “Lodging of Tender” section of the Tender Form. The Tenderer shall ensure that all the three sets of Tenders submitt\"",
+    "reasoning": "The tender clause excerpt (GCT34~2) references 'Tenderer’s consent and authorization on conviction records' and appears to relate to legal/ethical compliance, specifically disclosure of criminal convictions. Neither Candidate 19 (Financial Vetting) nor Candidate 12 (Request for Information) addresses conviction records, authorizations, or consent related to criminal history. Candidate 19 focuses on financial capability documentation, while Candidate 12 deals with procedural requests for missing information or clarifications. The actual relevant clause is likely GCT/12 as indicated in the index ('Letter of Tenderer’s Consent and Authorization on Conviction Records'), but this specific content is not among the provided candidates. Therefore, no candidate matches the subject matter.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT34~2",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT26",
+    "consistency_status": "compliant",
+    "confidence_score": 0.6685763,
+    "evidence": "From I-HY_2022_14-GCT-APP-D-00: \"# GCT 26 Anti-collusion\n(a) Subject to sub-clause (2) of this Clause, the tenderer shall not communicate to any person other than the Client the amount of the tender price or any part thereof until the tenderer is notified by the Client of the outcome of the tender exercise.   \n(b) Further to paragraph (a) of this sub-clause, the tenderer shall not fix the amount of the tender price or any part thereof by arrangement with any other person, make any arrangement with any person about whether or no\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 29. Warranty against Collusion\n\n29.1 The Tenderer must ensure that the Tender is prepared without any agreement, arrangement, communication, understanding, promise or undertaking with any other person (except as provided in paragraph 3 of the Non-collusive Tendering Certificate referred to in Paragraph 29.2 below), regarding, amongst other things, price, tender submission procedure or any terms of the Tender. Bid-rigging is inherently anticompetitive and is considered serious anti-competitive\"",
+    "reasoning": "Candidate 29 (Warranty against Collusion) directly addresses anti-collusion obligations, including prohibitions on price-fixing, bid-rigging, and collusive arrangements—mirroring the core requirements in GCT26(a) and (b). It also mandates submission of a non-collusive tendering certificate (aligned with GCT26(3)), and includes indemnification for breaches (matching GCT26(4)). While wording differs slightly (e.g., GCT26 specifies permitted confidential communications in sub-clause (2), which Candidate 29 references indirectly via 'except as provided in paragraph 3 of the Non-collusive Tendering Certificate'), the substance and legal intent are consistent. Thus, GCT26 is compliant with Candidate 29.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT26",
+    "document_references": [
+      "I-HY_2022_14-GCT-APP-D-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT24",
+    "consistency_status": "modified",
+    "confidence_score": 0.5967767,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# GCT 24 Offering gratuities\nThe tenderer shall not and shall ensure that its agents and employees shall not offer or give any advantage, gratuity, bonus, discount, bribe or loan of any sort to any agent or employee of the Client or to the Project Manager designate or to any member of the Project Manager designate’s staff. Any breach of or noncompliance with this Clause by the tenderer shall, without affecting the tenderer’s liability for such breach or non-compliance, invalidate its tender.\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 30. Warning against Bribery\n\n30.1 The offer of an advantage to any public officer with a view to influencing the award of the Contract, or as a reward for or otherwise on account of such award, is an offence under the Prevention of Bribery Ordinance (Chapter 201 of the Laws of Hong Kong). Any such act committed by a Tenderer or any of its officers, directors, employees or agents will render its Tender null and void.\n\n30.2 The successful Tenderer shall inform its officers, directors, employees\"",
+    "reasoning": "Candidate 30 is the most relevant as it directly addresses bribery and the prohibition of offering advantages to influence contract award, aligning with GCT24's core subject matter of prohibiting gratuities, bribes, or any advantage to client or project manager personnel. However, GCT24 is broader—it applies to any 'agent or employee of the Client' or Project Manager’s staff, not limited to 'public officers' as in Candidate 30, and includes specific prohibited items like bonuses, discounts, and loans. Additionally, GCT24 explicitly states that breach invalidates the tender, which Candidate 30 also reflects, but GCT24 imposes a duty on the tenderer to ensure compliance by its agents and employees, going beyond Candidate 30’s warning-focused language. Thus, while thematically aligned, GCT24 modifies and expands the scope and obligations compared to Candidate 30.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT24",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT22",
+    "consistency_status": "modified",
+    "confidence_score": 0.563987,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 22 Contractors under suspension\n(1) If the tenderer or, if the tenderer is an unincorporated or incorporated joint venture, any participant of the unincorporated joint venture or shareholder of the incorporated joint venture is under suspension from tendering for Roads and Drainage category of the List of Approved Contractors for Public Works, its tender will not be considered unless the suspension is lifted by the relevant works department or the Development Bureau by the date set for the\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 16. Government Discretion\n\n16.1 Notwithstanding anything to the contrary in this Tender Documents, the Government reserves the right to disqualify a Tenderer on grounds including any one of the following:\n\n(a) a petition is presented or a proceeding is commenced which has not been withdrawn any time prior to the Contract award or an order is made or a resolution is passed for the winding up or bankruptcy of the Tenderer or a related person of the Tenderer;   \n(b) the Tenderer has made or submi\"",
+    "reasoning": "Candidate 16 (Government Discretion) is the most relevant because it addresses grounds for disqualifying a tenderer, including legal or administrative actions affecting eligibility—similar in purpose to GCT22’s focus on suspension from the List of Approved Contractors. However, GCT22 specifically targets suspension (mandatory or voluntary) related to the Roads and Drainage category and includes procedural conditions (e.g., lifting of suspension by a deadline, revocation without approval), which are not covered in Candidate 16. While both clauses empower the government to reject non-compliant tenders, GCT22 introduces distinct, category-specific suspension criteria not present in Candidate 16, indicating a modification rather than direct compliance.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT22",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT35",
+    "consistency_status": "not_found",
+    "confidence_score": 0.54345185,
+    "evidence": "From I-HY_2022_14-SCT-APP-E-00: \"# GCT 35 Contingency sums, provisional sums and forecast total of the Prices\n(1) Notwithstanding the inclusion of contingency sums, provisional sums and forecast total of the Prices in the Grand Summary of the activity schedule, the contingency sums, provisional sums and forecast total of the Prices shall not form part of this contract.\n(2) The contingency sums and provisional sums are allowed as contingencies for the purpose of internal administration of the Client under the Stores and Procurem\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 5. Prices\n\n5.1 Unless otherwise provided for in the Tender Documents, the Tenderer shall quote the Unit Price for each Item in the Price Schedule in Hong Kong dollars or (if expressly permitted) the Permissible Currency. The quotations shall be subject to the following deeming provisions:\n\n(a) the Unit Price quoted by the Tenderer for an Item shall be allinclusive of all amounts chargeable for the performance by the Tenderer of all obligations as stated in the Contract for or concerning or in\"",
+    "reasoning": "The tender clause GCT35 specifically addresses the non-contractual status of contingency sums, provisional sums, and forecast totals, clarifying their limited administrative or evaluation purposes and prohibiting reliance on them for pricing adjustments. None of the candidate clauses address this subject matter: Candidate 1 (clause_id=1) covers general tender invitation and document awareness; Candidate 5 (clause_id=5) deals with unit pricing, inclusions, and formatting of price schedules; Candidate 11 (clause_id=11) governs counter-proposals and modifications to tender terms. While all are standard procurement clauses, none substantively overlap with the specific treatment of contingency/provisional sums or forecast totals as described in GCT35.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT35",
+    "document_references": [
+      "I-HY_2022_14-SCT-APP-E-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT1",
+    "consistency_status": "modified",
+    "confidence_score": 0.59311795,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"# GCT 1 Definitions\n(1) For the purpose of these General Conditions of Tender and Special Conditions of Tender:\n(a) conditions of contract means the core clauses and the clauses for main Option A and secondary Options X1, X5, X7, X14, X15, X16, X20 and Z of the NEC4 Engineering and Construction Contract (June 2017, with amendments October 2020) published by Thomas Telford Ltd., with amendments identified in the Schedule to the Articles of Agreement referred to in Clause GCT 2(a)(ii) of these Gen\" From BD-TERMS-2 (January 2026) (Eng).md: \"# 14. Communication with the Government\n\n14.1 Without prejudice to the requirements set out in Paragraph 18 of the Terms of Tender concerning notification of acceptance of Tender, all communications given or made by the Government or a Tenderer in relation to the Invitation to Tender shall be in writing and sent or delivered to the other Party in the manner provided in Clause 29 of the General Conditions of Contract at the address, facsimile number or email address specified in the Appendix, sav\"",
+    "reasoning": "The tender clause GCT1 primarily defines key terms, establishes interpretive rules, and specifies contact details for the 'Project Manager designate'—a role central to communication under the NEC4 framework. Among the candidates, Clause 14 ('Communication with the Government') is the most relevant because it governs how communications between tenderers and the government should be conducted, including required addresses, facsimile numbers, and email protocols. While GCT1 does not replicate Clause 14 verbatim, it modifies standard communication arrangements by explicitly naming a specific government officer (Mr. Alex C W CHAN) with full contact details as the 'Project Manager designate,' which aligns with but customizes the general communication protocol in Clause 14. Candidates 1 and 3 address invitation procedures and document access, which are less directly related to the definitional and contact-focused content of GCT1. Thus, GCT1 is a modified version of Clause 14 tailored to the project’s administrative structure.",
+    "check_type": "gct_vs_bdterms",
+    "description": "GCT1",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00",
+      "BD-TERMS-2 (January 2026) (Eng).md"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

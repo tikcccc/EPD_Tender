@@ -1,0 +1,55 @@
+{
+  "default_project_id": "tender-analysis",
+  "projects": [
+    {
+      "project_id": "tender-analysis",
+      "name": "Tender Analysis",
+      "template_json_path": "backend/data/templates/nec-template.json",
+      "report_sources": [
+        {
+          "source_id": "reference-seed",
+          "label": "Reference Seed",
+          "report_json_path": "backend/data/reports/seed-report-cards.json",
+          "order": 1,
+          "status_presentation": "normalized"
+        }
+      ]
+    },
+    {
+      "project_id": "hy202214",
+      "name": "HY202214",
+      "default_template_id": "hy202214-all-v1",
+      "document_search_root": "reference/HY202214 Tender Document/HY202214",
+      "report_sources": [
+        {
+          "source_id": "hy202214-issues-only",
+          "label": "HY202214 Issues Only",
+          "report_json_path": "backend/data/projects/hy202214/report-sources/seed-report-cards.issues-only.json",
+          "order": 1,
+          "status_presentation": "normalized"
+        },
+        {
+          "source_id": "hy202214-ntt-vs-ecc-ntt",
+          "label": "NTT vs ECC NTT",
+          "report_json_path": "backend/data/projects/hy202214/report-sources/seed-report-cards.ntt_vs_ecc_ntt.json",
+          "order": 2,
+          "status_presentation": "raw"
+        },
+        {
+          "source_id": "hy202214-sct-vs-ecc-sct",
+          "label": "SCT vs ECC SCT",
+          "report_json_path": "backend/data/projects/hy202214/report-sources/seed-report-cards.sct_vs_ecc_sct.json",
+          "order": 3,
+          "status_presentation": "raw"
+        },
+        {
+          "source_id": "hy202214-gct-vs-ecc-gct",
+          "label": "GCT vs ECC GCT",
+          "report_json_path": "backend/data/projects/hy202214/report-sources/seed-report-cards.gct_vs_ecc_gct.json",
+          "order": 4,
+          "status_presentation": "raw"
+        }
+      ]
+    }
+  ]
+}

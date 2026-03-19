@@ -36,7 +36,8 @@ type ComplianceCardProps = {
 };
 
 const REFERENCE_PREVIEW_LIMIT = 120;
-const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._-]+)(?:\s*,[^:\n]+)?\s*:/gi;
+const REFERENCE_PAGE_SIZE = 5;
+const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._() -]+?)(?:\s*,[^:\n]+)?\s*:/gi;
 const QUOTED_SEGMENT_PATTERNS = [/"([^"]+)"/g, /“([^”]+)”/g];
 const MANUAL_NOTE_MAX_LENGTH = 1000;
 const MANUAL_HISTORY_PAGE_SIZE = 5;
@@ -124,6 +125,19 @@ function formatCheckTypeLabel(checkType: string): string {
     .join(" ");
 }
 
+function formatStatusLabel(value: string): string {
+  const normalized = value.trim();
+  if (!normalized) {
+    return "Unknown";
+  }
+
+  return normalized
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
 function extractQuotedSegments(text: string): string[] {
   const segments: string[] = [];
 
@@ -193,7 +207,10 @@ export function ComplianceCard({
   const severityLabel = `${item.severity.charAt(0).toUpperCase()}${item.severity.slice(1)}`;
   const confidenceLabel = item.confidence_score.toFixed(2);
   const statusDomain: StatusDomain = item.status_domain === "compliance" ? "compliance" : "consistency";
-  const consistencyLabel = STATUS_LABEL_BY_DOMAIN_STATUS[statusDomain][item.consistency_status] ?? "Unknown";
+  const consistencyLabel =
+    item.status_presentation === "raw" && item.raw_status
+      ? formatStatusLabel(item.raw_status)
+      : STATUS_LABEL_BY_DOMAIN_STATUS[statusDomain][item.consistency_status] ?? "Unknown";
   const reviewTitle = REVIEW_TITLE_BY_DOMAIN_STATUS[statusDomain][item.consistency_status] ?? "Consistency Review";
   const checkTypeLabel = useMemo(() => formatCheckTypeLabel(item.check_type), [item.check_type]);
   const evidenceByDocument = useMemo(() => extractReferenceEvidenceByDocument(item), [item]);
@@ -216,6 +233,7 @@ export function ComplianceCard({
         const isReferenceActive = activeReferenceId
           ? activeReferenceId === referenceId
           : activeDocumentId === documentId && segmentIndex === 0;
+        const isPreviewable = Boolean(documentLabels[documentId]);
 
         return {
           id: referenceId,
@@ -224,14 +242,17 @@ export function ComplianceCard({
           preview,
           evidenceText,
           isActive: isReferenceActive,
+          isPreviewable,
         };
       });
     });
   }, [activeDocumentId, activeReferenceId, documentFileNames, documentLabels, evidenceByDocument, item.document_references, normalizedEvidence]);
+  const referenceTotalPages = Math.max(1, Math.ceil(referenceItems.length / REFERENCE_PAGE_SIZE));
 
   const [manualVerdict, setManualVerdict] = useState(item.manual_verdict ?? "");
   const [manualCategory, setManualCategory] = useState(item.manual_verdict_category ?? "");
   const [manualNote, setManualNote] = useState(item.manual_verdict_note ?? "");
+  const [referencePage, setReferencePage] = useState(1);
   const [savingManualReview, setSavingManualReview] = useState(false);
   const [manualReviewError, setManualReviewError] = useState("");
   const [manualReviewNotice, setManualReviewNotice] = useState("");
@@ -259,6 +280,7 @@ export function ComplianceCard({
       setManualReviewError("");
       setManualReviewNotice("");
       setManualReviewTab("edit");
+      setReferencePage(1);
       setHistoryPage(1);
       setHistoryTotal(0);
       setHistoryEntries([]);
@@ -278,6 +300,17 @@ export function ComplianceCard({
       setManualNote(item.manual_verdict_note ?? "");
     }
   }, [item.item_id, item.manual_verdict, item.manual_verdict_category, item.manual_verdict_note]);
+
+  useEffect(() => {
+    const activeReferenceIndex = referenceItems.findIndex((reference) => reference.isActive);
+    if (activeReferenceIndex < 0) {
+      setReferencePage((page) => Math.min(page, referenceTotalPages));
+      return;
+    }
+
+    const nextPage = Math.floor(activeReferenceIndex / REFERENCE_PAGE_SIZE) + 1;
+    setReferencePage((page) => (page === nextPage ? page : nextPage));
+  }, [referenceItems, referenceTotalPages]);
 
   useEffect(() => {
     if (!manualReviewNotice) {
@@ -750,6 +783,8 @@ export function ComplianceCard({
       <EvidenceReferenceList
         items={referenceItems}
         evidenceText={normalizedEvidence}
+        page={referencePage}
+        pageSize={REFERENCE_PAGE_SIZE}
         onSelect={(entry) =>
           onEvidenceClick(item, {
             forcedDocumentId: entry.documentId,
@@ -757,6 +792,7 @@ export function ComplianceCard({
             referenceId: entry.id,
           })
         }
+        onPageChange={setReferencePage}
       />
 
       <div className="c-card-meta">

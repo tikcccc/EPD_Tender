@@ -1,0 +1,845 @@
+[
+  {
+    "item_id": "ACC_E12",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"E12 Engagement of Labour Employment of Skilled Workers   \nE3 Fair Wages   \nE4 Passes   \nE5 Not Used   \nE6 Payment of Wages of Site Workers   \nE7 Not Used   \nE8 Not Used   \nE9 Not Used\nSection F – Contractor’s Design, Cost Savings Design, Professional Indemnity Insurance, Temporary Works Design and Intellectual Property Rights\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Engagement of Labour Employment of Skilled Workers",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_E6",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# E6 Payment of Wages of Site Workers\n(1) Subject to those Casual Workers referred to in Clause 1.103 of Particular Specification on “Casual Workers”, all Site Workers shall be engaged in accordance with Clauses 1.92 to 1.96 of the Particular Specification on “Payment of Wages of Site Workers”. Such Site Workers shall be engaged with a written employment contract with their respective employers who shall be either the Contractor or any of its subcontractors of all tiers as submitted in the Subco\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Payment of Wages of Site Workers",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D3",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D3 Giving of Notices and Payment of Fees\n(1) The Contractor shall give all notices and pay all licences, levies, premiums or other fees required to be given or paid by reason of any enactment or any regulations or byelaws of any local or other duly constituted authority in relation to the Contractor to Provide the Works and by the rules and regulations of all public bodies and statutory authorities whose property or rights are affected or may be affected in any way by the Contractor to Provide\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Giving of Notices and Payment of Fees",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D4",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D4 Compliance with Enactments and Regulations\nThe Contractor shall conform in all respects with:\nthe provisions of any enactment, the regulations or bye-laws of any local or duly constituted authority, and the rules and regulations of such public bodies and statutory authorities as are referred to in Clause D3 of these additional conditions of contract\nand any additions or amendments thereto or any new enactment, regulations, bye-laws or rules made during the continuance of the works, which ar\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Compliance with Enactments and Regulations",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_B12",
+    "consistency_status": "not_found",
+    "confidence_score": 0.51749885,
+    "evidence": "From I-HY_2022_14-ACC-00: \"B12 PRreocjoevcetryMaofn aMgeorn’esyPDouwe rtso Client 4 4 5 5 5   \nB3 Changing Scope before issue of Defects Certificate after Completion   \nB4 Right of Client to Determine for Convenience   \nB5 Not Used\nSection C – Assignment and Subcontracting\" From C-2025-01-01_BIM_CDCP: \"(1) BIM Models are listed in this Appendix PS.[X] of the PS. The Contractor shall refer to Section 3a.1 of the Scope on the use of the BIM Contents.\"",
+    "reasoning": "The tender clause B12 appears to be garbled or corrupted (e.g., 'PRreocjoevcetryMaofn aMgeorn’esyPDouwe rtso Client 4 4 5 5 5'), making its actual subject matter unclear. The surrounding context references scope changes (B3), termination for convenience (B4), and Section C on Assignment and Subcontracting, but B12 itself contains no intelligible content that can be matched to any of the provided BIM-related standard candidates. All candidates (1, general, 2) pertain specifically to BIM models, file formats, and scope exclusions related to digital modeling, which do not align with the apparent contractual topics in Section B (e.g., defects certificate, scope change, termination). Given the unreadable nature of B12 and lack of thematic overlap with BIM content, no candidate is relevant.",
+    "check_type": "acc_vs_cdcp",
+    "description": "PRreocjoevcetryMaofn aMgeorn’esyPDouwe rtso Client 4 4 5 5 5",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "C-2025-01-01_BIM_CDCP"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C5",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# C5 Subcontractor Management Plan\n(1) The Contractor shall within 30 days of the Contract Date submit a Subcontractor Management Plan (SMP) to the Project Manager for information and comments, if any.\n(2) The Contractor shall then submit quarterly the updated SMP, until the issuance of the certificate of Completion or where there is more than one such certificate, the issuance of the last certificate of Completion, to the Project Manager for information and comments, if any. Should there be any\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Subcontractor Management Plan",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_1",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# F8 Intellectual Property Rights\n1) The Contractor shall be fully responsible for its design under the contract (including the Contractor’s Design and Cost Savings Design) as well as the general performance of the contract. The Contractor shall not infringe any Intellectual Property Rights of any person, whether or not the design (including the Contractor’s Design or Cost Savings Design) or any machine, work, method or material or anything whatsoever required for any works is developed, adopted\" From C-2025-01-01_BIM_CDCP: \"(1) BIM Models are listed in this Appendix PS.[X] of the PS. The Contractor shall refer to Section 3a.1 of the Scope on the use of the BIM Contents.\"",
+    "reasoning": "The STANDARD clause addresses BIM model references and directs the Contractor to a specific section on BIM usage. The TENDER clause exclusively covers Intellectual Property Rights related to design and materials, with no mention of BIM models, BIM content, or reference to Appendix PS.[X] or Section 3a.1. There is no overlap in subject matter.",
+    "check_type": "acc_vs_cdcp",
+    "description": "1",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "C-2025-01-01_BIM_CDCP"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D32",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D32 Relevant Imported Items\n(1) If the Project Manager certifies Special Payment for any Relevant Imported Item in a Project Manager’s certificate and the amount certified as due to the Contractor in the Project Manager’s certificate has been paid by the Client, the Contractor shall deliver the Relevant Imported Item to the Site within 6 months from the date of payment.\nSubject to sub-clause (3), if the Contractor fails to comply with sub-clause (1), then, without prejudice to any other right\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Relevant Imported Items",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_P1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# P1 Security of Payment\n(1) The contract incorporates the Security of Payment Provisions in Appendix N to these additional conditions of contract (“SOP Provisions”) that form part of these additional conditions of contract.\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Security of Payment",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D34",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D34 Prohibition of Imposing Administrative Charges for Reporting of Site Accidents and Elimination of Under-reporting of Site Accidents\n(1) The Contractor shall not impose charges of any form on any subcontractor, or deduct any amount from the payment to which any subcontractor is entitled, for reporting accidents and processing any claims for compensation under the Employees’ Compensation Ordinance (Cap. 282) on behalf of the subcontractor. For the avoidance of doubt, subcontractor in this cl\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Prohibition of Imposing Administrative Charges for Reporting of Site Accidents and Elimination of Un",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D15",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D15 Ethical Commitment\n(1) The Contractor shall prohibit its employees, agents, and subcontractors who are involved in the contract from offering, soliciting or accepting any advantage as defined in the Prevention of Bribery Ordinance, Cap 201 when conducting business in connection with the contract.\n(2) The Contractor shall require its employees, agents and subcontractors who are involved in the contract to declare in writing to the Contractor any conflict or potential conflict between their\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Ethical Commitment",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A3",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# A3 Information not to be Divulged\n(1) The Contractor shall not use or divulge and shall procure that subcontractors of all tiers shall not use or divulge, except for the purpose of the contract, any information provided by the Client, or the Project Manager, the Supervisor or any delegate, in the contract or in any subsequent correspondence or documentation. Any disclosure to any person or agent or subcontractor of any tier for the purpose of the contract shall be in strict confidence and shal\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Information not to be Divulged",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_B1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# B1 Project Manager’s powers\n(1) Before carrying out any of its duties or exercising any of its powers under the contract, the Project Manager may be required under the terms of its appointment by the Client/under the internal rules of the Client to obtain confirmation that the Client has no objection to the Project Manager’s proposed course of action and, in the event of an objection, to act in accordance with the Client’s direction.\n(2) The Project Manager is required under the terms of its a\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Project Manager’s powers",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"A1 Definitions 1 A2 Not Used 2 2 2 A3 Information not to be Divulged   \nA4 Disclosure of Dispute or Settlement Terms by Client   \nA5 Contract Information for Cost Estimation or Cost Analysis for Client’s Other Works 3 A6 Contracts (Rights of Third Parties) Ordinance 3 3 3 A7 Contingency sums, provisional sums and forecast total of the Prices   \nA8 Not Used\nSection B – Powers and Duties of Client, Project Manager and Supervisor\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Definitions 1 A2 Not Used 2 2 2 A3 Information not to be Divulged",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.56698817,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D1 Contractor’s Management Team\n(1) The Contractor shall provide a team of suitably qualified and experienced staff to manage and supervise the contract throughout the execution of the works. All members of the Contractor’s management team (refer to as “the Team” in this Clause) shall be under the direct employment of the Contractor. In case the Contractor is in the form of unincorporated joint venture, employees under the direct employment of any or all of the joint venture participants are d\" From C-2025-01-01_BIM_CDCP: \"The BIM Team Leader shall be responsible for the overall BIM management and process controls. The BIM Team Leader shall delegate BIM Coordinator(s) for handling BIM tasks such as BIM modelling, collaborate information exchange amongst related stakeholders and maintain a drawing/information register to record the information to be incorporated in the model(s).\nFor any proposed staff movement or change in the BIM team, the Consultant/Contractor\\* shall provide a CV of the replacement personnel tog\"",
+    "reasoning": "The tender clause D1 specifies requirements for the Contractor’s Management Team, including composition, employment status, and prohibitions on subcontracting or vested interests. Candidate 1 (clause_id='general') pertains exclusively to BIM model scope exclusions and has no relevance to personnel management, team composition, or employment conditions. There is no subject-matter overlap between the tender clause and the candidate, making it inappropriate to assess compliance.",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contractor’s Management Team",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "C-2025-01-01_BIM_CDCP"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C8",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# C8 Subcontract Conditions\n(1) Without prejudice to the generality of Clause C2 of these additional conditions of contract and NEC Clause 26, if any part of the works is subcontracted by the Contractor, the Contractor shall ensure that a clause on payment of wages of Site Workers in the form appearing in Appendix D to these additional conditions of contract hereto is included in all subcontracts entered into with the Contractor. For subcontractors at any lower tier of subcontracting, the Contra\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Subcontract Conditions",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A6",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# A6 Contracts (Rights of Third Parties) Ordinance\n(1) Nothing in the contract confers or purports to confer on any third party any benefit or any right pursuant to the Contracts (Rights of Third Parties) Ordinance (Cap. 623) to enforce any term of the contract.\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contracts (Rights of Third Parties) Ordinance",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A4",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# A4 Disclosure of Dispute or Settlement Terms by Client\nNotwithstanding sub-clause (2) of Clause A3 of these additional conditions of contract, but subject to the following provisions, the Client may disclose the outline of any dispute and the terms of settlement for which a settlement agreement has been reached with the Contractor or the outcome of the arbitration or any other means of resolution of dispute to the Public Accounts Committee of the Legislative Council upon its request. Before di\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Disclosure of Dispute or Settlement Terms by Client",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D22",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D22 Contractors Joint Venture\n(1) Where the Contractor is an incorporated joint venture it shall within fourteen (14) days of the Contract Date provide to the Client a joint venture guarantee in the form set out in Appendix G to these additional conditions o contract executed by all the shareholders of the Contractor. For the purposes of this Clause, the expressions “incorporated joint venture” and “shareholder” appearing herein shall bear the same meanings as those given in paragraph 6 of the\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contractors Joint Venture",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D10",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D10 Site Cleanliness and Tidiness\n(1) “Public Cleaning Areas” means those public areas of the Site where no work is carried out other than cleaning by the Contractor and which have to be maintained open to the general public throughout the progress of the works, the extent of which is specified in Clause 1.32A(1) of the Particular Specification. For the avoidance of doubt, Site includes Public Cleaning Areas.\n(2) “Daily Cleaning” means daily cleaning and tidying up of the Site in accordance wi\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Site Cleanliness and Tidiness",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_F3",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# F3 Cost Savings Design Definitions\n(1) \\\"Independent Checking Engineer of Cost Savings Design\\\" means the person, firm or company employed by the Contractor and responsible for the independent checking of the Cost Savings Design whose qualifications, skill and experience are deemed satisfactory by the Client and who shall be independent of the Designer of Cost Savings Design and the Contractor.\n\\\"Designer of Cost Savings Design\\\" means the person, firm or company responsible for the design of Cost\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Cost Savings Design Definitions",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C3",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-18-00: \"# C3 Specialist Subcontractors\n(1) If the Contractor is not included in the “List of Approved Suppliers of Materials and Specialist Contractors for Public Works” (“the Approved Specialist List”) maintained by the Client for:\nLandscaping (Class Group II) General Landscape Works; Road Marking;   \nSpecialized Operations for Highway Structures;   \nClass IV – Non-destructive testing of welds   \nClass V – Hot dip galvanizing   \nStructural Steelwork;   \nSurvey of Lifting Appliances and Lifting Gear;\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Specialist Subcontractors",
+    "document_references": [
+      "I-HY_2022_14-PS-18-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_F1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"F1 Contractor’s Design Definitions 37   \nF2 Contractor’s Design 37   \nF3 Cost Savings Design Definitions 41   \nF4 Cost Savings Design 42   \nF5 Professional Indemnity Insurance in respect of Contractor’s Design 47   \nF6 Professional Indemnity Insurance in respect of Cost Savings Design 50   \nF7 Independent Checking of the Design, Erection, Use and Removal of Temporary Works 52   \nF8 Intellectual Property Rights 54\nSection G Settlement of Disputes\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contractor’s Design Definitions 37",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_E1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# E1 Engagement of Labour\n(1) The Contractor shall make its own arrangements in regard to the provision of such labour, skilled and unskilled, as may be required to Provide the Works and shall use all diligence in arranging for a sufficient and suitable supply of such labour but all such arrangements shall be in accordance with general local usage and subject to such regulations as the Government of the Hong Kong Special Administrative Region may from time to time require to be observed.\n(2) As\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Engagement of Labour",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D13",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# D13 Site Diary and Labour Returns\n(1) The Supervisor will record daily in the Project Manager’s site diary information with regard to labour, Equipment, Plant and Materials, utilities, work carried out and instructions issued to the Contractor and all other facts that may affect the progress or quality of the works.\n(2) The authorized agent or representative of the Contractor shall sign the site diary daily indicating its agreement to the information recorded. If the authorized agent or repres\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Site Diary and Labour Returns",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D8",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# D8 ISO 9000 Certification for the Contractor\n(1) Within three months of the Contract Date, the Contractor shall book with a certification body acceptable to the Client the date of audit for the ISO 9001:2015 certification; with detailed documented quality system procedures ready at the time of booking. If the Contractor is a joint venture, the date of audit for the ISO 9001:2015 certification shall mean that of the specified participant or shareholder in the statement submitted in accordance w\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "ISO 9000 Certification for the Contractor",
+    "document_references": [
+      "I-HY_2022_14-SCT-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D17",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D17 Acknowledgement of being Notified of the Ethical Requirements\nThe Contractor acknowledges that it has been reminded that dishonesty, theft and corruption on its part or those of its employees, agents or subcontractors who are involved in the contract may lead to prosecution under, without limitation, section 9 of the Prevention and Bribery Ordinance, Cap 201; section 17, section 18D or section 19 of the Theft Ordinance, Cap 210 and section 161 of the Crimes Ordinance, Cap\n200. These offenc\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Acknowledgement of being Notified of the Ethical Requirements",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_B2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-G-00: \"# B2 Recovery of Money Due to Client\nAll damages (including delay damages), costs, charges, expenses, debts or sums for which the Contractor is liable to the Client under any provision of the contract may be deducted by the Client from monies due to the Contractor under the contract including amounts retained and the Client shall have the power to recover any balance not so deducted from monies due to the Contractor under any other contract between the Client and the Contractor.\nAll damages (inc\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Recovery of Money Due to Client",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-G-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_F1~2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"F1 Contractor's Design Definitions\n(1) \\\"Independent Checking Engineer\\\" means the person, firm or company employed by the Contractor and responsible for the independent checking of the Contractor's Design whose qualifications, skill and experience are deemed satisfactory by the Client and who shall be independent of the Designer and the Contractor.\n\\\"Designer\\\" means the person, firm or company responsible for the design of the Contractor's Design whose qualifications, skill and experience are deem\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "F1~2",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D20",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D20 Environmental Management Plan\n(1) “Environmental Management Plan” means the Environmental Management Plan (EMP) referred to in this Clause, including any revised or updated version thereof, prepared by the Contractor in accordance with the Scope.\n(2) The Contractor shall prepare a draft EMP in accordance with the Scope and submit 3 copies of the draft EMP to the Supervisor for comments within 21 days of the Contract Date.\n(3) If the Supervisor is of the opinion that the draft EMP does not\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Environmental Management Plan",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_B4",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-N-00: \"# B4 Right of Client to Terminate for Convenience\n(1) Except as provided in sub-clause (2) of this Clause, the Client shall not terminate under NEC Clause X11.1 for convenience in order to Provide the Works itself or to arrange for another contractor to Provide the Works.\n(2) The Client is entitled to terminate under NEC Clause X11.1 for convenience and thereafter to Provide the Works itself or to arrange for another contractor to Provide the Works if the Project Manager shall certify in writing\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Right of Client to Terminate for Convenience",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-N-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_20.1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"20.1(b)Notwithstanding Article 20.1(a) and subject to the following provisions, the party comprising the Government of the Hong Kong Special Administrative Region (the Government party) may disclose the outline of any dispute with the other party and the outcome of the arbitration to the Public Accounts Committee of the Legislative Council upon its request. Before disclosures are made to the said Committee, the Government party shall inform the other party. Disclosures shall not be made to the s\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "20.1",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D1~2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"D1 Contractor’s Management Team 6   \nD2 Patents Rights and Royalties 17   \nD3 Giving of Notices and Payment of Fees 17   \nD4 Compliance with Enactments and Regulations 17   \nD5 Notices to be in English and Chinese 18   \nD6 Safety Plan 18   \nD7 Not Used 19   \nD8 ISO 9000 Certification for the Contractor 19   \nD9 Not Used 19   \nD10 Site Cleanliness and Tidiness 19   \nD11 Not Used 20   \nD12 Joint and Several Liability of Partners and Unincorporated Joint Venture Participants 20   \nD13 Site Diary an\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "D1~2",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A5",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# A5 Contract Information for Cost Estimation or Cost Analysis for Client’s Other Works\n(1) Subject to sub-clause (3) below, any contract rates or related information provided by the Contractor in connection with the contract may be used by the Client for the sole purpose of cost estimation or cost analysis for its other works which may or may not be connected with the contract.\n(2) Subject to sub-clause (3) below, the Client may also furnish such information to any third party engaged by the Cl\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contract Information for Cost Estimation or Cost Analysis for Client’s Other Works",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_B3",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# B3 Changing Scope before issue of Defects Certificate after Completion\nThe Project Manager may give an instruction after Completion to the Contractor which changes the Scope in respect of work not done at Completion or Defects before the Defects Certificate is issued if such a change is in the opinion of the Project Manager desirable for or to achieve the satisfactory Completion and functioning of the works.\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Changing Scope before issue of Defects Certificate after Completion",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C7",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# C7 Limiting Tiers of Subcontracting\n(1) For the purpose of this Clause, the first tier of subcontracting means the contracts between the Contractor and its subcontractors. The second tier means the subcontracts between any of the subcontractors of the first tier and their subcontractors.\nThe foregoing shall apply with necessary modifications to subsequent tiers of subcontracting.\n2) Notwithstanding Clauses C2 to C11 of these additional conditions of contract and NEC Clause 26 on subcontracting\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Limiting Tiers of Subcontracting",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C9",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# C9 Tender Requirements for Subcontracting\n(1) Without prejudice to the requirements in other provisions of the contract relating to subcontracting (including but not limited to the requirements of Clause C3 of these additional conditions of contract), if the Contractor intends to subcontract any of the works, it shall comply with the following and other sub-clauses in this Clause C9:\n(a) when the Contractor’s estimate for a subcontract does not exceed \\$200,000, the Contractor may select a sub\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Tender Requirements for Subcontracting",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D5",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-J-00: \"# D5 Notices to be in English and Chinese\nAny notice required to comply with any enactment or the rules and regulations of the Government of the Hong Kong Special Administrative Region or other competent\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Notices to be in English and Chinese",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-J-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D25",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-25-00: \"# D25 Disposal Ground\n(1) The Contractor shall not dispose of construction and demolition materials generated by the Site at any place other than the disposal grounds designated in the contract or directed by the Project Manager or such alternative disposal grounds as proposed by the Contractor and accepted by the Project Manager in accordance with Clause 25.25S(3) of the Particular Specification.\n(2) Notwithstanding any other provisions in the contract, the Project Manager’s acceptance or non-a\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Disposal Ground",
+    "document_references": [
+      "I-HY_2022_14-PS-25-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_E4",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# E4 Passes\n(1) The Supervisor may arrange the issue of passes to the Contractor for the admission of workers to the Site or to any part thereof and in such event any person who fails to show its pass on demand to any duly authorized person may be refused admission.\n(2) If required by the Supervisor the Contractor shall submit a list of the names of all its workers requiring passes together with two photographs of each person and shall satisfy the Supervisor of their bona fides and identity.\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Passes",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D14",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D14 Offering Gratuities\n(1) If the Contractor or any of its agents or employees shall be found to have offered or given any advantage, gratuity, bonus, discount, bribe or loan of any sort to any agent or employee of the Client or to the Project Manager or to any member of the Project Manager’s staff or to the Supervisor or to any member of the Supervisor’s staff, the Client may terminate forthwith the Contractor’s obligation to Provide the Works as if for any of the reasons R1-R15 under NEC Cl\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Offering Gratuities",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_E3",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-18-00: \"# E3 Fair Wages\n(1) The Contractor shall pay rates of wages and observe hours and conditions of labour which are not less favourable than the general level of wages, hours and conditions observed by other employers whose general circumstances in the trade or industry in which the Contractor is engaged are similar.\n(2) The Contractor shall in respect of all persons employed by it, whether in carrying out the contract or otherwise, in every workshop or other place occupied or used by it for Provid\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Fair Wages",
+    "document_references": [
+      "I-HY_2022_14-PS-18-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_F6",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# F6 Professional Indemnity Insurance in respect of Cost Savings Design\n(1) Without limiting its obligations under the contract, the Contractor shall effect and maintain, with well established insurers of repute, professional indemnity insurance for a minimum amount as notified by the Client to the Contractor in respect of its obligations in relation to the Cost Savings Design to be carried out by or on behalf of the Contractor pursuant to the contract for any one occurrence or series of occurre\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Professional Indemnity Insurance in respect of Cost Savings Design",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D16",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"D16 Contractor’s Interim Statements 21   \nD17 Acknowledgement of being Notified of the Ethical Requirements 21   \nD18 Not Used 22   \nD19 Hired and Hire-purchase Constructional Plant 22   \nD20 Environmental Management Plan 23   \nD21 Use of Ultra Low Sulphur Diesel 24   \nD22 Contractors’ Joint Venture 245   \nD23 Not Used   \nD24 Intellectual Property Rights relating to Site Uniform 25   \nD25 Disposal Ground 26   \nD26 Not Used 26   \nD27 Not Used 26   \nD28 Pay for Safety Performance Merit Scheme (PFS\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contractor’s Interim Statements 21",
+    "document_references": [
+      "I-HY_2022_14-NTT-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D16~2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D16 Contractor’s Interim Statements\nThe Contractor shall submit and procure its subcontractors to submit a signed declaration in a form prescribed or accepted by the Client to confirm compliance with the provisions on ethical commitment and confidentiality in Clauses A3 and D15 at a frequency of once every month. If the Contractor fails to submit or fails to procure the subcontractors to submit the declaration as required, the Client shall be entitled to withhold payment until such declaration\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "D16~2",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# D2 Patents Rights and Royalties\nExcept when otherwise specified in the contract the Contractor shall pay all tonnage and other royalties, rent and other payments or compensation (if any) for getting stone, sand, gravel, clay or other materials required for the works.\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Patents Rights and Royalties",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_G1A",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-C-00: \"G1A Not Used 56   \nG1B Settlement of Disputes 56   \nG2 Not Used 59\nSection P – Security of Payment P1 Security of Payment\nList of Appendices   \nAppendix A Change in Law   \nAppendix B Guidelines on Scope and Contents of Subcontractor Management Plan   \nAppendix C Guidelines on Documentary Proof to Demonstrate the Compliance of the Provisions in the SMP   \nAppendix D Draft Clause on payment of wages of Site Worker   \nAppendix E Articles of Agreement for Partnership Unincorporated Joint Venture\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Not Used 56",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-C-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D21",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-APP-E1-00: \"# D21 Use of Ultra Low Sulphur Diesel\nSubject to Clause 1.129(2) of the Particular Specification for B5 diesel, all Equipment powered by diesel fuel, whether they belong to the Contractor or its subcontractors, must only be replenished with ultra low sulphur diesel (ULSD) (defined as diesel fuel containing not more than 0.005% by weight of sulphur) when working on the Site. The Contractor shall maintain a summary record of all delivery notes of ULSD delivered to the Site, including those ordered\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Use of Ultra Low Sulphur Diesel",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-E1-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A7",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# A7 Contingency sums, provisional sums and forecast total of the Prices\n(1) Notwithstanding the inclusion of contingency sums, provisional sums and forecast total of the Prices in the Grand Summary of the activity schedule, the contingency sums, provisional sums and forecast total of the Prices shall not form part of the contract.\n(2) The contingency sums and provisional sums are allowed as contingencies for the purpose of internal administration of the Client under the Stores and Procurement R\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Contingency sums, provisional sums and forecast total of the Prices",
+    "document_references": [
+      "I-HY_2022_14-NTT-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D6",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-B-00: \"# D6 Safety Plan\nauthority and which Contractor may have to exhibit either for the benefit of the public or for the benefit of its employees shall be written in English and Chinese.   \n(1) “Safety Plan” means a document, including any revised or updated version, setting out details of the safety management system that the Contractor will implement on the Site, together with any other measures and information required by the contract to ensure safety and health to Provide the Works.   \n(2) The Co\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Safety Plan",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-B-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C4",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# C4 ISO 9000 Certification for Subcontractor\nThe listed contractor to be engaged in accordance with Clause C3 of these additional conditions of contract for all categories and/or groups of works shall either:\n(a) have obtained an ISO 9001:2015 certificate acceptable to the Client with the scope of certification acceptable to the Project Manager; or\n(b) (i) have obtained a confirmation from a certification body acceptable to the Client, stating that a full review of the Quality Manual of its Hon\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "ISO 9000 Certification for Subcontractor",
+    "document_references": [
+      "I-HY_2022_14-SCT-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_E2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# E2 Employment of Skilled Workers\n(1) Further to NEC Clause 26.1 and Clause E1 of these additional conditions of contract, the Contractor shall ensure the employment and provision of registered skilled workers, registered skilled workers (provisional), registered semi-skilled workers, registered semi-skilled worker (provisional) (as defined in section 2(1) of the Construction Workers Registration Ordinance (Cap 583)) for each of the relevant specified trade division at the Site is at all times\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Employment of Skilled Workers",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C1",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"C1 C2 Not Used Subcontracting 6 6 6 7 7   \nC3 Specialist Subcontractors   \nC4 ISO 9000 Certification for Subcontractor   \nC5 Subcontractor Management Plan   \nC6 Engagement of Subcontractors who are registered under the respective trades and groups available in the Registered Specialist Trade Contractors Scheme 8 9 10 11 14 14 14   \nC7 Limiting Tiers of Subcontracting   \nC8 Subcontract Conditions   \nC9 Tender Requirements for Subcontracting   \nC9A Not Used   \nC10 Not Used   \nC11 Tender requiremen\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "C2 Not Used Subcontracting 6 6 6 7 7",
+    "document_references": [
+      "I-HY_2022_14-NTT-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_A1~2",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"A1 Definitions\nUnless otherwise specified, the terms and definitions used in these additional conditions of contract shall be the same as those used in the conditions of contract. In the contract:\n“Change in Law” means any addition or amendment to any enactment, regulations, bylaws or rules listed in Appendix A attached to these additional conditions of contract:\nmade on or after the date 10 days prior to the tender closing date; or made before the date 10 days prior to the tender closing date a\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "A1~2",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_C6",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"# C6 Engagement of Subcontractors who are registered under the respective trades and groups available in the Registered Specialist Trade Contractors Scheme\n(1) For the purpose of this Clause, the following words and expressions shall have the meaning hereby assigned to them:\n“RSTCS” means the Registered Specialist Trade Contractors Scheme managed by the Construction Industry Council and as referred to in the Rules and Procedures applicable to the aforesaid Registered Specialist Trade Contractors\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Engagement of Subcontractors who are registered under the respective trades and groups available in ",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "ACC_D33",
+    "consistency_status": "not_found",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# D33 Vaccine Pass Requirements on the Site\n(1) For purposes of the contract, “Government” shall mean the Government of the Hong Kong Special Administrative Region.\n(2) Notwithstanding any other provision of the contract, upon request of the Client made at any time and from time to time, the Contractor shall submit to the Client a list containing information specified in sub-clause (3) of this Clause relating to the following persons who are to enter into the Site for the purpose of the contract\"",
+    "reasoning": "no matching standard clause",
+    "check_type": "acc_vs_cdcp",
+    "description": "Vaccine Pass Requirements on the Site",
+    "document_references": [
+      "I-HY_2022_14-ACC-00"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

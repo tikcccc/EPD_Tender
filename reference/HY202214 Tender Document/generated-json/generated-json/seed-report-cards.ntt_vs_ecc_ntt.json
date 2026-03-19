@@ -1,0 +1,402 @@
+[
+  {
+    "item_id": "NTT_NTTA21",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"NTT A21 NTT A3 PLrocaetidounres Not Used of ftoernodeprenbionxg tenders 1 1 1 1 1 2 3 3 3 3 3 3 3 3 4 4 4 4 5 5 5 5 5 5 5 5 6 6 6 6 NTT A4 Clarifications from Project Manager designate NTT A5 Check list for tenders deposited in the tender box NTT A6 Electronic submission NTT A7 Changes in status of qualifications NTT A8 Regulating actions on inappropriate conducts NTT A9 Not Used NTT A10 Anti-collusion NTT A11 Formula Approach NTT A12 Not Used NTT A13 Not Used NTT A14 Not Used NTT A15 Net presen\" From ECC HK_NTTA21_20231115.docx: \"Clause | Remarks/Guidelines\nNTT A21    Estimates for Tender Price Index | NTT A21    Estimates for Tender Price Index\nTenderer’s attention is drawn to Special Conditions of Tender Clause SCT [20]# which requires the tenderer to submit Estimates for Tender Price Index (“ETPI”) with its tender. The ETPI is submitted to the Client for the purposes as stated in Special Conditions of Tender Clause SCT [20(4)]# only and will not be used for tender assessment. Failure to submit the ETPI by the tenderer\"",
+    "reasoning": "The tender clause labeled 'NTTA21' contains garbled text and appears to be a corrupted or misformatted list of clause headers without any substantive content related to Estimates for Tender Price Index (ETPI). It does not include the required language from the STANDARD NTT A21 clause regarding ETPI submission, its purpose, or consequences of non-submission.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA21",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA21_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA2",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT A2 Procedures for opening tenders\nTenders will be opened by the tender opening team of the Public Works Tender Board at 12 noon on the date set for the close of tender or, if this has been extended, the extended date at Room 503, 5/F., Low Block, The Queensway Government Offices, 66 Queensway, Hong Kong.\" From ECC HK_NTTA2_20231115.doc: \"|Clause                                  |Remarks/Guidelines               |\n|NTT A2    Procedures for opening tenders                                  |\n|Tenders will be opened by the tender    |                                 |\n|opening team of the [insert name of     |                                 |\n|tender board] at 12 noon on the date set|                                 |\n|for the close of tender or, if this has |                                 |\n|been extended, the extended date at\"",
+    "reasoning": "The tender clause fully implements the standard by specifying the required tender opening team, time (12 noon), date (including provision for extension), and location—replacing the placeholders in the standard with actual values.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA2",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA2_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC20",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT C20 Environmental management\nTenderers should note Clause D20 of the additional conditions of contract on “Environmental Management Plan” and the Particular Specification on “Environmental Management” for minimising nuisances and waste\ngeneration from the works. In addition, tenderers should note that all non-road based construction machinery powered by diesel fuel working on this contract should use B5 diesel (i.e. 5% biodiesel blended with 95% Euro V diesel) in accordance with Clause 1.1\" From ECC HK_NTTC20_20231115.docx: \"Clause | Remarks/Guidelines\nNTT C20    Environmental management  [optional clause] | NTT C20    Environmental management  [optional clause]\nTenderers should note clause [12.1]# of the Scope provided by the Client on “Environmental Management Plan” and the Particular Specification on “Environmental Management” for minimising nuisances and waste generation from the works. In addition, tenderers should note that all non-road based construction machinery powered by diesel fuel working on the contrac\"",
+    "reasoning": "The tender clause updates references (e.g., from generic '[12.1]#' to specific 'Clause D20' and 'Clause 1.132(1)') and adds new content about subcontracting restrictions (Clause C7) and amendments to the Short Schedule of Cost Components, which are not present in the standard clause.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC20",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTC20_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA4",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT A4\nClarifications from Project Manager designate\nShould the tenderer for any reason whatsoever be in doubt about the precise meaning of any item or figure contained in the documents it shall seek clarification from the Project Manager designate.\nProject Manager designate: Principal Project Coordinator/Environmental Projects, Major Works Project Management Office, Highways Department.   \nAddress: 6th Floor, Ho Man Tin Government Offices, 88 Chung Hau Street, Ho Man Tin, Kowloon.   \nContact\" From ECC HK_NTTA4_20231115.docx: \"Clause | Remarks/Guidelines\nNTT A4    Clarifications from *Project Manager / Supervisor designate | NTT A4    Clarifications from *Project Manager / Supervisor designate\nShould the tenderer for any reason whatsoever be in doubt about the precise meaning of any item or figure contained in the documents it shall seek clarification from the [*Project Manager/ Supervisor] designate [Insert post title of Government officer / company name and contact details as appropriate.] | Advice directing tendere\"",
+    "reasoning": "The tender clause fully implements the standard by specifying the required clarification contact, including the designated role, name, address, and contact details (telephone and fax), as advised in the standard's remarks.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA4",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA4_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA7",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT A7 Changes in status of qualifications\nThe tenderer should inform the Government in its tender submission of any factor which might affect its status of qualifications. The Government reserves the right to review the tenderer’s qualified status in the light of any new information relevant to its qualifications.\" From ECC HK_NTTA7_20231115.docx: \"Clause | Remarks/Guidelines\nNTT A7    Changes in status of qualifications | NTT A7    Changes in status of qualifications\nThe tenderer should inform the Government in its tender submission of any factor which might affect its status of qualifications.  The Government reserves the right to review the tenderer’s qualified status in the light of any new information relevant to its qualifications. | Advice to tenderers to inform the Government of any factor which might affect the tenderer’s qualifie\"",
+    "reasoning": "The tender clause is identical in substance and wording to the standard clause, including both the obligation for the tenderer to disclose relevant factors and the Government's right to review qualifications.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA7",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA7_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC2",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"NTT C2 Payment for Subcontractor Management Plan 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 9 9 9 9 NTT C3 Details of Subcontractor Management Plan   \nNTT C4 Not Used   \nNTT C5 Early Warning Register   \nNTT C6 Not Used   \nNTT C7 Not Used   \nNTT C8 Professional indemnity insurance   \nNTT C9 Not Used   \nNTT C10 Proof of plant ownership   \nNTT C11 Employing Site Workers for this contract and payment of Site Worker’s wages   \nNTT C12 Not Used   \nNTT C13 Site cleanliness and tidiness – daily cleaning and\" From ECC HK_NTTC2_20240410_clean.docx: \"Clause | Remarks/Guidelines\nNTT C2    Payment for Subcontractor Management Plan | NTT C2    Payment for Subcontractor Management Plan\nTenderers’ attention is drawn to Clause [GCT 20]# of General Conditions of Tender, ACC Clause [V:2]#  and clause [X]# of the Particular Specification requiring the submission and quarterly updating of the Subcontractor Management Plan (SMP) in the form and contents as prescribed in the contract.  Tenderers’ attention is also drawn to the requirement to monitor and\"",
+    "reasoning": "The TENDER CLAUSE (NTTC2) listing appears to be a table of contents or index of clause titles without substantive content for NTTC2 itself. It does not include the required language about SMP submission, updating, cost coverage, or references to GCT 20, ACC Clause V:2, or Particular Specification clause X as specified in the STANDARD clause.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC2",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTC2_20240410_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA16",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT A16 Destruction of documents\nDocuments of unsuccessful tenderers may be destroyed three months after the date this contract has been awarded.\" From ECC HK_NTTA16_20231115.doc: \"|Clause                                  |Remarks/Guidelines               |\n|NTT A16    Destruction of documents                                       |\n|Documents of unsuccessful tenderers may |Advice to tenderers that         |\n|be destroyed *three months1/three years2|documents of unsuccessful        |\n|after the date the contract has been    |tenderers will be destroyed at   |\n|awarded.                                |certain time after the date of   |\n|\"",
+    "reasoning": "The tender clause specifies a fixed three-month retention period without distinguishing between WTO GPA-covered and non-covered tenders, whereas the standard requires either three months (non-GPA) or three years (GPA). This is an acceptable modification only if the tender is confirmed to be non-GPA-covered, but the clause omits this conditionality.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA16",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA16_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTB2",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT B2 Constraints on Project Manager’s power\nThe tenderer’s attention is drawn to the constraints on the Project Manager’s powers set out in Clause B1 of the additional conditions 2 contract.\n(2) In addition to the above constraints, the Project Manager is also required under the terms of its appointment by the Client to:\n(i) refer the details of every change to the Scope, including the reasons for the change and its estimated change to the Prices due to the associated compensation event, to\" From ECC HK_NTTB2_20231115.docx: \"Clause | Remarks/Guidelines\nNTT B2    Constraints on Project Manager’s power | NTT B2    Constraints on Project Manager’s power\nThe tenderer’s attention is drawn to the constraints on the Project Manager’s powers set out in ACC Clause [III:1]#. | Please refer to WBTC Nos. 19/2000, 20/2000 and 16/2002, ETWB TCW Nos. 56/ and 6/2004, and DEVB TCW No. 5/2007 \n# Insert as appropriate\n(2)\tIn addition to the above constraints, the Project Manager is also required under the terms of its appointment by t\"",
+    "reasoning": "The tender clause replaces the reference to 'ACC Clause [III:1]#' with 'Clause B1 of the additional conditions 2 contract' and adds a new sub-clause (iv) regarding delays to Completion Date and Key Dates not present in the standard. These are explicit amendments rather than omissions or contradictions.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTB2",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTB2_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC17",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# NTT C17 Pay for Safety Performance Merit Scheme\nTenderers shall note that besides the task-tied payment items for the Pay for Safety Scheme (PFSS), performance-tied payment items for the newly introduced Pay for Safety Performance Merit Scheme (PFSPMS) are also included in this contract. Tenderers shall pay attention to Clause D28 of the additional conditions of contract on “Pay for Safety Performance Merit Scheme (PFSPMS)”, the Assessment Rules and the incentive schedule for Performance-tied\" From ECC HK_NTTC17_20231115.docx: \"Clause | Remarks/Guidelines\nNTT C17    Pay for Safety Performance Merit Scheme  [optional clause] | NTT C17    Pay for Safety Performance Merit Scheme  [optional clause]\nTenderers shall note that besides the task-tied payment items for the *Pay for Safety Scheme (PFSS)/*Pay for Safety and Environment Scheme (PFSES), performance-tied payment items for the newly introduced Pay for Safety Performance Merit Scheme (PFSPMS) are also included in the contract. Tenderers shall pay attention to ACC Claus\"",
+    "reasoning": "The tender clause implements the core requirement of referencing PFSPMS, task-tied and performance-tied payment items, but modifies specific references: it cites Clause D28 instead of ACC Clause [IV:6]#, Appendix A instead of Appendix [X]#, and Section 1.13B with slightly different title wording. These are acceptable adjustments as placeholders in the standard ([X]#, etc.) are meant to be inserted or amended per project.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC17",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "ECC HK_NTTC17_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA5",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"# NTT A5 Check list for tenders deposited in the tender box\n(1) Before the tender is sealed and delivered to the Public Works Tender Box, please check the following:\n(a) The tender has been properly signed and the signature witnessed.   \n(b) All the documents issued with or requested in the tender such as acknowledgements of receipt of corrigenda or addenda, are properly completed and attached to the tender.   \n(c) Copies of the Form of Tender, Contract Data Part two, and priced activity schedul\" From ECC HK_NTTA5_20240612_clean r1.docx: \"via the e-TS(WC) until after the closing time when they will be opened by authorised personnel.\"",
+    "reasoning": "The STANDARD clause refers to submission via 'e-TS(WC)' and opening by authorised personnel after closing time, but the TENDER clause provides detailed procedural instructions for physical/electronic tender submission without mentioning e-TS(WC) or the specific opening process described in the standard.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA5",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00",
+      "ECC HK_NTTA5_20240612_clean r1.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC18",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# NTT C18 Tree preservation\nTenderers should note that Clause 26.04(1) of the Particular Specification requires the Contractor to assign a competent member of the site supervisory staff to oversee and supervise the tree works under this contract, and that such a person should possess the practical experience as required under Clause 26.04(1) of the Particular Specification.\" From ECC HK_NTTC18_20231115.docx: \"Clause | Remarks/Guidelines\nNTT C18    Tree preservation  [optional clause] | NTT C18    Tree preservation  [optional clause]\nTenderers should note that clause [X]# of the Particular Specification requires the Contractor to assign a competent member of the site supervisory staff to oversee and supervise the tree works under the contract, and that such a person should possess the practical experience as required under clause [X]# of the Particular Specification. | Please refer to DEVB TC(W) No. 4\"",
+    "reasoning": "The tender clause correctly implements the standard by specifying Clause 26.04(1) of the Particular Specification as the referenced requirement, aligning with the standard's instruction to insert the appropriate clause reference.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC18",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_NTTC18_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTB3",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT B3\nContingency sums, provisional sums and forecast total of the Prices\nTenderers' attention is drawn to Clause GCT 35 of the General Conditions of Tender on the contingency sums, provisional sums and forecast total of the Prices.\nPayment under Capital Works Contracts\nTenderers’ attention is drawn to the provisions of Secondary Option X14 as amended by the schedule to the Articles of Agreement setting out the details of advance payment to the Contractor and the repayment arrangement thereof\" From ECC HK_NTTB3_20231115.docx: \"Clause | Remarks/Guidelines\nNTT B3    Contingency sums, provisional sums and forecast total of the Prices | NTT B3    Contingency sums, provisional sums and forecast total of the Prices\nTenderers' attention is drawn to the General Conditions of Tender Clause [GCT 35]#on the contingency sums, provisional sums and forecast total of the Prices. | # Insert as appropriate\"",
+    "reasoning": "The tender clause includes all content from the standard clause but adds an additional paragraph about payment under Capital Works Contracts referencing Secondary Option X14, which is not present in the standard. This constitutes an explicit addition/modification.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTB3",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTB3_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA11",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"# NTT A11 Formula Approach\nTenders will be evaluated in accordance with the formula approach at Appendix A to these Notes to Tenderers. Tenderers should note DEVB TC(W) No. 4/2014 and 4/2014A which set out the use of the Formula Approach for tender evaluation. Tenderers shall note that the Government is not bound to accept the tender with the highest overall score or any tender and may cancel the tender exercise on public interest ground. In considering the acceptance of a tender, the Government\" From ECC HK_NTTA11_20240422_clean r1.docx: \"does not have any total “man-year” worked in the stated period; or (ii) has total “man-year” worked below 20 and a training score of “0” in the stated period; or (iii) is not a Group C contractor in the stated period, the tenderer(s) concerned will be given a training rating of 50% of the full mark.\n\nTraining score | [X]##, i.e. the full mark, shall be determined as follows:-\n(27)\tThe training score of a tenderer should be worked out using the number of workers trained as detailed below –\n1 trai\"",
+    "reasoning": "The TENDER clause (NTTA11) describes a general formula-based tender evaluation approach and lists broad considerations for tender acceptance, but it does not address the specific training score calculation, man-year thresholds, or contractor group classifications outlined in the STANDARD clause. There is no mention of CCTS, ITCTS, ACMTS, CICATP, CWRO registration, or the 50% training rating rule.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA11",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_NTTA11_20240422_clean r1.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC1",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT C1\nEngagement of Subcontractors who are Registered under the Respective Trades and Groups available in the Registered Specialist Trade Contractors Scheme (RSTCS)\nTenderers’ attention is drawn to the Clause C6 of the additional conditions of contract requiring the engagement of subcontractors who are registered under the respective trades and groups available in the Registered Specialist Trade Contractors Scheme (RSTCS).\" From ECC HK_NTTC1_20240410_clean.docx: \"Clause | Clause | Remarks/Guidelines\nSubcontractor Registration Scheme | Subcontractor Registration Scheme | Subcontractor Registration Scheme\nTenderers’ attention is drawn to ACC Clause [V:4]# requiring the engagement of subcontractors who are registered under the respective trades and groups available in the Registered Specialist Trade Contractors Scheme (RSTCS). | Please refer to DEVB memos ref. DEVB(W) 510/94/02 dated 4.12.2020, 11.1.2022, 17.6.2022, 1.12.2022, 1.2.2023, 6.9.2023 and 10.4.20\"",
+    "reasoning": "The tender clause correctly references the requirement to engage subcontractors registered under the RSTCS, aligning with the standard clause's intent and referencing the appropriate contractual clause (C6 vs. ACC [V:4], which is an acceptable placeholder variation). Both emphasize compliance with the RSTCS registration requirement.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC1",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTC1_20240410_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA6",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# NTT A6 Electronic submission\n(1) Tenderers may submit tenders in traditional hard copy format or partly in electronic format in accordance with Clause GCT 4 of the General Conditions of Tender. All tenders, whether in hard copy format or partly in electronic format, will be evaluated on an equal basis.\n(2) When submitting tenders in electronic format, tenderers are reminded to digitally sign their tenders in electronic format, which shall comply with the requirements set out in Appendix A to t\" From ECC HK_NTTA6_20250610_clean.docx: \"ce.\n\n* Delete as appropriate.\n# Update the figure as appropriate.\nPlease refer to Appendix 5.8 of Chapter 5 of the Project Administration Handbook).\"",
+    "reasoning": "The STANDARD clause appears to be a placeholder or incomplete (contains only 'ce.', deletion/update instructions, and a reference), providing no substantive requirement to compare against. The TENDER clause contains specific provisions on electronic submission, but there is no discernible standard requirement to assess compliance against.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA6",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "ECC HK_NTTA6_20250610_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC14",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# NTT C14 Site uniform\nTenderers should note that the prices in the activity schedule shall be deemed to cover all works, services and obligations for or related to ensuring that all workers involved in site works wear site uniform when they are on the Site as specified in Clauses D24 of the additional conditions of contract, and Clause 1.118 of Particular Specification. There shall be no measurement or separate payment for any of such works, services or obligations. For enquiries on details of\" From ECC HK_NTTC14_20231115.docx: \"Clause | Remarks/Guidelines\nNTT C14    Site uniform | NTT C14    Site uniform\nTenderers should note that the *rates/*prices in the *bill of quantities/ *activity schedule shall be deemed to cover all works, services and obligations for or related to ensuring that all workers involved in site works wear site uniform when they are on the Site as specified in ACC Clauses [IV:9]#, and clause [X]# of Particular Specification.  There shall be no measurement or separate payment for any of such works, s\"",
+    "reasoning": "The tender clause replaces the referenced clauses (ACC [IV:9] and clause [X]) with specific clause numbers (D24 and 1.118), which constitutes a documented adjustment to align with project-specific contract documents. All other requirements, including cost inclusion and contact details, remain consistent.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC14",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_NTTC14_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC19",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-26-00: \"# NTT C19 Tree pruning works\nTenderers should note that Clause 26.14 of the Particular Specification requires the Contractor to assign worker(s) with relevant qualification to undertake tree pruning works involving the use of chainsaw.\" From ECC HK_NTTC19_20231115.docx: \"Clause | Remarks/Guidelines\nNTT C19    Tree pruning works  [optional clause] | NTT C19    Tree pruning works  [optional clause]\nTenderers should note that clause [X]# of the Particular Specification requires the Contractor to assign worker(s) with relevant qualification to undertake tree pruning works involving the use of chainsaw. | Please refer to DEVB memo ref. (36) in L/M to DEVB(GLTM) 302/5/1 dated 17.12.2014.\n# Insert appropriate reference\"",
+    "reasoning": "The tender clause correctly specifies Clause 26.14 of the Particular Specification as the reference, fulfilling the placeholder '[X]#' in the standard clause. It retains the core requirement regarding qualified workers for chainsaw tree pruning and aligns with the intent and content of the standard clause.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC19",
+    "document_references": [
+      "I-HY_2022_14-PS-26-00",
+      "ECC HK_NTTC19_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA10",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT A10 Anti-collusion\nTenderers’ attention is drawn to the anti-collusion provisions in Clause GCT 26 of the General Conditions of Tender.\" From ECC HK_NTTA10_20231115.doc: \"|Clause                                  |Remarks/Guidelines               |\n|NTT A10    Anti-collusion                                                 |\n|Tenderersâ€™ attention is drawn to the    |Please refer to DEVB memo ref.   |\n|anti-collusion provisions in Clause GCT |(02B6J-01-6) in DEVB(W) 510/10/01|\n|26 of the General Conditions of Tender. |dated 24.3.2011.                 |\"",
+    "reasoning": "The tender clause fully reproduces the substantive requirement of the standard clause by referencing Clause GCT 26 of the General Conditions of Tender. The omission of the remarks/guidelines (which are advisory and reference a memo) does not affect compliance, as those are not part of the binding clause text.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA10",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA10_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC13",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# NTT C13 Site cleanliness and tidiness daily cleaning and weekly tidying\n(1) Tenderers should note Clause D10 of the additional conditions of contract and Clause .32A of the Particular Specification on “Site Cleanliness and Tidiness Daily Cleaning and Weekly Tidying Up of the Site”. Separate items are stipulated in the activity schedule for the cleaning and tidying up work of the Site, including Public Cleaning Areas which the Contractor is solely responsible for cleaning and have to be maintai\" From ECC HK_NTTC13_20231115.docx: \"Clause | Remarks/Guidelines\nNTT C13    Site cleanliness and tidiness – daily cleaning and weekly tidying  \n[optional clause] | NTT C13    Site cleanliness and tidiness – daily cleaning and weekly tidying  \n[optional clause]\n(1)\tTenderers should note clause [13.2]# of the Scope provided by the Client and clause [X]# of the Particular Specification on “Site Cleanliness and Tidiness - Daily Cleaning and Weekly Tidying Up of the Site”. Separate items are stipulated in the *bill of quantities/*activi\"",
+    "reasoning": "The tender clause adds a detailed enforcement and penalty mechanism (verbal/written warnings, performance ratings) not present in the standard clause, while retaining core obligations. This constitutes an explicit modification rather than mere implementation.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC13",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_NTTC13_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC2~2",
+    "consistency_status": "modified",
+    "confidence_score": 0.8936875,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# NTT C2 Payment for Subcontractor Management Plan\nTenderers’ attention is drawn to Clause GCT 20 of General Conditions of Tender, Clause C5 of additional conditions of contract and Clause 1.135 of the Particular Specification requiring the submission and quarterly updating of the Subcontractor Management Plan (SMP) in the form and contents as prescribed in this contract. Tenderers’ attention is also drawn to the requirement to monitor and ensure the implementation of and the compliance with the\" From ECC HK_NTTC2_20240410_clean.docx: \"Clause | Remarks/Guidelines\nNTT C2    Payment for Subcontractor Management Plan | NTT C2    Payment for Subcontractor Management Plan\nTenderers’ attention is drawn to Clause [GCT 20]# of General Conditions of Tender, ACC Clause [V:2]#  and clause [X]# of the Particular Specification requiring the submission and quarterly updating of the Subcontractor Management Plan (SMP) in the form and contents as prescribed in the contract.  Tenderers’ attention is also drawn to the requirement to monitor and\"",
+    "reasoning": "The tender clause replaces references to ACC Clause [V:2] and generic Clause [X] with specific clauses (C5 of ACC and 1.135 of Particular Specification) and uses 'activity schedule' instead of the bracketed '*bill of quantities / *activity schedule' option. These are explicit, documented adjustments rather than omissions or contradictions.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC2~2",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "ECC HK_NTTC2_20240410_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA15",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-NTT-00: \"# NTT A15 Net present value analysis\n(1) A programme for the purpose of conducting a net present value analysis in accordance with NTT A11(1)(ii) of these Notes to Tenderers is included in Appendix B of these Notes to Tenderers. This programme is for tender assessment use only and will not form part of this contract.\nThe cashflow discount rate to be used for the aforesaid net present value analysis shall be 4% per annum.\nThe cashflow discount rate provided herein is for tender assessment only an\" From ECC HK_NTTA15_20231115.docx: \"Clause | Remarks/Guidelines\nNTT A15    Net present value analysis | NTT A15    Net present value analysis\n(1)\tA programme for the purpose of conducting a net present value analysis in accordance with NTT [X]# of the Notes to Tenderers is included in Appendix [X]# of the Notes to Tenderers.  This programme is for tender assessment use only and will not form part of the contract.\n(2)\tThe cashflow discount *[rate/rates] to be used for the aforesaid net present value analysis shall be *[a% per annum\"",
+    "reasoning": "The tender clause implements the standard but replaces the variable/bracketed discount rate structure in the standard with a fixed 4% per annum rate. This is an explicit adjustment to the standard clause, not a contradiction or omission.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA15",
+    "document_references": [
+      "I-HY_2022_14-NTT-00",
+      "ECC HK_NTTA15_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTC3",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-B-00: \"# NTT C3 Details of Subcontractor Management Plan\nTenderers’ attention is drawn to the Appendix B to Clause C5 of additional conditions of contract on the scope and contents of Subcontractor Management Plan, including but not limited to the details of subcontract(s), the trade and group (if any) of the subcontractor under the Registered Specialist Trade Contractors Scheme and value of the subcontract(s).\nThe tenderer should note that the matters to be included by the Client in the Early Warning\" From ECC HK_NTTC3_20240410_clean.docx: \"Clause | Remarks/Guidelines\nNTT C3    Details of Subcontractor Management Plan | NTT C3    Details of Subcontractor Management Plan\nTenderers’ attention is drawn to the Appendix [X]# to ACC Clause [V:2]# on the scope and contents of Subcontractor Management Plan, including but not limited to the details of subcontract(s), the trade and group (if any) of the subcontractor under the Registered Specialist Trade Contractors Scheme and value of the subcontract(s). | # Insert as appropriate\n\n\nPlease r\"",
+    "reasoning": "The Tender clause retains the core requirement of providing a Subcontractor Management Plan as per the Standard clause but adds significant additional content unrelated to the original scope—specifically, requirements on the Early Warning Register, professional indemnity insurance (Clauses F5/F6), hired plant (Clause D19), and Site Worker employment/wage payment (Clause E6 and Particular Specification). These additions expand beyond the Standard clause’s focus, constituting explicit modifications.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTC3",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-B-00",
+      "ECC HK_NTTC3_20240410_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA1",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"NTT A1 Location of tender box\nThe tender box (Public Works Tender Box) is located in Room 503 on the 5th Floor, Low Block, Queensway Government Offices, 66 Queensway, Hong Kong.\" From ECC HK_NTTA1_20231115.doc: \"|Clause                                  |Remarks/Guidelines               |\n|NTT A1    Location of tender box                                          |\n|*[The tender box (Government Secretariat|* Delete as appropriate.         |\n|Tender Box) is located at the Lobby of  |1For tenders to be opened by the |\n|the Public Entrance on the Ground Floor,|tender opening teams of the      |\n|East Wing, Central Government Offices, 2|Central Tender Board. Any interim|\n|Tim Mei Avenue, Tamar, Hong Kong.]1\"",
+    "reasoning": "The tender clause correctly selects and includes the second location option (Public Works Tender Box) from the standard clause, which is appropriate for tenders opened by the Public Works Tender Board.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA1",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_NTTA1_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA18",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-APP-E-00: \"# NTT A18 JV Proforma\nTenderers’ attention is drawn to Clause SCT 5(4)A of the Special Conditions of Tender requiring the submission of the JV Proforma. Tenderer shall note the following in completing the JV Proforma:\nFor each category of works set out in the JV Proforma, the tenderer shall fill in the proposed value of works to be undertaken by each participant shareholder in the joint venture, and each proposed value of works shall be inserted as a figure in the unit of Hong Kong dollar, other\" From ECC HK_NTTA18_20231115.docx: \"Clause | Remarks/Guidelines\nNTT A18    JV Proforma | NTT A18    JV Proforma\nTenderers' attention is drawn to Clause [SCT 5(4)]# of the Special Conditions of Tender requiring the submission of the JV Proforma.  Tenderer shall note the following in completing the JV Proforma:\nFor each category of works set out in the JV Proforma, the tenderer shall fill in the proposed value of works to be undertaken by each participant / shareholder in the joint venture, and each proposed value of works shall be\"",
+    "reasoning": "The tender clause adds two elements not present in the standard: (1) a requirement that the JV Proforma total must tally with other tender documents (e.g., Grand Summary, Form of Tender), and (2) a reference to 'specific correction rules' in the JV Proforma. It also appends a sentence about the applicable NEC4 contract conditions, which is unrelated to the JV Proforma instructions. These additions modify the standard clause, though they do not contradict its core requirements.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA18",
+    "document_references": [
+      "I-HY_2022_14-SCT-APP-E-00",
+      "ECC HK_NTTA18_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "NTT_NTTA8",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-O-00: \"# NTT A8 Regulating actions on inappropriate conducts\nWhere the tenderer (i) is involved in any of the inappropriate conducts as described in paragraph 5.13.1 of the Contractor Management Handbook and which gives rise to reasonable suspicions as to its capability or integrity or (ii) fails or refuses to implement an accepted tender, regulating action may be taken against the tenderer in accordance with the terms of the Contractor Management Handbook.\" From ECC HK_NTTA8_20231115.docx: \"Clause | Remarks/Guidelines\nNTT A8    Regulating actions on inappropriate conducts | NTT A8    Regulating actions on inappropriate conducts\nWhere the tenderer (i) is involved in any of the inappropriate conducts as described in paragraph [5.13.1#] of the Contractor Management Handbook and which gives rise to reasonable suspicions as to its capability or integrity or (ii) fails or refuses to implement an accepted tender, regulating action may be taken against the tenderer in accordance with the t\"",
+    "reasoning": "The tender clause reproduces the operative text of the standard clause verbatim, including both grounds for regulating action and reference to the Contractor Management Handbook. The only difference is the omission of administrative remarks (e.g., DEVB memo reference and advice note), which are guidance for drafters and not part of the binding clause.",
+    "check_type": "ntt_vs_ecc_ntt",
+    "description": "NTTA8",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-O-00",
+      "ECC HK_NTTA8_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

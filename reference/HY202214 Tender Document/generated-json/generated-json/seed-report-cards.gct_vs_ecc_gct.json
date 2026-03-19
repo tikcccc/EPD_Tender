@@ -1,0 +1,546 @@
+[
+  {
+    "item_id": "GCT_GCT34",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 34 Tenderer’s consent and authorization on conviction records\nThe tenderer shall submit with the tender a duly signed letter in the form set out in Appendix E to these General Conditions of Tender giving consent to the Major Works Project Management Office of Highways Department to obtain from all relevant government departments/bureaux, authorizing such relevant government departments/bureaux to release and make available to the Major Works Project Management Office of Highways Department\" From ECC HK_GCT34_20231121_clean.docx: \"ay have any involvement therein.  For the purpose of this sub-paragraph, “serious bodily injury” and “construction site” shall bear the same meanings as assigned to them under paragraph 10(g)(ii) and paragraph 10(a), respectively, of DEVB TC(W) No. 5/2023 dated 28 July 2023 or any subsequent update.\n\n\tWe give further consent to the [ name of the project office / procuring department ] to furnish the information described in sub-paragraphs (1) and (2) above to [ name of project consultant], the P\"",
+    "reasoning": "The STANDARD clause references consent related to 'serious bodily injury' and 'construction site' as defined in DEVB TC(W) No. 5/2023 and includes a provision for sharing information with the Project Manager designate, but does not specify conviction record disclosures under listed ordinances. The TENDER clause introduces a detailed requirement for submitting conviction records under 15 specific ordinances—content absent in the STANDARD clause. This constitutes a material addition/contradiction, not merely a modification.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT34",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT34_20231121_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT14",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 14 Erratic pricing\n(1) Without prejudice to the generality of the other General Conditions of Tender and Special\nConditions of Tender, the Client may regard a tender as not being the most advantageous, irrespective of whether or not it is the lowest tender or the tender with the highest overall score, if in the Client’s opinion:\n(a) the activity schedule of the tender have been priced erratically whether or not such erratic pricing is the result of the application of Appendix F to these Ge\" From ECC HK_GCT14_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 14  Erratic pricing | GCT 14  Erratic pricing | GCT 14  Erratic pricing\n(1) | Without prejudice to the generality of the other General Conditions of Tender and Special Conditions of Tender, the Client may regard a tender as not being the most advantageous, irrespective of whether or not it is the lowest tender or the tender with the highest overall score, if in the Client’s opinion: | * Delete as appropriate\n(a) | the *bill of quantities/*activity schedul\"",
+    "reasoning": "The tender clause replaces generic placeholders (e.g., '*bill of quantities/*activity schedule') with specific references ('activity schedule' and 'Appendix F'), and adds new sub-clauses (2)(b) and (3) defining market price benchmarks—expanding beyond the standard’s scope. These are explicit, documented adjustments.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT14",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT14_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT4",
+    "consistency_status": "modified",
+    "confidence_score": 0.8499203,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 4 Submission of tender (Formula Approach)\n(1) The following documents shall be enclosed in a sealed envelope addressed, endorsed and deposited as required by the Gazette Notification or Letter of Invitation to Tender or the Tender Notice:\n(a) One set of the documents referred to in Clause GCT 2(b) above with:\n(i) The Form of Tender in hard copy format duly signed. (ii) The Contract Data Part two in hard copy format duly completed and signed. (iii) The activity schedule in either hard copy\" From ECC HK_GCT4_FA_20231115.docx: \"ocopying charge for tenders opened by the CTB and PWTB are $12.0 per page and $16.2 per page respectively.]\n(4) | If a tenderer elects to submit the priced *bill of quantities/*activity schedule in hard copy format and where a hard copy has been supplied by the Client, it should price the *bill of quantities/*activity schedule on the hard copy supplied by the Client. If a tenderer fails to do so, any extra cost incurred by the Client in checking whether the printed descriptions or figures of the\"",
+    "reasoning": "The STANDARD clause states that non-evaluated hard copy parts need not be checked for compliance with any requirements. However, the TENDER clause (GCT4(4)) imposes a cost-recovery mechanism if the tenderer prices the activity schedule on a hard copy other than the one supplied by the Client—even if that document is not used in evaluation—thus contradicting the 'benefit of doubt' principle in the STANDARD.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT4",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT4_FA_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT20",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 20 Management of Subcontractors\n(1) The tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate an outline Subcontractor Management Plan (SMP) which shall contain information as required in the Guidelines on Scope and Contents of the Subcontractor Management Plan at Appendix B to the additional conditions of contract. The outline SMP submitted shall not form part of t\" From ECC HK_GCT20_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 20  Management of Subcontractors | GCT 20  Management of Subcontractors | GCT 20  Management of Subcontractors\n(1) | The tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate an outline Subcontractor Management Plan (SMP) which shall contain information as required in the Guidelines on Scope and Contents of the Subcontractor Manage\"",
+    "reasoning": "The tender clause replaces the placeholder '[  ]#' with 'Appendix B' and slightly rewords sub-clause (2) to define 'subcontractor' more broadly as 'all types of subcontractor including without limitation Specialist Subcontractor', whereas the standard references 'Specialist Contractor as set out in ACC Clause V:5'. This is a documented adjustment rather than a contradiction.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT20",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT20_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT19",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 19 Copyright\n(1) The documents, plans, drawings or other materials forming part of the tender documents shall only be used by a tenderer or any person authorized or licensed by the tenderer for the purpose of preparing its tender. All other rights in the aforesaid materials are reserved by the relevant copyright owners. The tenderer shall be liable to the Client for breach of the foregoing by any such person as if the breach were committed by the tenderer.\n(2) The tenderer shall indemnify\" From ECC HK_GCT19_20250228_clean.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 19  Copyright | GCT 19  Copyright | GCT 19  Copyright\n(1) | The documents, plans, drawings, BIM Models or other materials forming part of the tender documents shall only be used by a tenderer or any person authorized or licensed by the tenderer for the purpose of preparing its tender. All other rights in the aforesaid materials are reserved by the relevant copyright owners.  The tenderer shall be liable to the Client for breach of the foregoing by any suc\"",
+    "reasoning": "The tender clause adds specific requirements not present in the standard: submission of a Letter of Indemnity in forms C1 and C2, including special provisions for incorporated joint ventures. While these additions implement and elaborate on the indemnity obligation, they constitute an explicit modification of the standard clause.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT19",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT19_20250228_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT27",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 27\nStatement of convictions under the Immigration Ordinance (Cap. 115)\n(1) A tender will not be considered if, during the 12-month period prior to the date set for the close of tender, or if this has been extended, the extended date, the tenderer has had three or more convictions in respect of separate incidents under Sections 17I or 38A of the Immigration Ordinance (Cap. 115) for employing illegal workers or for having illegal workers on any site under the tenderer’s control, whether or n\" From ECC HK_GCT27_20231115.docx: \"ts) during the 12-month^ period prior to the date set for the close of tender, or if this has been extended, the extended date, the details of which shall include the legislation violated, dates of offences, dates of convictions and the associated fine imposed by the court, site addresses, contract numbers and contract titles, or a statement of “no conviction”.  The statement shall be certified by a person authorized to sign Government contracts on the tenderer’s behalf #[, or in case of EMSTF’s\"",
+    "reasoning": "The TENDER clause narrows the scope of the STANDARD clause by specifying convictions only under Sections 17I or 38A of the Immigration Ordinance (Cap. 115) related to illegal workers, whereas the STANDARD clause appears broader (referring generally to 'legislation violated'). Additionally, the TENDER clause introduces a disqualification threshold (three or more convictions) not present in the STANDARD clause. These are explicit, documented adjustments.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT27",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT27_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT21",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 21 Essential submissions\nWithout prejudice to other General Conditions of Tender or Special Conditions of Tender providing for invalidating a tender submitted by a tenderer, the failure of a tenderer to submit with its tender any of the following on or before the original date set for the close of tender or, if this has been extended, the extended date shall render its tender invalid:\n(i) the Form of Tender required under Clause GCT 4(1)(a)(i);   \n(ii) the activity schedule required under\" From ECC HK_GCT21_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 21  Essential submissions | GCT 21  Essential submissions | GCT 21  Essential submissions\nWithout prejudice to other General Conditions of Tender or Special Conditions of Tender providing for invalidating a tender submitted by a tenderer, the failure of a tenderer to submit with its tender any of the following on or before the original date set for the close of tender or, if this has been extended, the extended date shall render its tender invalid: | With\"",
+    "reasoning": "The tender clause expands GCT 21 by adding requirements (iii) and (iv) related to joint ventures, which are not present in the standard clause. While the core requirement regarding submission deadlines and invalidation is preserved, the inclusion of additional mandatory submissions constitutes a documented modification referencing SCT clauses.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT21",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT21_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT9",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 9 Qualification of tender\nAny qualification of the tender may cause the tender to be disqualified.\" From ECC HK_GCT9_20231115.doc: \"|Clause                                       |Remarks/Guidelines          |\n|GCT 9  Qualification of tender                                            |\n|Any qualification of the tender may cause the|                            |\n|tender to be disqualified.                   |                            |\"",
+    "reasoning": "The tender clause is identical in wording and meaning to the standard clause, with no modifications or omissions.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT9",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT9_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT5",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 5 Financial Information\nThe tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate the financial information set out in Appendix B to these General Conditions of Tender. The information shall be used for tender assessment only and shall not form part of this contract.\" From ECC HK_GCT_APPENDIX_TO_THE_GCT5_20231115.docx: \"t venture, financial and supplementary statements as mentioned under paragraph (1) above for each participating company must be submitted.\"",
+    "reasoning": "The STANDARD clause requires submission of venture, financial, and supplementary statements for each participating company as part of the contract obligations. The TENDER clause limits submission to specific information in Appendix B, only upon request, and explicitly states it will not form part of the contract—omitting mandatory ongoing disclosure and contractual incorporation required by the standard.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT5",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT_APPENDIX_TO_THE_GCT5_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT29",
+    "consistency_status": "not_found",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 29\nOne tender only for holding companies, subsidiaries or related parties\n(1) Unless otherwise provided in the Special Conditions of Tender, no tenderer is permitted to submit more than one tender for each contract.\n(2) (a) A holding company and all of its subsidiaries shall be allowed to submit only one tender from any one of the companies in the group. (b) The existence of a holding-subsidiary relationship shall be determined as at the date set for the close of tender, or if this has bee\" From ECC HK_GCT26_20240524.docx: \"d to sign Government contracts on behalf of that person or as the case may be company.\"",
+    "reasoning": "The STANDARD clause appears to be an incomplete or corrupted fragment ('d to sign Government contracts...') and does not convey a clear requirement. The TENDER clause (GCT29) addresses restrictions on multiple tenders by related entities, which is unrelated to signing authority. No meaningful comparison can be made due to the incoherence of the standard clause.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT29",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT26_20240524.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT17",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 17 Unreasonably low bids\nWithout prejudice to the generality of other General Conditions of Tender and Special Conditions of Tender, the Client may reject a tender which in the opinion of the Client is unreasonably low in terms of price and may therefore affect the tenderer’s capability to carry out and complete this contract and/or deliver work of the quality required in accordance with the terms of this contract.\" From ECC HK_GCT17_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 17  Unreasonably low bids | GCT 17  Unreasonably low bids\nWithout prejudice to the generality of other General Conditions of Tender and Special Conditions of Tender, the Client may reject a tender which in the opinion of the Client is unreasonably low in terms of price and may therefore affect the tenderer’s capability to carry out and complete the contract and/or deliver work of the quality required in accordance with the terms of the contract.\"",
+    "reasoning": "The tender clause is identical to the standard clause, with only minor stylistic differences (e.g., 'this contract' vs. 'the contract') that do not affect meaning or intent.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT17",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT17_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT28",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 28\nStatement of convictions under the Employment Ordinance (Cap. 57)\n(1) A tender will not be considered if, during the 12-month period prior to the date set for the close of tender, or if this has been extended, the extended date, the tenderer has had three or more convictions in respect of separate incidents under the Employment Ordinance (Cap. 57) on any site under the tenderer’s control, whether or not it has been formally suspended as a result of such convictions. If the tenderer is a\" From ECC HK_GCT28_20231115.docx: \"uch convictions during the 12-month period, whether or not that participant or shareholder has been formally suspended as a result of such convictions. | Ref. ETWB TCW No. 10/2004 and Clause  of the Contractor Management Handbook, with modifications in accordance with the definition in GCT 1(b).\n(2) | The tenderer shall submit, subject to General Conditions of Tender Clause GCT 25/ with the tender**, either a statement of all convictions under the Employment Ordinance (Cap. 57) for all sites und\"",
+    "reasoning": "The Tender Clause expands the Standard Clause by adding requirements for joint venture participants/shareholders to submit separate statements (para 3) and mandating disclosure of company name changes with associated convictions (para 4). These are explicit additions not present in the Standard Clause, constituting documented modifications.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT28",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT28_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT6",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 6 Unauthorised alterations\nAny unauthorised alteration or erasure or obliteration to the text of the documents may cause the tender to be disqualified.\" From ECC HK_GCT6_20231115.doc: \"|Clause                                       |Remarks/Guidelines          |\n|GCT 6  Unauthorised alterations                                           |\n|Any unauthorised alteration or erasure or    |                            |\n|obliteration to the text of the documents may|                            |\n|cause the tender to be disqualified.         |                            |\"",
+    "reasoning": "The tender clause is identical in wording and meaning to the standard clause, with no alterations, omissions, or contradictions.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT6",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT6_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT8",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 8 Clarification of documents\nShould the tenderer for any reason whatsoever be in doubt about the precise meaning of any item or figure contained in the documents it shall seek clarification from the Project Manager designate.\" From ECC HK_GCT8_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 8  Clarification of documents | GCT 8  Clarification of documents\nShould the tenderer for any reason whatsoever be in doubt about the precise meaning of any item or figure contained in the documents it shall seek clarification from the Project Manager designate.\"",
+    "reasoning": "The tender clause is identical in wording and meaning to the standard clause, requiring tenderers to seek clarification from the Project Manager designate when in doubt.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT8",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT8_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT11",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 11 Correction rules for tender errors\nWithout prejudice to other General Conditions of Tender and Special Conditions of Tender, if errors and/or omissions are found in a tender during tender examination, such errors and/or omissions shall be dealt with in accordance with the principles and rules contained in Appendix F to these General Conditions of Tender.\" From ECC HK_GCT_APPENDIX_TO_THE_GCT11_20240318_clean_r1.docx: \"t is modified | If a rate has been entered against the original item of work, the rate shall be adjusted to fit in with the new unit.\"",
+    "reasoning": "The STANDARD clause specifies how rates should be adjusted when an item of work is modified, while the TENDER clause addresses correction of tender errors/omissions via Appendix F, with no mention of rate adjustment for modified work items. The core requirement of the standard is omitted.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT11",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT_APPENDIX_TO_THE_GCT11_20240318_clean_r1.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT30",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"GCT 30 Admission, promotion and confirmation to the List of Approved Contractors for Public Works / the List of Approved Suppliers of Materials and Specialist Contractors for Public Works\nA tender submitted by a contractor who has applied for admission or promotion to the category, class and/or group specified in the tender invitation or, in relation to a contract for which tenders are invited from confirmed contractors only, a tender submitted by a contractor who has applied for confirmed statu\" From ECC HK_GCT30_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 30  Admission, promotion and confirmation to the List of Approved Contractors for Public Works / the List of Approved Suppliers of Materials and Specialist Contractors for Public Works | GCT 30  Admission, promotion and confirmation to the List of Approved Contractors for Public Works / the List of Approved Suppliers of Materials and Specialist Contractors for Public Works\nA tender submitted by a contractor who has applied for admission or promotion to the categor\"",
+    "reasoning": "The tender clause adds specific provisions regarding probationary contractors' eligibility to tender and receive contract awards, referencing limits and conditions in the Contractor Management Handbook. These details are not present in the standard clause, which only addresses admission, promotion, and confirmation status by the tender closing date. The addition constitutes an explicit expansion of requirements, not a contradiction.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT30",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_GCT30_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT15",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# GCT 15 Tender addenda\nShould the Client require any amendments, clarifications, or adjustments to be made to the tender documents for the purpose of tendering, the Project Manager designate will issue to every tenderer numbered addenda giving full details D such amendments etc. and the tender documents shall be taken as having been amended, clarified or adjusted accordingly upon the issue of these addenda. The tenderer shall acknowledge receipt of these addenda.\" From ECC HK_GCT15_20240524.docx: \"Clause | Remarks/Guidelines\nGCT 15  Tender addenda | GCT 15  Tender addenda\nShould the Client require any amendments, clarifications, or adjustments to be made to the tender documents for the purpose of tendering, the Project Manager designate will issue to every tenderer numbered addenda giving full details of such amendments etc. and the tender documents shall be taken as having been amended, clarified or adjusted accordingly upon the issue of these addenda.  The tenderer shall acknowledge rec\"",
+    "reasoning": "The tender clause contains a typographical error ('D such amendments' instead of 'of such amendments'), which introduces ambiguity and may affect enforceability or clarity, constituting a deviation from the standard clause's precise wording.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT15",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_GCT15_20240524.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT33",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# GCT 33 Tender cost\nThe Client shall not in any circumstances be liable for any costs, expenses and damages incurred or suffered by the tenderers in connection with the preparation and submission of their tenders, in the event that this tender exercise is cancelled on any ground, including on the ground that funds are not available under Special Conditions of Tender Clause SCT 10.\" From ECC HK_GCT33_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 33  Tender cost | GCT 33  Tender cost\nThe Client shall not in any circumstances be liable for any costs, expenses and damages incurred or suffered by the tenderers in connection with the preparation and submission of their tenders, in the event that this tender exercise is cancelled on any ground[, including on the ground that funds are not available under Special Conditions of Tender Clause SCT 10].* | Note :\tOriginated from the funding approval clause.\n\n*\tDelete\"",
+    "reasoning": "The tender clause includes the bracketed text '[, including on the ground that funds are not available under Special Conditions of Tender Clause SCT 10]' without deletion, indicating SCT 10 is used. However, the standard clause instructs to delete this text if SCT 10 is not used—since the presence/absence of SCT 10 isn't confirmed, inclusion of the phrase constitutes a documented modification rather than strict compliance.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT33",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00",
+      "ECC HK_GCT33_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT3",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"# GCT 3 Relevant documents not issued\nThe following documents are not issued to tenderers:\n(a) Standard documents, namely:\n(i) NEC4 Engineering and Construction Contract (June 2017, with amendments October 2020) published by Thomas Telford Ltd.,   \n(ii) General Specification for Civil Engineering Works, 2020 Edition (the Government of the Hong Kong Special Administrative Region) and the Corrigendum together with any latest amendment issued up to and including the day before the closing date of t\" From ECC HK_GCT3_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 3  Relevant documents not issued | GCT 3  Relevant documents not issued | GCT 3  Relevant documents not issued\nThe following documents are not issued to tenderers: | The following documents are not issued to tenderers:\n(a) | Standard documents, namely: | * \tDelete/Modify as appropriate\n(i) | The Hong Kong Edition of NEC Engineering and Construction Contract (July 2023) published by Thomas Telford Limited.,\n*(ii) | General Specification, | The documents re\"",
+    "reasoning": "The tender clause expands the list of non-issued documents beyond the standard (e.g., adds reference documents, cost index data) and specifies exact editions/dates not present in the standard. It also includes additional procedural details (e.g., inspection by appointment). These are acceptable modifications as they provide greater specificity and do not contradict the standard’s intent.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT3",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00",
+      "ECC HK_GCT3_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT16",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 16 Tender clarifications\n(1) The Client will not consider any clarification or information submitted by a tenderer after close of tender irrespective of whether or not the clarification or information is submitted at the invitation of the Client if such clarification or information would alter the tender in substance or give the tenderer an advantage over the other tenderers.\n(2) Without prejudice to the generality of sub-clause (1) of this Clause, where the Project Manager designate has a\" From ECC HK_GCT16_20240524.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 16  Tender clarifications | GCT 16  Tender clarifications | GCT 16  Tender clarifications\n(1) | The Client will not consider any clarification or information submitted by a tenderer after close of tender irrespective of whether or not the clarification or information is submitted at the invitation of the Client if such clarification or information would alter the tender in substance or give the tenderer an advantage over the other tenderers. | DEVB memos\"",
+    "reasoning": "The Tender clause adds sub-clause (3) with specific consequences for late submission of certain critical documents and introduces a new sub-clause (4) defining 'Excepted Information', which are not present in the truncated Standard clause. While these additions align with referenced DEVB memos and do not contradict the core principle in sub-clauses (1)–(2), they explicitly extend the standard provisions.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT16",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT16_20240524.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT23",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# GCT 23 Alternative tenders or designs uninvited\nAlternative tenders or designs for which no invitation has been made shall not be considered.\" From ECC HK_GCT23_20231115.doc: \"|Clause                                       |Remarks/Guidelines          |\n|GCT 23  Alternative tenders or designs uninvited                          |\n|Alternative tenders or designs for which no  |Ref.: DEVB TCW No. 3/2014.  |\n|invitation has been made shall not be        |                            |\n|considered.                                  |                            |\"",
+    "reasoning": "The tender clause reproduces the standard clause verbatim, including the core requirement that uninvited alternative tenders or designs shall not be considered.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT23",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "ECC HK_GCT23_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT10",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-APP-G42-00: \"# GCT 10 Errors in tender submission\nIn the event of a tenderer discovering an error in its tender after it has been deposited, attention in writing may be drawn to the error and an amendment submitted which, provided that the amendment shall have been deposited before the time fixed for receipt of tenders, shall be accepted.\" From ECC HK_GCT10_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 10  Errors in tender submission | GCT 10  Errors in tender submission\nIn the event of a tenderer discovering an error in its tender after it has been deposited, attention in writing may be drawn to the error and an amendment submitted which, provided that the amendment shall have been deposited before the time fixed for receipt of tenders, shall be accepted.\"",
+    "reasoning": "The tender clause is identical in wording and meaning to the standard clause, allowing correction of errors if submitted in writing and received before the tender deadline.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT10",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-G42-00",
+      "ECC HK_GCT10_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT32",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# GCT 32 Ethical commitment\n(1) The tenderer shall not, and shall procure that its employees, agents and subcontractors shall not, offer, solicit or accept an advantage as defined in the Prevention of Bribery Ordinance, Cap. 201 in connection with the tendering and execution of this contract.\n(2) Failure to so procure or any act of offering, soliciting or accepting advantage referred to in (1) above committed by the tenderer or by an employee, agent or subcontractor of the tenderer shall, withou\" From ECC HK_GCT32_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 32  Ethical commitment | GCT 32  Ethical commitment | GCT 32  Ethical commitment\n(1) | The tenderer shall not, and shall procure that its employees, agents and subcontractors shall not, offer, solicit or accept an advantage as defined in the Prevention of Bribery Ordinance, Cap.  connection with the tendering and execution of the contract.\n(2) | Failure to so procure or any act of offering, soliciting or accepting advantage referred to in (1) above commit\"",
+    "reasoning": "The tender clause matches the standard clause exactly, including the reference to the Prevention of Bribery Ordinance, Cap. 201, and the consequences of non-compliance.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT32",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_GCT32_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT18",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"# GCT 18 Site investigation information\n(1) Site investigation information as listed in Clause GCT 3(b) of these General Conditions of Tender is available for inspection by appointment at the Project Manager designate’s office during normal office hours for the information of the tenderer. Any site investigation information, if issued, is to be returned to the Project Manager designate’s office after submission of the tender.\n(2) Neither the Client nor its agents or representatives accept any re\" From ECC HK_GCT18_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 18  Site investigation information | GCT 18  Site investigation information | GCT 18  Site investigation information\n(1) | Site investigation information *as listed in General Conditions of Tender Clause GCT 2(c) is issued with the tender documents/* as listed in General Conditions of Tender Clause GCT 3(b) is available for inspection by appointment at the Project Manager designate’s office during normal office hours for the information of the tenderer.\"",
+    "reasoning": "The tender clause implements the standard clause accurately: it selects the second option in the standard's alternative phrasing (referring to GCT 3(b) rather than GCT 2(c)), includes the requirement to return information after tender submission, and retains the disclaimer of liability and onus on the tenderer. The choice between GCT 2(c) and GCT 3(b) is explicitly marked for deletion as appropriate in the standard, and the tender consistently uses GCT 3(b).",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT18",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "ECC HK_GCT18_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT7",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-PS-APP-C1-00: \"# GCT 7 Discrepancies in the documents\nThe tenderer shall check the numbers of pages of all documents against page numbers given in summaries, and should it find any discrepancy or indistinctness, it must inform the Project Manager designate and have the same rectified.\" From ECC HK_GCT7_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 7  Discrepancies in the documents | GCT 7  Discrepancies in the documents\nThe tenderer shall check the numbers of pages of all documents against page numbers given in summaries, and should it find any discrepancy or indistinctness, it must inform the Project Manager designate and have the same rectified.\"",
+    "reasoning": "The tender clause is identical in wording and meaning to the standard clause, with no omissions, contradictions, or modifications.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT7",
+    "document_references": [
+      "I-HY_2022_14-PS-APP-C1-00",
+      "ECC HK_GCT7_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT25",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# GCT 25 Submission of further information\nThe tenderer shall upon written request by the Project Manager designate (which may be issued at any time after the tender closing date) submit to the Project Manager designate within 7 days of the date of issue of the written request or within reasonable time upon the written request the following documents:\n(a) Financial information as referred to in Clause GCT 5;   \n(b) Outline Subcontractor Management Plan as referred to in Clause GCT 20(1);   \n(c)\" From ECC HK_GCT25_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 25  Submission of further information | GCT 25  Submission of further information | GCT 25  Submission of further information\nThe tenderer shall upon written request by the Project Manager designate (which may be issued at any time after the tender closing date) submit to the Project Manager designate within 7 days of the date of issue of the written request or within reasonable time upon the written request the following documents: | The tenderer shall u\"",
+    "reasoning": "The tender clause expands the standard by specifying exact documents (a–h) to be submitted, whereas the standard clause leaves these as placeholders. The consequence of non-submission is also reworded ('render its tender invalid' vs 'regarded as withdrawal of tender'), though functionally similar. These are explicit, documented adjustments.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT25",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_GCT25_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT13",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"# GCT 13 Tender negotiation\nThe Client reserves the right to negotiate with any tenderer about the terms of the offer.\" From ECC HK_GCT13_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 13  Tender negotiation | GCT 13  Tender negotiation\nThe Client reserves the right to negotiate with any tenderer about the terms of the offer.\"",
+    "reasoning": "The tender clause is identical in wording and meaning to the standard clause, fully implementing its intent.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT13",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_GCT13_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT12",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-00: \"# GCT 12 Tenders in Hong Kong dollars\nUnless otherwise provided, the tender shall be in Hong Kong dollars.\" From ECC HK_GCT12_20231115.doc: \"|Clause                                       |Remarks/Guidelines          |\n|GCT 12  Tenders in Hong Kong dollars                                      |\n|Unless otherwise provided, the tender shall  |Note: Please refer to SPR   |\n|be in Hong Kong dollars.                     |355 for tenders in foreign  |\n|                                             |currencies.                 |\"",
+    "reasoning": "The tender clause matches the standard clause verbatim and includes the core requirement that tenders be in Hong Kong dollars unless otherwise provided. The omission of the remark about SPR 355 does not affect compliance as it is guidance, not a mandatory requirement.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT12",
+    "document_references": [
+      "I-HY_2022_14-ACC-00",
+      "ECC HK_GCT12_20231115.doc"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT34~2",
+    "consistency_status": "compliant",
+    "confidence_score": 0.78339183,
+    "evidence": "From I-HY_2022_14-GCT-00: \"GCT 34   \nGCT 35\nIndex Page Tenderer’s consent and authorization on conviction records GCT/12 Contingency sums, provisional sums and forecast total of the Prices GCT/13\nAPPENDICES\nAppendix A Appendix B\nRequirements for Tender Submission in Electronic Format   \nFinancial Information Required to be Submitted in Tender for Public   \nWorks Contracts   \nLetter of Indemnity   \nLetter of Indemnity (For Incorporated Joint Venture)   \nConfirmation Letter for Anti-collusion   \nLetter of Tenderer’s Consent\" From ECC HK_GCT_Index_20250610_clean.docx: \"st of Approved Suppliers of Materials and Specialist Contractors for Public Works | 15.11.2023\nGCT31 | Eligibility of probationary contractors to tender and for the award of contracts | 15.11.2023\nGCT31A | Eligibility to tender and for the award of contracts applicable to confirmed Group [B] contractors | 15.11.2023\nGCT 32 | Ethical commitment | 15.11.2023\nGCT 33 | Tender cost | 15.11.2023\nGCT 34 | Tenderer’s consent and authorization on conviction records | 24.5.2024\nGCT 35 | National security\"",
+    "reasoning": "The TENDER clause includes 'Correction Rules for Tender Errors' as Appendix G, which directly corresponds to the STANDARD clause titled 'Correction Rules for Tender Errors (General Condition of Tender Clause GCT 11)'. The presence and naming alignment indicate implementation of the standard requirement.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT34~2",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT_Index_20250610_clean.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT26",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-APP-D-00: \"# GCT 26 Anti-collusion\n(a) Subject to sub-clause (2) of this Clause, the tenderer shall not communicate to any person other than the Client the amount of the tender price or any part thereof until the tenderer is notified by the Client of the outcome of the tender exercise.   \n(b) Further to paragraph (a) of this sub-clause, the tenderer shall not fix the amount of the tender price or any part thereof by arrangement with any other person, make any arrangement with any person about whether or no\" From ECC HK_GCT26_20240524.docx: \"] have read and fully understand this letter and the anti-collusion clause in General Conditions of Tender Clause GCT 26. | *\tDelete as appropriate. \n1\tWhere the tenderer comprises two or more persons or companies acting in partnership, joint venture or otherwise, this part in square brackets should be expanded to include the respective names and addresses of such persons or as the case may be companies.\n2\tWhere the tenderer comprises two or more persons or companies acting in partnership, joint\"",
+    "reasoning": "The STANDARD clause appears to be a declaration/signature block requiring the tenderer to acknowledge understanding of GCT26 and include specific representations, signature requirements, and instructions for multi-party tenderers. The TENDER clause, however, contains the substantive anti-collusion provisions (sub-clauses (1)–(4)) but omits the required declaration format, witness requirement, reference to Appendix D, and explicit instructions for joint tenderers to all sign. These omissions mean key procedural and compliance elements from the standard are missing.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT26",
+    "document_references": [
+      "I-HY_2022_14-GCT-APP-D-00",
+      "ECC HK_GCT26_20240524.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT24",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# GCT 24 Offering gratuities\nThe tenderer shall not and shall ensure that its agents and employees shall not offer or give any advantage, gratuity, bonus, discount, bribe or loan of any sort to any agent or employee of the Client or to the Project Manager designate or to any member of the Project Manager designate’s staff. Any breach of or noncompliance with this Clause by the tenderer shall, without affecting the tenderer’s liability for such breach or non-compliance, invalidate its tender.\" From ECC HK_GCT24_20231115.docx: \"Clause | Remarks/Guidelines\nGCT 24  Offering gratuities | GCT 24  Offering gratuities\nThe tenderer shall not and shall ensure that its agents and employees shall not offer or give any advantage, gratuity, bonus, discount, bribe or loan of any sort to any agent or employee of the Client or to the Project Manager designate or to any member of the Project Manager designate’s staff.  Any breach of or non-compliance with this clause by the tenderer shall, without affecting the tenderer’s liability fo\"",
+    "reasoning": "The tender clause text is identical to the standard clause, including the prohibition on offering gratuities and the consequence of invalidating the tender upon breach.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT24",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_GCT24_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT22",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# GCT 22 Contractors under suspension\n(1) If the tenderer or, if the tenderer is an unincorporated or incorporated joint venture, any participant of the unincorporated joint venture or shareholder of the incorporated joint venture is under suspension from tendering for Roads and Drainage category of the List of Approved Contractors for Public Works, its tender will not be considered unless the suspension is lifted by the relevant works department or the Development Bureau by the date set for the\" From ECC HK_GCT22_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nGCT 22  Contractors under suspension | GCT 22  Contractors under suspension | GCT 22  Contractors under suspension\n(1) \n\n\n\n\n\n\n\n\n\n\n\n\n\n                     (2) | If the tenderer or, if the tenderer is an unincorporated or incorporated joint venture, any participant of the unincorporated joint venture or shareholder of the incorporated joint venture is under suspension from tendering for Buildings* / Port Works* / Roads and Drainage* / Site Formation*/ Waterwork\"",
+    "reasoning": "The tender clause narrows the scope from multiple categories (Buildings, Port Works, Roads and Drainage, Site Formation, Waterworks) in the standard to only 'Roads and Drainage', and adds a new sub-clause (2) regarding voluntary suspension revocation without written consent, which is not present in the standard.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT22",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_GCT22_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT35",
+    "consistency_status": "modified",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-APP-E-00: \"# GCT 35 Contingency sums, provisional sums and forecast total of the Prices\n(1) Notwithstanding the inclusion of contingency sums, provisional sums and forecast total of the Prices in the Grand Summary of the activity schedule, the contingency sums, provisional sums and forecast total of the Prices shall not form part of this contract.\n(2) The contingency sums and provisional sums are allowed as contingencies for the purpose of internal administration of the Client under the Stores and Procurem\" From ECC HK_GCT35_20240524.docx: \"of the tenderer) of (address of the tenderer)]1, refer to *[my/our] tender for the above contract.\n\n2.\t*[I/We] confirm that, before *[I/we] sign this letter, *[I/we] have read and fully understand this letter and General Conditions of Tender Clause GCT 35 on “National Security and Public Interest”.\n\n3.\t*[I/We], represent and warrant that *[I/We] have not engaged, *[am/are] not engaging and will not engage in acts or activities that are likely to constitute or cause the occurrence of offences end\"",
+    "reasoning": "The TENDER clause addresses 'Contingency sums, provisional sums and forecast total of the Prices', which is entirely unrelated to the STANDARD clause's focus on 'National Security and Public Interest', including representations, warranties, and indemnities regarding national security offences. The subject matter, obligations, and intent are completely different.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT35",
+    "document_references": [
+      "I-HY_2022_14-SCT-APP-E-00",
+      "ECC HK_GCT35_20240524.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "GCT_GCT1",
+    "consistency_status": "compliant",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"# GCT 1 Definitions\n(1) For the purpose of these General Conditions of Tender and Special Conditions of Tender:\n(a) conditions of contract means the core clauses and the clauses for main Option A and secondary Options X1, X5, X7, X14, X15, X16, X20 and Z of the NEC4 Engineering and Construction Contract (June 2017, with amendments October 2020) published by Thomas Telford Ltd., with amendments identified in the Schedule to the Articles of Agreement referred to in Clause GCT 2(a)(ii) of these Gen\" From ECC HK_GCT1_20231115.docx: \"ese General Conditions of Tender and Special Conditions of Tender, except where the context otherwise requires, the singular shall include the plural and vice versa and any gender shall include all genders.\"",
+    "reasoning": "The TENDER clause includes the exact wording from the STANDARD clause in subsection (2), preserving the rule that singular includes plural and vice versa, and any gender includes all genders, with the same contextual exception.",
+    "check_type": "gct_vs_ecc_gct",
+    "description": "GCT1",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00",
+      "ECC HK_GCT1_20231115.docx"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

@@ -3,10 +3,10 @@ from __future__ import annotations
 from uuid import uuid4
 
 from app.schemas.evidence import BBox, EvidenceAnchor, EvidenceResolveData, EvidenceResolveRequest
-from app.services.document_service import resolve_document_path
+from app.services.document_service import resolve_project_document_path
 from app.services.pdf_locator_service import locate_evidence
-from app.services.report_service import get_item
-from app.services.template_service import get_document
+from app.services.project_service import get_project_document
+from app.services.report_service import get_item, get_report_project_id
 
 
 def _to_bbox(raw: tuple[float, float, float, float] | None) -> BBox | None:
@@ -26,7 +26,8 @@ def _to_bboxes(raw_list: list[tuple[float, float, float, float]] | None) -> list
 
 def resolve_evidence(payload: EvidenceResolveRequest) -> EvidenceResolveData:
   report_item = get_item(payload.report_id, payload.item_id)
-  pdf_path = resolve_document_path(payload.document_id)
+  project_id = get_report_project_id(payload.report_id)
+  pdf_path = resolve_project_document_path(project_id, payload.document_id)
   clause_keyword = payload.hints.clause_keyword if payload.hints else None
   evidence_text = payload.evidence_text or report_item.evidence
 
@@ -34,7 +35,7 @@ def resolve_evidence(payload: EvidenceResolveRequest) -> EvidenceResolveData:
   bbox = _to_bbox(located.bbox)
   bboxes = _to_bboxes(located.bboxes)
 
-  document = get_document(payload.document_id)
+  document = get_project_document(project_id, payload.document_id)
   file_name = document.file_name if document else pdf_path.name
 
   anchor = EvidenceAnchor(

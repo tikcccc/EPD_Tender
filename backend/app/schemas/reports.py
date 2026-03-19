@@ -13,6 +13,7 @@ StatusDomain = Literal["consistency", "compliance"]
 Severity = Literal["major", "minor", "info"]
 ManualVerdict = Literal["accepted", "rejected", "needs_followup"]
 ManualVerdictCategory = Literal["evidence_gap", "rule_dispute", "false_positive", "data_issue", "other"]
+StatusPresentation = Literal["normalized", "raw"]
 
 _STATUS_NORMALIZATION_MAP = {
   "consistent": "consistent",
@@ -55,6 +56,9 @@ class ReportItem(BaseModel):
   keywords: list[str] = Field(min_length=1)
   source: str
   severity: Severity
+  raw_status: str | None = None
+  status_presentation: StatusPresentation = "normalized"
+  source_pack: str | None = None
   # Keep read compatibility with legacy seed values while constraining writes via ManualReviewUpdateRequest.
   manual_verdict: str | None = None
   manual_verdict_category: str | None = None
@@ -104,18 +108,23 @@ class ReportItem(BaseModel):
 
 
 class ReportIngestRequest(BaseModel):
+  project_id: str = "tender-analysis"
   report_source: str = "manual_upload"
   report_items: list[ReportItem] = Field(default_factory=list)
 
 
 class ReportIngestData(BaseModel):
   report_id: str
+  project_id: str
   items_count: int
   invalid_items: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class ReportCardsData(BaseModel):
   report_id: str
+  page: int = Field(ge=1)
+  page_size: int = Field(ge=1)
+  total: int = Field(ge=0)
   cards: list[ReportItem]
 
 

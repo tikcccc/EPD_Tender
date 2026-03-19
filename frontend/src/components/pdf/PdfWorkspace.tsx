@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { BBox } from "@/features/tender-ui/types";
 
 type PdfWorkspaceProps = {
+  projectId: string;
   documentId: string;
   currentPage: number;
   highlightPage?: number | null;
@@ -55,6 +56,7 @@ function getRenderScale(zoom: number): number {
 }
 
 export function PdfWorkspace({
+  projectId,
   documentId,
   currentPage,
   highlightPage = null,
@@ -86,12 +88,12 @@ export function PdfWorkspace({
     : "Fetching document data and rendering the page.";
 
   const pdfUrl = useMemo(() => {
-    if (!documentId || documentId === "unknown") {
+    if (!projectId || !documentId || documentId === "unknown") {
       return "";
     }
 
-    return `/api/documents/${encodeURIComponent(documentId)}/file`;
-  }, [documentId]);
+    return `/api/projects/${encodeURIComponent(projectId)}/documents/${encodeURIComponent(documentId)}/file`;
+  }, [documentId, projectId]);
 
   useEffect(() => {
     let disposed = false;

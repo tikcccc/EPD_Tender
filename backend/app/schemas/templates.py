@@ -15,6 +15,7 @@ class DocumentReference(BaseModel):
   document_id: str
   file_name: str
   display_name: str
+  relative_path: str | None = None
 
 
 class NecTemplateData(BaseModel):

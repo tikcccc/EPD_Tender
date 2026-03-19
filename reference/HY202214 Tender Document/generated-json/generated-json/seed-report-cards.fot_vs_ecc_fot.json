@@ -1,0 +1,178 @@
+[
+  {
+    "item_id": "FOT_1",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-SCT-APP-D-AS-00: \"HIGHWAYS DEPARTMENT CONTRACT NO. HY/2022/14 MODIFICATION WORKS OF NOISE BARRIERS ALONG YUEN LONG HIGHWAY NEAR PARK SIGNATURE\" From ECC HK_Scope_20250416_clean r2: \"[INSERT PROCURING DEPARTMENT] CONTRACT NO. [INSERT CONTRACT NO.] [INSERT CONTRACT TITLE]\"",
+    "reasoning": "The tender contains specific department and contract details where the standard uses placeholders. This is expected customization and substantively identical in structure.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Contract Header and Particulars",
+    "document_references": [
+      "I-HY_2022_14-SCT-APP-D-AS-00",
+      "ECC HK_Scope_20250416_clean r2"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_2",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"NOTES: (1) If the tenderer is a limited company (including incorporated joint venture), insert the information in the spaces provided at Form of Tender P.3.\" From ECC HK_FOT_20231115: \"NOTES (1) If the tenderer is a limited company (including incorporated joint venture), insert the information in the spaces provided at Form of Tender – P.3.\"",
+    "reasoning": "The notes regarding business registration certificates and entity types are substantively identical to the standard template.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Notes on Business Registration",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_3",
+    "consistency_status": "modified",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"To: The Chairman, Public Works Tender Board, Room 503, 5/F., Low Block, The Queensway Government Offices, 66 Queensway, Hong Kong\" From ECC HK_FOT_20231115: \"To : The Chairman, Central Tender Board, Lobby of the Public Entrance on the Ground Floor, East Wing, Central Government Offices, 2 Tim Mei Avenue, Tamar, Hong Kong\"",
+    "reasoning": "The tender addresses the Public Works Tender Board at Queensway, whereas the standard specifies the Central Tender Board at Central Government Offices. This is a material change in authority and location.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Tender Board Addressee",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_4",
+    "consistency_status": "modified",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"I/we offer to Provide the Works as may from time to time be instructed and in conformity with the conditions of contract, additional conditions of contract, Scope and activity schedule.\" From ECC HK_FOT_20231115: \"I/we offer to Provide the Works in conformity with all documents comprising the contract as stated in the Articles of Agreement.\"",
+    "reasoning": "The tender specifies conformity with 'Scope and activity schedule' whereas the standard refers to 'all documents comprising the contract as stated in the Articles of Agreement'.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Offer to Provide Works",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_5",
+    "consistency_status": "modified",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"I/We agree to abide by this Tender for the period of 120 days from the date, or the extended date if this has been extended, of expiry fixed for receiving the same\" From ECC HK_FOT_20231115: \"I/We agree to abide by this Tender for the period of [90 days]2 from the date, or the extended date if this has been extended, of expiry fixed for receiving the same\"",
+    "reasoning": "The tender specifies a validity period of 120 days, while the standard template stipulates 90 days. This is a material change in the binding offer period.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Tender Validity Period",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_6",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"Unless and until the Articles of Agreement is prepared and executed, this Tender together with the written acceptance thereof by the Client subject to the provisions of clause 2 hereof shall constitute a binding contract between us.\" From ECC HK_FOT_20231115: \"Unless and until the Articles of Agreement is prepared and executed, this Tender together with the written acceptance thereof by the Client subject to the provisions of clause 2 hereof shall constitute a binding contract between us.\"",
+    "reasoning": "The clause regarding the formation of a binding contract upon acceptance is substantively identical to the standard template.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Binding Contract Formation",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_7",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"I/We understand that the Client reserves the right to negotiate with any tenderer about the term of the offer and is not bound to accept any tender irrespective of whether the tender is the lowest offer\" From ECC HK_FOT_20231115: \"I/We understand that the Client reserves the right to negotiate with any tenderer about the term of the offer and is not bound to accept any tender irrespective of whether the tender is the lowest offer\"",
+    "reasoning": "The reservation of rights regarding negotiation and acceptance of tenders is substantively identical to the standard template.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Client Rights to Negotiate",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_8",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"NOTE: To be inserted in case the tenderer is a limited company Name Signature in the capacity of duly authorised to sign tenders for and on behalf of (name of the limited company)\" From ECC HK_FOT_20231115: \"NOTE: To be inserted in case the tenderer is a limited company Name Signature in the capacity of duly authorised to sign tenders for and on behalf of (name of the limited company)\"",
+    "reasoning": "The signature requirements for limited companies are structurally and substantively identical to the standard template.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Limited Company Signature Block",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_9",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"NOTE: To be inserted in case the tenderer is an unincorporated joint venture2 me Name Signature Signature in the capacity of in the capacity of\" From ECC HK_FOT_20231115: \"NOTE: To be inserted in case the tenderer is an unincorporated joint venture3 Name Name Signature Signature in the capacity of in the capacity of\"",
+    "reasoning": "The signature requirements for unincorporated joint venture participants are structurally and substantively identical to the standard template.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Unincorporated Joint Venture Signature",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_10",
+    "consistency_status": "modified",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"Trading in Hong Kong with a business name of (the name of the unincorporated joint venture) Correspondence address of the unincorporated joint venture Name(s)3 of Witness(es)\" From ECC HK_FOT_20231115: \"Trading in Hong Kong with a business name of (the name of the unincorporated joint venture) Correspondence address of the unincorporated joint venture Name(s)4 of Witness(es) Signature(s) of Witness(es) Occupation(s) of Witness(es) Address(es) of Witness(es)\"",
+    "reasoning": "The tender text for witnesses appears garbled and omits explicit fields for Occupation and Address found in the standard template, representing a material omission.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Unincorporated Joint Venture Witness",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "FOT_11",
+    "consistency_status": "compliant",
+    "confidence_score": 0.0,
+    "evidence": "From I-HY_2022_14-FTR-00: \"NOTE: To be inserted if the tenderer is a sole proprietorship or a partnership4 Name Name Signature Signature Residential address5 Residential address5\" From ECC HK_FOT_20231115: \"NOTE: To be inserted if the tenderer is a sole proprietorship or a partnership5 Name Signature Name Signature Residential address6 Residential address6\"",
+    "reasoning": "The signature requirements for sole proprietorships or partnerships are structurally and substantively identical to the standard template.",
+    "check_type": "fot_vs_ecc_fot",
+    "description": "Sole Proprietorship Signature Block",
+    "document_references": [
+      "I-HY_2022_14-FTR-00",
+      "ECC HK_FOT_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

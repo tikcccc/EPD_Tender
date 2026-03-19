@@ -1,0 +1,82 @@
+[
+  {
+    "item_id": "CDP1_X7",
+    "consistency_status": "modified",
+    "confidence_score": 0.83886373,
+    "evidence": "From I-HY_2022_14-CDP1-00: \"X7 Delay damages (as amended by the Articles of Agreement)\nDelay damages for Completion of the whole of the works are HK\\$ 1.629 x 10-4 (Y1) + \\$8,771.14 per day.\nwhere   \nY1 = Total sum of Schedule Nos. 1 to 4 and Schedule No. 6 in the Activity Schedule and Provisional sum for price adjustment for inflation under Secondary Option X1.\nThe minimum amounts of delay damages for Completion of the whole of the works are HK\\$2,280 per day.\nIn computing the above delay damages, the Client has not taken\" From ECC HK_CDP1_20250729_clean: \"# X7 Delay damages\n\nApplicable if Option X7 is used without Option X5\nThe rate of delay damages for Completion of the whole of the works is HK\\$ per day.\nThe minimum rate of delay damages is HK\\$ per day.\nApplicable if Option X7 is used with Option X5\nThe rate of delay damages for each section of the works is\nThe minimum rate of delay damages for each section of the works is\nApplicable if the optional standard amendments to core clauses 25.3 & 30.3 and secondary Option X7 are adopted\nThe rate of\"",
+    "reasoning": "The tender clause provides a specific, formula-based delay damages rate and a defined minimum amount, whereas the standard clause leaves these fields blank as placeholders. The tender also adds an exclusion regarding the Client’s liability under the Land (Miscellaneous Provisions) Ordinance, which is not present in the standard. These are explicit amendments consistent with Option X7 usage but constitute documented modifications.",
+    "check_type": "cdp1_vs_ecc_cdp1",
+    "description": "Delay damages (as amended by the Articles of Agreement)",
+    "document_references": [
+      "I-HY_2022_14-CDP1-00",
+      "ECC HK_CDP1_20250729_clean"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "CDP1_X14",
+    "consistency_status": "compliant",
+    "confidence_score": 0.87152845,
+    "evidence": "From I-HY_2022_14-CDP2-00: \"X14 Advance Payment to the Contractor\nThe amount of the advance payment is the lesser of (i) an amount equal to two percent (2%) of the tendered total of the Prices set out in Contract Data Part two at the date of acceptance of the tender or (ii) HK\\$30,000,000.\nThe Contractor repays the instalments in assessments starting at the 7th month after the Contract Date. The instalments are 1/6 of the advance payment.\" From ECC HK_CDP1_20250729_clean: \"# X14 Advanced payment to the Contractor\n\nThe amount of the advanced payment is [the lesser of (i) an amount equal to two percent (2%) of the tendered total of the Prices set out in Contract Data Part two at the date of acceptance of the tender or (ii) HK\\$30,000,000.]\nThe Contractor repays the instalments in [assessments starting at the 7th month after the Contract Date. The instalments are [1/6] of the advanced payment (either an amount or a percentage of the payment otherwise due).]\n[Subject\"",
+    "reasoning": "The tender clause exactly matches the standard clause in both advance payment amount calculation and repayment terms, including the 2% cap, HK$30M limit, 7th-month start, and 1/6 instalments.",
+    "check_type": "cdp1_vs_ecc_cdp1",
+    "description": "Advance Payment to the Contractor",
+    "document_references": [
+      "I-HY_2022_14-CDP2-00",
+      "ECC HK_CDP1_20250729_clean"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "CDP1_X16",
+    "consistency_status": "modified",
+    "confidence_score": 0.68117964,
+    "evidence": "From I-HY_2022_14-CDP2-00: \"X16 Retention (as amended by the   \nArticles of Agreement)   \nX20 Key Performance Indicators\nThe retention free amount is HK\\$0.00.\nThe retention percentage is 1%.\nThe incentive schedule for Key Performance Indicators is in Appendix A to this Contract Data Part one.\nA report of performance against each Key Performance Indicator is provided at intervals of 1 month.\nZ additional conditions of contract\nThe additional conditions of contract are set out in the document entitled “Additional Conditions\" From ECC HK_CDP1_20250729_clean: \"# X20 Key Performance Indicators\n\nOptional clause\nThe incentive schedule for Key Performance Indicators is in Appendix [insert reference] to this Contract Data Part one.\nA report of performance against each Key Performance Indicator is provided at intervals of 1 month. [subject to review by project office]\"",
+    "reasoning": "The tender clause includes all elements of the standard clause but adds unrelated content about retention (X16) and additional conditions, indicating explicit amendments beyond the standard X20 KPI clause.",
+    "check_type": "cdp1_vs_ecc_cdp1",
+    "description": "Retention (as amended by the",
+    "document_references": [
+      "I-HY_2022_14-CDP2-00",
+      "ECC HK_CDP1_20250729_clean"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "CDP1_3",
+    "consistency_status": "compliant",
+    "confidence_score": 0.68613106,
+    "evidence": "From I-HY_2022_14-PS-01-00: \"3 Time The starting date is the date which is within 2 weeks from the Contract Date and as notified by the Project Manager after acceptance of tender. The access date is the starting date for the whole of the Site The Contractor is to submit a first programme for acceptance within 2 weeks of the Contract Date. The Contractor submits revised programmes for acceptance at intervals no longer than month. The completion date for the whole of the works is the date of 365 days after the starting date.\" From ECC HK_CDP1_20250729_clean: \"# Quality management\n\nThe period after the Contract Date within which the Contractor is to submit a quality policy statement and quality plan is [one month] [subject to review by project office].\nThe period between Completion of the whole of the works and the defects date is [12 months] [subject to review by project office].\nThe defect correction period is [12 weeks] [subject to review by project office] except that\nOptional clause\nThe defect correction period for [insert description] is [insert\"",
+    "reasoning": "The Tender Clause 4 reproduces the timeframes from the Standard Clause verbatim: 1 month for quality policy/plan submission, 12 months between Completion and defects date, and 12 weeks defect correction period. No modifications or omissions are present.",
+    "check_type": "cdp1_vs_ecc_cdp1",
+    "description": "Time The starting date is the date which is within 2 weeks from the Contract Date and as notified by",
+    "document_references": [
+      "I-HY_2022_14-PS-01-00",
+      "ECC HK_CDP1_20250729_clean"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  },
+  {
+    "item_id": "CDP1_1",
+    "consistency_status": "modified",
+    "confidence_score": 0.74413764,
+    "evidence": "From I-HY_2022_14-ACC-APP-E-00: \"1 General\nThe conditions of contract are the core clauses and the clauses for main Option A and secondary Options X1, X7, X11, X14, X16, X20 and Z of the NEC4 Engineering and Construction Contract (June 2017, with amendments October 2020) published by Thomas Telford Limited (NEC4 ECC), as amended or supplemented by the Schedule to the Articles of Agreement, and include the additional conditions of contract.   \nThe works are modification works for a section of vertical noise barriers along Yuen L\" From ECC HK_CDP1_20250729_clean: \"# General\n\nThe conditions of contract are the core clauses and the clauses for main Option [insert selected main Option], secondary Options [insert selected secondary Options (commonly used secondary Options include X1, X2, X5, X7, X11, X14, X16, X20, X30)], W4 and Z of the Hong Kong Edition of NEC Engineering and Construction Contract (July 2023) published by Thomas Telford Limited (NEC ECC HK Edition), and include the additional conditions of contract.\nThe works are [insert brief description o\"",
+    "reasoning": "The tender clause specifies a different contract edition (NEC4 ECC June 2017 with Oct 2020 amendments) versus the standard's reference to NEC ECC HK Edition (July 2023). It also fixes specific main and secondary options rather than using placeholders, and adds detailed project-specific information (e.g., Client, Project Manager, Scope, Site details) not present in the generic standard clause.",
+    "check_type": "cdp1_vs_ecc_cdp1",
+    "description": "General",
+    "document_references": [
+      "I-HY_2022_14-ACC-APP-E-00",
+      "ECC HK_CDP1_20250729_clean"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

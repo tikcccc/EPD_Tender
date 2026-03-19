@@ -1,0 +1,140 @@
+[
+  {
+    "item_id": "SCT_SCT19",
+    "consistency_status": "inconsistent",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# SCT 19 Fee Percentage\nThe fee percentage to be inserted by the tenderer in the Contract Data Part two shall be within a range from the minimum fee percentage to the cap of fee percentage as stated in the Contract Data Part two. Any error found should be corrected as per the principles and rules contained in Appendix F to the General Conditions of Tender as mentioned in General Conditions of Tender Clause GCT 11.\" From ECC HK_SCT19_20231115.docx: \"Clause | Remarks/Guidelines\nSCT 19  Fee Percentage | SCT 19  Fee Percentage\nThe fee percentage to be inserted by the tenderer in the Contract Data Part two shall be within a range from the minimum fee percentage to the cap of fee percentage as stated in the Contract Data Part two. Any error found should be corrected as per the principles and rules contained in Appendix [ ]# to the General Conditions of Tender as mentioned in General Conditions of Tender Clause GCT [11] #. | DEVB memo ref. DEVB(W\"",
+    "reasoning": "The tender clause specifies 'Appendix F' and 'GCT 11' explicitly, whereas the standard clause leaves these as placeholders ('[ ]#' and '[11] #'). This is a documented refinement rather than a contradiction.",
+    "check_type": "sct_vs_ecc_sct",
+    "description": "SCT19",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_SCT19_20231115.docx"
+    ],
+    "keywords": [
+      "SCT19",
+      "sct_vs_ecc_sct",
+      "modified",
+      "I-HY_2022_14-SCT-00"
+    ],
+    "source": "Analyst_Report_Recommendation",
+    "severity": "major",
+    "status_domain": "compliance",
+    "raw_status": "modified"
+  },
+  {
+    "item_id": "SCT_SCT10",
+    "consistency_status": "consistent",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# SCT 10 Funding Approval\nThe tenderers shall note that this tender exercise is held before the necessary funds for this contract have been approved. The tenderers shall also note that the Client reserves the right to cancel this tender exercise for not having the necessary funds approved; and that the tenderers will accordingly be notified if the necessary funds are not approved.\" From ECC HK_SCT10_20231115.docx: \"Clause | Remarks/Guidelines\nSCT 10 Funding Approval | SCT 10 Funding Approval\nThe tenderers shall note that this tender exercise is held before the necessary funds for the contract have been approved.  The tenderers shall also note that the Client reserves the right to cancel this tender exercise for not having the necessary funds approved; and that the tenderers will accordingly be notified if the necessary funds are not approved. | To be used if funding has not been approved at the time of ten\"",
+    "reasoning": "The tender clause matches the standard clause word-for-word and includes all required elements regarding funding approval and the Client's right to cancel.",
+    "check_type": "sct_vs_ecc_sct",
+    "description": "SCT10",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_SCT10_20231115.docx"
+    ],
+    "keywords": [
+      "SCT10",
+      "sct_vs_ecc_sct",
+      "compliant",
+      "I-HY_2022_14-SCT-00"
+    ],
+    "source": "Analyst_Report_Recommendation",
+    "severity": "info",
+    "status_domain": "compliance",
+    "raw_status": "compliant"
+  },
+  {
+    "item_id": "SCT_SCT8",
+    "consistency_status": "inconsistent",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# SCT 8 Outline Environmental Management Plan\n(1) The tenderer shall upon written request by the Project Manager designate in accordance with the General Conditions of Tender Clause GCT 25 submit an outline Environmental Management Plan, which shall be the tenderer’s proposal to:\n(a) minimize the environmental nuisances of air, noise and wastewater pollution; and   \n(b) minimize the generation of surplus construction and demolition (C&D) materials, in particular, the proposed measures to avoid/m\" From ECC HK_SCT8_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nSCT 8 Outline Environmental Management Plan | SCT 8 Outline Environmental Management Plan | SCT 8 Outline Environmental Management Plan\n(1) | The tenderer shall upon written request by the Project Manager designate in accordance with the General Conditions of Tender Clause GCT [25]# submit an outline Environmental Management Plan, which shall be the tenderer’s proposal to:\n(a)\tminimize the environmental nuisances of air, noise and wastewater pollution; and \n(\"",
+    "reasoning": "The tender clause adds paragraph (2), specifying that the Outline Environmental Management Plan is site-specific, used for preparing the final EMP post-award, and explicitly states it does not form part of the contract—this is an addition not present in the standard clause.",
+    "check_type": "sct_vs_ecc_sct",
+    "description": "SCT8",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_SCT8_20231115.docx"
+    ],
+    "keywords": [
+      "SCT8",
+      "sct_vs_ecc_sct",
+      "modified",
+      "I-HY_2022_14-SCT-00"
+    ],
+    "source": "Analyst_Report_Recommendation",
+    "severity": "major",
+    "status_domain": "compliance",
+    "raw_status": "modified"
+  },
+  {
+    "item_id": "SCT_SCT7",
+    "consistency_status": "inconsistent",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-SCT-00: \"# SCT 7 ISO 9000\n(1) The tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate:\nEITHER\n(a) a copy of its ISO 9001:2015 certificate acceptable to the Client showing the scope of certification and a statement either:\n(i) confirming that there is no area/aspect in this contract which its quality system specifically excludes; or   \n(ii) disclosing the areas/aspects in this co\" From ECC HK_SCT7_20231115.docx: \"Clause | Clause | Remarks/Guidelines\nSCT 7 ISO 9000 | SCT 7 ISO 9000 | SCT 7 ISO 9000\n(1) | The tenderer shall, upon written request by the Project Manager designate issued in accordance with General Conditions of Tender Clause GCT 25, submit to the Project Manager designate: | This clause is extracted from WBTC No. 13/2001 with modifications in accordance with ETWB TCW No. 50/2002, DEVB memo ref. (025B1) in DEVB(W) 520/83/01 dated 26.1.2010 and DEVB memo ref. DEVB(W) 520/83/01 dated 4.4.2018.\"",
+    "reasoning": "The tender clause includes additional provisions not present in the standard clause, specifically: (1) detailed requirements for joint ventures under subsection (2), and (2) more specific conditions under (b)(ii) regarding booking an audit within three months of tender acceptance. While these additions do not contradict the standard and appear to be acceptable enhancements per referenced policy memos, they constitute explicit modifications.",
+    "check_type": "sct_vs_ecc_sct",
+    "description": "SCT7",
+    "document_references": [
+      "I-HY_2022_14-SCT-00",
+      "ECC HK_SCT7_20231115.docx"
+    ],
+    "keywords": [
+      "SCT7",
+      "sct_vs_ecc_sct",
+      "modified",
+      "I-HY_2022_14-SCT-00"
+    ],
+    "source": "Analyst_Report_Recommendation",
+    "severity": "major",
+    "status_domain": "compliance",
+    "raw_status": "modified"
+  },
+  {
+    "item_id": "SCT_SCT5",
+    "consistency_status": "inconsistent",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# SCT 5 Contractors Joint Venture\n(1) Tenderers may submit their tender in the form of a joint venture provided they meet the conditions of participation below:\n(a) the participants or shareholders in the joint venture collectively satisfy the qualification requirements; and   \n(b) each participant or shareholder in the joint venture is technically capable for that part of the works it undertakes.\n(2) Where the tenderer is an unincorporated joint venture, it must:\n(a) subject to General Conditio\" From ECC HK_SCT5V1_20231115.docx: \"006,\nref. (02VFJ-01-2) in DEVB(W) 510/83/05 dated 30.11.2016, \nref. (02VVW-01-1) in DEVB(W) 510/83/05 dated 24.1.2017, \nref. (03487-01-1) in DEVB(W) 510/83/05 dated 31.12.2019,\nref. DEVB(W) 510/83/05 dated 14.7.2020,\nref. DEVB(W) 510/83/05 dated 16.9.2020, and\nref. DEVB(W) 510/83/05 dated 26.3.2021 \n\nThis version of SCT 5 is used if joint venture is not allowed to tender.\nNote 1:\nInsert the appropriate Category(ies), Group(s), and/or status of Contractors on the List of Approved Contractors for\"",
+    "reasoning": "The STANDARD clause explicitly states it applies 'if joint venture is not allowed to tender' and requires insertion of approved contractor categories per the Tender Notice. In contrast, the TENDER clause permits joint ventures and includes detailed JV participation rules, directly contradicting the standard's premise.",
+    "check_type": "sct_vs_ecc_sct",
+    "description": "SCT5",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_SCT5V1_20231115.docx"
+    ],
+    "keywords": [
+      "SCT5",
+      "sct_vs_ecc_sct",
+      "modified",
+      "I-HY_2022_14-GCT-00"
+    ],
+    "source": "Analyst_Report_Recommendation",
+    "severity": "major",
+    "status_domain": "compliance",
+    "raw_status": "modified"
+  },
+  {
+    "item_id": "SCT_SCT17",
+    "consistency_status": "inconsistent",
+    "confidence_score": 1.0,
+    "evidence": "From I-HY_2022_14-GCT-00: \"# SCT 17 Activity Schedule\n(1) The tenderer shall submit an activity schedule fully priced as to each of the activities, extended, cast, totalled, completed and signed as required in Clause GCT 4 of the General Conditions of Tender. The priced activity schedule shall contain a summary (“Grand Summary of the activity schedule”) at the end stating the tendered total of the Prices. Failure to submit this Grand Summary by the tenderer shall render its tender invalid.\n(2) A sample form of activity sc\" From ECC HK_SCT17_20240318_clean_r1.docx: \"Clause | Clause | Remarks/Guidelines\nSCT 17  Activity Schedule | SCT 17  Activity Schedule | SCT 17  Activity Schedule\n(1) | The tenderer shall submit an activity schedule fully priced as to each of the activities, extended, cast, totalled, completed and signed as required in Clause GCT 4 of the General Conditions of Tender. | Applicable for Options A and C\n(2) | The priced activity schedule, which shall contain a summary (“Grand Summary of the activity schedule”) stating the tendered total of t\"",
+    "reasoning": "The tender clause introduces a stricter consequence—rendering the tender invalid for missing the Grand Summary—whereas the standard allows correction per GCT 11. It also replaces the mandatory form requirement with a non-binding sample and shifts responsibility to the tenderer, contradicting the standard’s requirement to use the specified Appendix form.",
+    "check_type": "sct_vs_ecc_sct",
+    "description": "SCT17",
+    "document_references": [
+      "I-HY_2022_14-GCT-00",
+      "ECC HK_SCT17_20240318_clean_r1.docx"
+    ],
+    "keywords": [
+      "SCT17",
+      "sct_vs_ecc_sct",
+      "modified",
+      "I-HY_2022_14-GCT-00"
+    ],
+    "source": "Analyst_Report_Recommendation",
+    "severity": "major",
+    "status_domain": "compliance",
+    "raw_status": "modified"
+  }
+]

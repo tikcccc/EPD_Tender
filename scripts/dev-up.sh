@@ -39,6 +39,35 @@ if [ ! -d "$FRONTEND_DIR/node_modules" ]; then
   (cd "$FRONTEND_DIR" && npm install)
 fi
 
+port_in_use() {
+  local port="$1"
+
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -iTCP:"$port" -sTCP:LISTEN -n -P >/dev/null 2>&1
+    return $?
+  fi
+
+  if command -v ss >/dev/null 2>&1; then
+    ss -ltn "( sport = :$port )" | tail -n +2 | grep -q .
+    return $?
+  fi
+
+  return 1
+}
+
+print_port_owner() {
+  local port="$1"
+
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -iTCP:"$port" -sTCP:LISTEN -n -P >&2 || true
+    return
+  fi
+
+  if command -v ss >/dev/null 2>&1; then
+    ss -ltnp "( sport = :$port )" >&2 || true
+  fi
+}
+
 cleanup() {
   local exit_code=$?
   trap - INT TERM EXIT
@@ -57,6 +86,18 @@ cleanup() {
 }
 
 trap cleanup INT TERM EXIT
+
+if port_in_use "$BACKEND_PORT"; then
+  echo "[dev-up] Backend port :$BACKEND_PORT is already in use. Stop the existing process and retry." >&2
+  print_port_owner "$BACKEND_PORT"
+  exit 1
+fi
+
+if port_in_use "$FRONTEND_PORT"; then
+  echo "[dev-up] Frontend port :$FRONTEND_PORT is already in use. Stop the existing process and retry." >&2
+  print_port_owner "$FRONTEND_PORT"
+  exit 1
+fi
 
 echo "[dev-up] Starting backend on :$BACKEND_PORT ..."
 (

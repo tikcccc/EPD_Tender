@@ -1,0 +1,18 @@
+[
+  {
+    "item_id": "AA_1",
+    "consistency_status": "modified",
+    "confidence_score": 0.7607374,
+    "evidence": "From I-HY_2022_14-AA-00: \"1 The date to be inserted should be the date of the Client’s letter of acceptance.   \n2 The italic parts are not part of the execution clause. They are for guidance or information only.   \n3 Insert name(s) of partners. Add more names if there are more partners.\n(c) Executed and delivered as a deed and the COMMON SEAL of [name of Contractor] was affixed in the presence of [ ] its [director(s) or director and secretary or person(s) authorized to sign the contract by its board of directors]4 in the\" From ECC HK_AOA_20231115: \"# IN WITNESS WHEREOF these Articles of Agreement have been executed as a deed the day and year first above written\n\n(a) SIGNED, SEALED and DELIVERED\nby [insert name of sole proprietor]\ntrading as [name of the firm]\nin the presence of:\n[Name]\n[Occupation]\n[Address]\nOr\nSIGNED, SEALED and DELIVERED by\n]7 and\n]8\n[Signature of the individual partner]\nbeing the partners of [name of Contractor]\n[Signature of the individual partner]\nin the presence of:\n[Name]\n[Occupation]\n[Address]\nOr\n(c) Executed and d\"",
+    "reasoning": "The Tender clause expands the execution options to cover various legal entity types (companies, joint ventures, attorneys) not fully reflected in the Standard clause, which focuses only on sole proprietors and partnerships. While the core concept of execution as a deed is preserved, the Tender introduces additional execution formalities (e.g., common seal, authorized signatories) that modify the Standard’s scope.",
+    "check_type": "aa_vs_ecc_aoa",
+    "description": "The date to be inserted should be the date of the Client’s letter of acceptance.",
+    "document_references": [
+      "I-HY_2022_14-AA-00",
+      "ECC HK_AOA_20231115"
+    ],
+    "keywords": [],
+    "source": "Analyst_Report_Recommendation",
+    "severity": ""
+  }
+]

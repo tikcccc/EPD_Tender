@@ -100,7 +100,12 @@ def _review_title(consistency_status: str, status_domain: str | None) -> str:
   return domain_titles.get(consistency_status, domain_titles["unknown"])
 
 
-def _status_label(consistency_status: str, status_domain: str | None) -> str:
+def _status_label(card: ReportItem) -> str:
+  if card.status_presentation == "raw" and card.raw_status:
+    return _format_label(card.raw_status)
+
+  consistency_status = card.consistency_status
+  status_domain = card.status_domain
   domain = _normalized_status_domain(status_domain)
   domain_labels = _STATUS_LABEL_BY_DOMAIN_STATUS[domain]
   return domain_labels.get(consistency_status, _format_label(consistency_status))
@@ -162,7 +167,7 @@ def _build_docx(
     document.add_heading(f"{index}. {title}", level=2)
     document.add_paragraph(f"Item ID: {card.item_id}")
     document.add_paragraph(f"Title: {title}")
-    document.add_paragraph(f"Status: {_status_label(card.consistency_status, card.status_domain)}")
+    document.add_paragraph(f"Status: {_status_label(card)}")
     document.add_paragraph(f"Category: {_format_label(card.check_type)}")
     document.add_paragraph(f"Severity: {_format_label(card.severity)}")
     document.add_paragraph(f"Confidence: {card.confidence_score:.2f}")
@@ -265,7 +270,7 @@ def _build_pdf(
     story.append(Paragraph(f"{index}. {_safe_text(title)}", heading_style))
     story.append(Paragraph(f"Item ID: {_safe_text(card.item_id)}", meta_style))
     story.append(Paragraph(f"Title: {_safe_text(title)}", meta_style))
-    story.append(Paragraph(f"Status: {_safe_text(_status_label(card.consistency_status, card.status_domain))}", meta_style))
+    story.append(Paragraph(f"Status: {_safe_text(_status_label(card))}", meta_style))
     story.append(Paragraph(f"Category: {_safe_text(_format_label(card.check_type))}", meta_style))
     story.append(Paragraph(f"Severity: {_safe_text(_format_label(card.severity))}", meta_style))
     story.append(Paragraph(f"Confidence: {card.confidence_score:.2f}", meta_style))

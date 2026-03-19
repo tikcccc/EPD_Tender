@@ -13,13 +13,16 @@
   flex-direction: column;
   max-height: 100vh;
   min-height: 0;
+  min-width: 0;
   overflow: hidden;
 }
 
 .l-sidebar-scroll {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   padding: var(--space-5) var(--space-5) var(--space-8);
 }
 
@@ -39,6 +42,12 @@
   height: 100vh;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.l-workspace-canvas::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
 }
 
 @media (max-width: 1080px) {

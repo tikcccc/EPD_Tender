@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { TenderAppShell } from "@/components/layout/TenderAppShell";
 import { PdfWorkspace } from "@/components/pdf/PdfWorkspace";
 import { ComplianceCard } from "@/components/report/ComplianceCard";
@@ -9,8 +9,8 @@ import { WorkspaceToolbar } from "@/components/toolbar/WorkspaceToolbar";
 import {
   deleteManualReviewHistoryEntry,
   exportReportFile,
-  fetchNecTemplate,
   fetchReportCards,
+  fetchWorkspaceProjectsConfig,
   ingestReport,
   resolveEvidence,
   updateManualReviewHistoryEntry,
@@ -22,19 +22,22 @@ import type {
   EvidenceWorkspaceState,
   ManualReviewUpdatePayload,
   MatchStatus,
-  NecTemplatePayload,
   ReportItem,
   ResolveEvidenceResult,
   Severity,
   SelectedStandard,
+  WorkspaceProjectConfig,
+  WorkspaceProjectsConfig,
 } from "@/features/tender-ui/types";
 
+const CARD_PAGE_SIZE = 50;
+const EXPORT_CARD_PAGE_SIZE = 200;
 const FALLBACK_DOCUMENT: DocumentReference = {
   document_id: "unknown",
   file_name: "unknown.pdf",
   display_name: "Unknown Document",
 };
-const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._-]+)(?:\s*,[^:\n]+)?\s*:/gi;
+const REFERENCE_MARKER_RE = /from\s+(?:document\s+)?([a-z0-9._() -]+?)(?:\s*,[^:\n]+)?\s*:/gi;
 const QUOTED_SEGMENT_PATTERNS = [/"([^"]+)"/g, /“([^”]+)”/g];
 const SEVERITY_ORDER: Severity[] = ["major", "minor", "info"];
 const SEVERITY_LABELS: Record<Severity, string> = {
@@ -75,11 +78,11 @@ function normalizeQuote(text: string): string {
   return text.replace(/\s+/g, " ").trim().slice(0, 380);
 }
 
-function toDocumentMap(template: NecTemplatePayload | null): Record<string, DocumentReference> {
-  if (!template) {
+function toDocumentMap(project: WorkspaceProjectConfig | null): Record<string, DocumentReference> {
+  if (!project) {
     return {};
   }
-  return Object.fromEntries(template.documents.map((document) => [document.document_id, document]));
+  return Object.fromEntries(project.documents.map((document) => [document.document_id, document]));
 }
 
 function normalizeEvidenceText(text: string): string {
@@ -97,31 +100,6 @@ function formatCheckTypeLabel(checkType: string): string {
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
     .join(" ");
-}
-
-function normalizeKeyword(text: string): string {
-  return text.trim().toLowerCase();
-}
-
-function matchesKeywordFuzzySearch(keywords: string[], searchText: string): boolean {
-  const query = normalizeKeyword(searchText);
-  if (!query) {
-    return true;
-  }
-
-  const normalizedKeywords = keywords.map(normalizeKeyword).filter(Boolean);
-  if (normalizedKeywords.length === 0) {
-    return false;
-  }
-
-  if (normalizedKeywords.some((keyword) => keyword.includes(query))) {
-    return true;
-  }
-
-  const queryTokens = query.split(/\s+/).filter(Boolean);
-  return queryTokens.every((token) =>
-    normalizedKeywords.some((keyword) => keyword.includes(token) || token.includes(keyword)),
-  );
 }
 
 function extractQuotedSegments(text: string): string[] {
@@ -154,7 +132,10 @@ function extractEvidenceByDocument(item: ReportItem): Map<string, string[]> {
     }
 
     const segmentStart = match.index + match[0].length;
-    const segmentEnd = index + 1 < matches.length && matches[index + 1].index !== undefined ? matches[index + 1].index : item.evidence.length;
+    const segmentEnd =
+      index + 1 < matches.length && matches[index + 1].index !== undefined
+        ? matches[index + 1].index
+        : item.evidence.length;
     const segment = item.evidence.slice(segmentStart, segmentEnd);
     const quotes = extractQuotedSegments(segment);
     const normalizedSegment = normalizeEvidenceText(segment.replace(/["“”]/g, ""));
@@ -311,7 +292,6 @@ function toApproximateState(
 }
 
 function getClauseKeyword(evidenceText: string): string | undefined {
-  // Prefer a leading clause label such as "59.3 ..."; body text may also reference other clauses (e.g. Clause 59.1).
   const leadingClauseMatch = evidenceText.match(/^\s*(?:\([a-z]\)\s*)?(\d{1,3}(?:\.\d+){1,3})(?![\d-])/i);
   if (leadingClauseMatch?.[1]) {
     return leadingClauseMatch[1];
@@ -335,35 +315,72 @@ function getClauseKeyword(evidenceText: string): string | undefined {
   return undefined;
 }
 
-export default function TenderPage() {
-  const [template, setTemplate] = useState<NecTemplatePayload | null>(null);
-  const [loadingTemplate, setLoadingTemplate] = useState(true);
-  const [templateError, setTemplateError] = useState("");
+function getDefaultSelectedOrder(project: WorkspaceProjectConfig | null): string[] {
+  if (!project) {
+    return [];
+  }
 
-  const [reportId, setReportId] = useState("");
-  const [reportItems, setReportItems] = useState<ReportItem[]>([]);
-  const [loadingReport, setLoadingReport] = useState(true);
-  const [reportError, setReportError] = useState<string>("");
+  const template = project.templates.find((item) => item.template_id === project.default_template_id);
+  if (template) {
+    return template.standards
+      .slice()
+      .sort((a, b) => a.priority - b.priority)
+      .map((entry) => entry.standard_id);
+  }
 
-  const [searchText, setSearchText] = useState("");
-  const [reviewTypeFilter, setReviewTypeFilter] = useState<"all" | "consistency" | "compliance">("all");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [severityFilter, setSeverityFilter] = useState<"all" | Severity>("all");
-  const [evaluationScopeExpanded, setEvaluationScopeExpanded] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
+  return project.standards_catalog
+    .slice()
+    .sort((a, b) => a.default_priority - b.default_priority)
+    .filter((standard) => standard.enabled_by_default)
+    .map((standard) => standard.standard_id);
+}
 
-  const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>({
+function getTemplateName(project: WorkspaceProjectConfig | null): string {
+  if (!project) {
+    return "N/A";
+  }
+
+  const template = project.templates.find((item) => item.template_id === project.default_template_id);
+  return template?.name ?? project.name;
+}
+
+function createIdleWorkspaceState(document: DocumentReference): EvidenceWorkspaceState {
+  return {
     item_id: "N/A",
-    document_id: FALLBACK_DOCUMENT.document_id,
-    file_name: FALLBACK_DOCUMENT.file_name,
-    display_name: FALLBACK_DOCUMENT.display_name,
+    document_id: document.document_id,
+    file_name: document.file_name,
+    display_name: document.display_name,
     page: 1,
     quote: "Pick a card to focus evidence in the workspace.",
     bbox: null,
     bboxes: null,
     match_status: "resolved_approximate",
     loading: false,
-  });
+  };
+}
+
+export default function TenderPage() {
+  const [workspaceConfig, setWorkspaceConfig] = useState<WorkspaceProjectsConfig | null>(null);
+  const [loadingTemplate, setLoadingTemplate] = useState(true);
+  const [templateError, setTemplateError] = useState("");
+  const [activeProjectId, setActiveProjectId] = useState("");
+
+  const [reportId, setReportId] = useState("");
+  const [reportItems, setReportItems] = useState<ReportItem[]>([]);
+  const [loadingReport, setLoadingReport] = useState(true);
+  const [reportError, setReportError] = useState<string>("");
+  const [cardsPage, setCardsPage] = useState(1);
+  const [totalCards, setTotalCards] = useState(0);
+
+  const [searchText, setSearchText] = useState("");
+  const deferredSearchText = useDeferredValue(searchText);
+  const [reviewTypeFilter, setReviewTypeFilter] = useState<"all" | "consistency" | "compliance">("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [severityFilter, setSeverityFilter] = useState<"all" | Severity>("all");
+  const [evaluationScopeExpanded, setEvaluationScopeExpanded] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
+
+  const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>(createIdleWorkspaceState(FALLBACK_DOCUMENT));
   const [activeItemId, setActiveItemId] = useState<string>("");
   const [activeReferenceId, setActiveReferenceId] = useState<string>("");
   const [workspaceDocuments, setWorkspaceDocuments] = useState<DocumentReference[]>([FALLBACK_DOCUMENT]);
@@ -374,22 +391,25 @@ export default function TenderPage() {
   const [zoom, setZoom] = useState(125);
   const [fitWidthMode, setFitWidthMode] = useState(true);
   const [exportNotice, setExportNotice] = useState("");
-  const autoResolvedReportIdRef = useRef<string>("");
+  const requestKeyRef = useRef("");
 
-  const standardsCatalog = useMemo(() => template?.standards ?? [], [template]);
+  const activeProject = useMemo(() => {
+    return workspaceConfig?.projects.find((project) => project.project_id === activeProjectId) ?? null;
+  }, [activeProjectId, workspaceConfig]);
+  const standardsCatalog = useMemo(() => activeProject?.standards_catalog ?? [], [activeProject]);
 
   const standardMap = useMemo(() => {
     return new Map(standardsCatalog.map((standard) => [standard.standard_id, standard]));
   }, [standardsCatalog]);
 
   const defaultDocument = useMemo(() => {
-    if (!template || template.documents.length === 0) {
+    if (!activeProject || activeProject.documents.length === 0) {
       return FALLBACK_DOCUMENT;
     }
-    return template.documents[0];
-  }, [template]);
+    return activeProject.documents[0];
+  }, [activeProject]);
 
-  const documentMap = useMemo(() => toDocumentMap(template), [template]);
+  const documentMap = useMemo(() => toDocumentMap(activeProject), [activeProject]);
   const documentLabels = useMemo(() => {
     const entries = Object.values(documentMap).map((document) => [document.document_id, document.display_name] as const);
     return Object.fromEntries(entries);
@@ -399,34 +419,25 @@ export default function TenderPage() {
     return Object.fromEntries(entries);
   }, [documentMap]);
 
-  const selectedCheckTypes = useMemo(() => {
-    const set = new Set<string>();
-    selectedOrder.forEach((standardId) => {
-      const standard = standardMap.get(standardId);
-      if (!standard) {
-        return;
-      }
-
+  const categoryOptions = useMemo(() => {
+    const categories = new Set<string>();
+    standardsCatalog.forEach((standard) => {
       standard.check_types.forEach((checkType) => {
         const normalized = checkType.trim();
-        if (normalized) {
-          set.add(normalized);
+        if (!normalized) {
+          return;
         }
+
+        const domains = standard.check_type_domains?.[normalized] ?? ["consistency"];
+        if (reviewTypeFilter !== "all" && !domains.includes(reviewTypeFilter)) {
+          return;
+        }
+
+        categories.add(normalized);
       });
     });
-    return set;
-  }, [selectedOrder, standardMap]);
-
-  const categoryOptions = useMemo(() => {
-    return Array.from(new Set(reportItems.map((item) => item.check_type.trim()).filter(Boolean))).sort((a, b) =>
-      a.localeCompare(b),
-    );
-  }, [reportItems]);
-
-  const severityOptions = useMemo(() => {
-    const presentSeverities = new Set(reportItems.map((item) => item.severity));
-    return SEVERITY_ORDER.filter((severity) => presentSeverities.has(severity));
-  }, [reportItems]);
+    return Array.from(categories).sort((a, b) => a.localeCompare(b));
+  }, [reviewTypeFilter, standardsCatalog]);
 
   const selectedStandards = useMemo<SelectedStandard[]>(() => {
     return selectedOrder.map((standardId, index) => {
@@ -439,246 +450,320 @@ export default function TenderPage() {
     });
   }, [selectedOrder, standardMap]);
 
-  const visibleCards = useMemo(() => {
-    const keyword = searchText.trim();
-    return reportItems.filter((item) => {
-      if (selectedOrder.length > 0 && selectedCheckTypes.size > 0 && !selectedCheckTypes.has(item.check_type)) {
-        return false;
-      }
-
-      const statusDomain = item.status_domain === "compliance" ? "compliance" : "consistency";
-      if (reviewTypeFilter !== "all" && statusDomain !== reviewTypeFilter) {
-        return false;
-      }
-
-      if (categoryFilter !== "all" && item.check_type !== categoryFilter) {
-        return false;
-      }
-
-      if (severityFilter !== "all" && item.severity !== severityFilter) {
-        return false;
-      }
-
-      if (!keyword) {
-        return true;
-      }
-
-      return matchesKeywordFuzzySearch(item.keywords, keyword);
-    });
-  }, [categoryFilter, reportItems, reviewTypeFilter, searchText, selectedOrder.length, selectedCheckTypes, severityFilter]);
+  const totalPages = Math.max(1, Math.ceil(totalCards / CARD_PAGE_SIZE));
 
   useEffect(() => {
     let disposed = false;
 
-    async function bootstrapWorkspace(): Promise<void> {
+    async function loadWorkspaceConfig(): Promise<void> {
       setLoadingTemplate(true);
       setTemplateError("");
-      setLoadingReport(true);
-      setReportError("");
 
       try {
-        const necTemplate = await fetchNecTemplate();
-        const defaultOrder = necTemplate.standards
-          .slice()
-          .sort((a, b) => a.default_priority - b.default_priority)
-          .filter((standard) => standard.enabled_by_default)
-          .map((standard) => standard.standard_id);
-
-        const ingestResult = await ingestReport({ report_source: "reference_seed", report_items: [] });
-        const cardsResult = await fetchReportCards(ingestResult.report_id);
-
+        const config = await fetchWorkspaceProjectsConfig();
         if (!disposed) {
-          const map = toDocumentMap(necTemplate);
-          const initialDocument = necTemplate.documents[0] ?? FALLBACK_DOCUMENT;
-          const initialWorkspaceDocuments = necTemplate.documents.length > 0 ? necTemplate.documents : [FALLBACK_DOCUMENT];
-
-          setTemplate(necTemplate);
-          setWorkspaceDocuments(initialWorkspaceDocuments);
-          setSelectedOrder(defaultOrder);
-          setReportId(ingestResult.report_id);
-          setReportItems(cardsResult.cards);
-          setActiveItemId(cardsResult.cards[0]?.item_id ?? "");
-
-          if (cardsResult.cards[0]) {
-            setWorkspaceState({
-              ...toApproximateState(cardsResult.cards[0], map, initialDocument),
-              loading: true,
-            });
-          }
+          setWorkspaceConfig(config);
+          setActiveProjectId(config.default_project_id);
         }
       } catch (error) {
         if (!disposed) {
-          const message = error instanceof Error ? error.message : "Failed to load tender workspace data.";
+          const message = error instanceof Error ? error.message : "Failed to load workspace configuration.";
           setTemplateError(message);
-          setReportError(message);
-          setTemplate(null);
-          setReportItems([]);
+          setWorkspaceConfig(null);
+          setLoadingReport(false);
         }
       } finally {
         if (!disposed) {
           setLoadingTemplate(false);
-          setLoadingReport(false);
         }
       }
     }
 
-    void bootstrapWorkspace();
+    void loadWorkspaceConfig();
 
     return () => {
       disposed = true;
     };
   }, []);
 
-  async function focusEvidence(
-    item: ReportItem,
-    options?: {
-      forcedDocumentId?: string;
-      evidenceTextOverride?: string;
-      referenceId?: string;
-      fromDocumentSwitcher?: boolean;
-    },
-  ): Promise<void> {
-    setIsManualViewerMode(false);
-    setActiveItemId(item.item_id);
-
-    const evidenceByDocument = extractEvidenceByDocument(item);
-    const candidateDocumentIds = getCandidateDocumentIds(item, defaultDocument.document_id, documentMap);
-    const candidateDocuments = candidateDocumentIds.map((documentId) =>
-      toDocumentReference(documentId, documentMap, defaultDocument),
-    );
-    const baseWorkspaceDocuments = template?.documents?.length ? template.documents : [defaultDocument];
-    setWorkspaceDocuments(mergeDocumentReferences(baseWorkspaceDocuments, candidateDocuments));
-
-    const preferredDocumentId = options?.forcedDocumentId?.trim() || candidateDocumentIds[0];
-    const preferredDocument = toDocumentReference(preferredDocumentId, documentMap, defaultDocument);
-    const preferredEvidenceSegments = evidenceByDocument.get(preferredDocumentId);
-    const preferredEvidence =
-      options?.evidenceTextOverride ?? preferredEvidenceSegments?.[0] ?? item.evidence;
-    const preferredReferenceId =
-      options?.referenceId ?? resolveReferenceId(preferredDocumentId, preferredEvidence, evidenceByDocument);
-    setActiveReferenceId(preferredReferenceId);
-
-    const baseState: EvidenceWorkspaceState = {
-      ...toApproximateState(item, documentMap, defaultDocument),
-      document_id: preferredDocument.document_id,
-      file_name: preferredDocument.file_name,
-      display_name: preferredDocument.display_name,
-      quote: normalizeQuote(preferredEvidence),
-      error: undefined,
-    };
-
-    if (!reportId) {
-      setWorkspaceState(baseState);
-      return;
-    }
-
-    setWorkspaceState({
-      ...baseState,
-      loading: true,
-    });
-    if (options?.fromDocumentSwitcher) {
-      setSwitchingDocument(true);
-    }
-
-    try {
-      const resolveInputs = options?.forcedDocumentId
-        ? [{ documentId: preferredDocumentId, evidenceText: preferredEvidence, referenceId: preferredReferenceId }]
-        : candidateDocumentIds.flatMap((documentId) => {
-            const candidateSegments = evidenceByDocument.get(documentId);
-            const evidenceTexts = candidateSegments && candidateSegments.length > 0 ? candidateSegments : [item.evidence];
-
-            return evidenceTexts.map((evidenceText, segmentIndex) => ({
-              documentId,
-              evidenceText,
-              referenceId: buildReferenceId(documentId, segmentIndex),
-            }));
-          });
-
-      const settled = await Promise.allSettled(
-        resolveInputs.map(async ({ documentId, evidenceText, referenceId }, order): Promise<ResolveCandidate> => {
-          const clauseKeyword = getClauseKeyword(evidenceText) ?? getClauseKeyword(item.evidence);
-
-          const payload = await resolveEvidence({
-            report_id: reportId,
-            item_id: item.item_id,
-            document_id: documentId,
-            evidence_text: evidenceText,
-            hints: {
-              clause_keyword: clauseKeyword,
-            },
-          });
-
-          const anchor = payload.anchors[0];
-          if (!anchor) {
-            throw new Error(`No anchor returned for ${documentId}.`);
-          }
-
-          return {
-            order,
-            document_id: documentId,
-            evidence_text: evidenceText,
-            reference_id: referenceId,
-            anchor,
-            payload,
-          };
-        }),
-      );
-
-      const successfulCandidates = settled
-        .filter((result): result is PromiseFulfilledResult<ResolveCandidate> => result.status === "fulfilled")
-        .map((result) => result.value);
-
-      if (successfulCandidates.length === 0) {
-        throw new Error("Evidence resolve failed for all referenced documents.");
-      }
-
-      const bestCandidate = pickBestResolveCandidate(successfulCandidates);
-      const bestAnchor = bestCandidate.anchor;
-      const resolvedDocument = toDocumentReference(bestCandidate.document_id, documentMap, defaultDocument);
-      setActiveReferenceId(bestCandidate.reference_id);
-
-      setWorkspaceState({
-        item_id: item.item_id,
-        document_id: resolvedDocument.document_id,
-        file_name: bestCandidate.payload.file_name || resolvedDocument.file_name,
-        display_name: resolvedDocument.display_name,
-        page: bestAnchor.page,
-        quote: bestAnchor.quote || normalizeQuote(bestCandidate.evidence_text),
-        bbox: bestAnchor.bbox ?? null,
-        bboxes: bestAnchor.bboxes ?? (bestAnchor.bbox ? [bestAnchor.bbox] : null),
-        match_status: bestAnchor.status,
-        loading: false,
-      });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Evidence resolve failed.";
-      setActiveReferenceId(preferredReferenceId);
-      setWorkspaceState({
-        ...baseState,
-        loading: false,
-        error: message,
-      });
-    } finally {
-      if (options?.fromDocumentSwitcher) {
-        setSwitchingDocument(false);
-      }
-    }
-  }
+  useEffect(() => {
+    setCardsPage(1);
+  }, [activeProjectId, searchText, reviewTypeFilter, categoryFilter, severityFilter]);
 
   useEffect(() => {
-    if (reportItems.length === 0 || !reportId) {
+    if (categoryFilter === "all") {
       return;
     }
 
-    if (autoResolvedReportIdRef.current === reportId) {
+    if (categoryOptions.includes(categoryFilter)) {
       return;
     }
 
-    autoResolvedReportIdRef.current = reportId;
-    const firstItem = reportItems[0];
-    void focusEvidence(firstItem);
-    // Only run when initial report load finishes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reportId, reportItems]);
+    setCategoryFilter("all");
+  }, [categoryFilter, categoryOptions]);
+
+  useEffect(() => {
+    if (!activeProject) {
+      return;
+    }
+
+    const currentProject = activeProject;
+    let disposed = false;
+    const baseDocuments = currentProject.documents.length > 0 ? currentProject.documents : [FALLBACK_DOCUMENT];
+
+    async function bootstrapProject(): Promise<void> {
+      setReportError("");
+      setLoadingReport(true);
+      setReportId("");
+      setReportItems([]);
+      setTotalCards(0);
+      setCardsPage(1);
+      setSearchText("");
+      setReviewTypeFilter("all");
+      setCategoryFilter("all");
+      setSeverityFilter("all");
+      setSelectedOrder(getDefaultSelectedOrder(currentProject));
+      setWorkspaceDocuments(baseDocuments);
+      setActiveItemId("");
+      setActiveReferenceId("");
+      setIsManualViewerMode(false);
+      setSwitchingDocument(false);
+      setWorkspaceState(createIdleWorkspaceState(baseDocuments[0] ?? FALLBACK_DOCUMENT));
+      setExportNotice("");
+      requestKeyRef.current = "";
+
+      try {
+        const ingestResult = await ingestReport({
+          project_id: currentProject.project_id,
+          report_source: "reference_seed",
+          report_items: [],
+        });
+
+        if (!disposed) {
+          setReportId(ingestResult.report_id);
+        }
+      } catch (error) {
+        if (!disposed) {
+          const message = error instanceof Error ? error.message : "Failed to initialize project report.";
+          setReportError(message);
+          setLoadingReport(false);
+        }
+      }
+    }
+
+    void bootstrapProject();
+
+    return () => {
+      disposed = true;
+    };
+  }, [activeProject]);
+
+  const focusEvidence = useCallback(
+    async (
+      item: ReportItem,
+      options?: {
+        forcedDocumentId?: string;
+        evidenceTextOverride?: string;
+        referenceId?: string;
+        fromDocumentSwitcher?: boolean;
+      },
+    ): Promise<void> => {
+      setIsManualViewerMode(false);
+      setActiveItemId(item.item_id);
+
+      const evidenceByDocument = extractEvidenceByDocument(item);
+      const candidateDocumentIds = getCandidateDocumentIds(item, defaultDocument.document_id, documentMap);
+      const candidateDocuments = candidateDocumentIds.map((documentId) =>
+        toDocumentReference(documentId, documentMap, defaultDocument),
+      );
+      const baseWorkspaceDocuments = activeProject?.documents?.length ? activeProject.documents : [defaultDocument];
+      setWorkspaceDocuments(mergeDocumentReferences(baseWorkspaceDocuments, candidateDocuments));
+
+      const preferredDocumentId = options?.forcedDocumentId?.trim() || candidateDocumentIds[0];
+      const preferredDocument = toDocumentReference(preferredDocumentId, documentMap, defaultDocument);
+      const preferredEvidenceSegments = evidenceByDocument.get(preferredDocumentId);
+      const preferredEvidence = options?.evidenceTextOverride ?? preferredEvidenceSegments?.[0] ?? item.evidence;
+      const preferredReferenceId =
+        options?.referenceId ?? resolveReferenceId(preferredDocumentId, preferredEvidence, evidenceByDocument);
+      setActiveReferenceId(preferredReferenceId);
+
+      const baseState: EvidenceWorkspaceState = {
+        ...toApproximateState(item, documentMap, defaultDocument),
+        document_id: preferredDocument.document_id,
+        file_name: preferredDocument.file_name,
+        display_name: preferredDocument.display_name,
+        quote: normalizeQuote(preferredEvidence),
+        error: undefined,
+      };
+
+      if (!reportId) {
+        setWorkspaceState(baseState);
+        return;
+      }
+
+      setWorkspaceState({
+        ...baseState,
+        loading: true,
+      });
+      if (options?.fromDocumentSwitcher) {
+        setSwitchingDocument(true);
+      }
+
+      try {
+        const resolveInputs = options?.forcedDocumentId
+          ? [{ documentId: preferredDocumentId, evidenceText: preferredEvidence, referenceId: preferredReferenceId }]
+          : candidateDocumentIds.flatMap((documentId) => {
+              const candidateSegments = evidenceByDocument.get(documentId);
+              const evidenceTexts = candidateSegments && candidateSegments.length > 0 ? candidateSegments : [item.evidence];
+
+              return evidenceTexts.map((evidenceText, segmentIndex) => ({
+                documentId,
+                evidenceText,
+                referenceId: buildReferenceId(documentId, segmentIndex),
+              }));
+            });
+
+        const settled = await Promise.allSettled(
+          resolveInputs.map(async ({ documentId, evidenceText, referenceId }, order): Promise<ResolveCandidate> => {
+            const clauseKeyword = getClauseKeyword(evidenceText) ?? getClauseKeyword(item.evidence);
+
+            const payload = await resolveEvidence({
+              report_id: reportId,
+              item_id: item.item_id,
+              document_id: documentId,
+              evidence_text: evidenceText,
+              hints: {
+                clause_keyword: clauseKeyword,
+              },
+            });
+
+            const anchor = payload.anchors[0];
+            if (!anchor) {
+              throw new Error(`No anchor returned for ${documentId}.`);
+            }
+
+            return {
+              order,
+              document_id: documentId,
+              evidence_text: evidenceText,
+              reference_id: referenceId,
+              anchor,
+              payload,
+            };
+          }),
+        );
+
+        const successfulCandidates = settled
+          .filter((result): result is PromiseFulfilledResult<ResolveCandidate> => result.status === "fulfilled")
+          .map((result) => result.value);
+
+        if (successfulCandidates.length === 0) {
+          throw new Error("Evidence resolve failed for all referenced documents.");
+        }
+
+        const bestCandidate = pickBestResolveCandidate(successfulCandidates);
+        const bestAnchor = bestCandidate.anchor;
+        const resolvedDocument = toDocumentReference(bestCandidate.document_id, documentMap, defaultDocument);
+        setActiveReferenceId(bestCandidate.reference_id);
+
+        setWorkspaceState({
+          item_id: item.item_id,
+          document_id: resolvedDocument.document_id,
+          file_name: bestCandidate.payload.file_name || resolvedDocument.file_name,
+          display_name: resolvedDocument.display_name,
+          page: bestAnchor.page,
+          quote: bestAnchor.quote || normalizeQuote(bestCandidate.evidence_text),
+          bbox: bestAnchor.bbox ?? null,
+          bboxes: bestAnchor.bboxes ?? (bestAnchor.bbox ? [bestAnchor.bbox] : null),
+          match_status: bestAnchor.status,
+          loading: false,
+        });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Evidence resolve failed.";
+        setActiveReferenceId(preferredReferenceId);
+        setWorkspaceState({
+          ...baseState,
+          loading: false,
+          error: message,
+        });
+      } finally {
+        if (options?.fromDocumentSwitcher) {
+          setSwitchingDocument(false);
+        }
+      }
+    },
+    [activeProject, defaultDocument, documentMap, reportId],
+  );
+
+  useEffect(() => {
+    if (!reportId || !activeProject) {
+      return;
+    }
+
+    const currentProject = activeProject;
+    let disposed = false;
+    const requestKey = [
+      reportId,
+      cardsPage,
+      CARD_PAGE_SIZE,
+      deferredSearchText.trim(),
+      categoryFilter,
+      severityFilter,
+      reviewTypeFilter,
+    ].join("|");
+    requestKeyRef.current = requestKey;
+
+    async function loadCards(): Promise<void> {
+      setLoadingReport(true);
+      setReportError("");
+
+      try {
+        const result = await fetchReportCards(reportId, {
+          page: cardsPage,
+          pageSize: CARD_PAGE_SIZE,
+          q: deferredSearchText.trim() || undefined,
+          checkType: categoryFilter,
+          severity: severityFilter,
+          reviewType: reviewTypeFilter,
+        });
+
+        if (disposed || requestKeyRef.current !== requestKey) {
+          return;
+        }
+
+        setReportItems(result.cards);
+        setTotalCards(result.total);
+
+        const baseDocuments = currentProject.documents.length > 0 ? currentProject.documents : [FALLBACK_DOCUMENT];
+        setWorkspaceDocuments(baseDocuments);
+
+        if (result.cards.length > 0) {
+          void focusEvidence(result.cards[0]);
+        } else {
+          setActiveItemId("");
+          setActiveReferenceId("");
+          setWorkspaceState(createIdleWorkspaceState(baseDocuments[0] ?? FALLBACK_DOCUMENT));
+        }
+      } catch (error) {
+        if (!disposed && requestKeyRef.current === requestKey) {
+          const message = error instanceof Error ? error.message : "Failed to load report cards.";
+          setReportError(message);
+          setReportItems([]);
+          setTotalCards(0);
+        }
+      } finally {
+        if (!disposed && requestKeyRef.current === requestKey) {
+          setLoadingReport(false);
+        }
+      }
+    }
+
+    void loadCards();
+
+    return () => {
+      disposed = true;
+    };
+  }, [activeProject, cardsPage, categoryFilter, deferredSearchText, focusEvidence, reportId, reviewTypeFilter, severityFilter]);
 
   useEffect(() => {
     setViewerPage(Math.max(1, workspaceState.page));
@@ -697,10 +782,7 @@ export default function TenderPage() {
     setViewerPageCount(pageCount);
   }, []);
 
-  const toolbarDocumentOptions = useMemo(
-    () => toToolbarDocumentOptions(workspaceDocuments),
-    [workspaceDocuments],
-  );
+  const toolbarDocumentOptions = useMemo(() => toToolbarDocumentOptions(workspaceDocuments), [workspaceDocuments]);
 
   const currentToolbarDocumentId = useMemo(() => {
     const activeDocument = workspaceDocuments.find((document) => document.document_id === workspaceState.document_id);
@@ -724,14 +806,13 @@ export default function TenderPage() {
       return;
     }
 
-    const selectedDocument = mappedDocument;
     setIsManualViewerMode(true);
     setActiveReferenceId("");
     setWorkspaceState((previous) => ({
       ...previous,
-      document_id: selectedDocument.document_id,
-      file_name: selectedDocument.file_name,
-      display_name: selectedDocument.display_name,
+      document_id: mappedDocument.document_id,
+      file_name: mappedDocument.file_name,
+      display_name: mappedDocument.display_name,
       page: 1,
       bbox: null,
       bboxes: null,
@@ -741,12 +822,40 @@ export default function TenderPage() {
   }
 
   function openWorkspacePdf(): void {
-    if (!workspaceState.document_id || workspaceState.document_id === "unknown") {
+    if (!activeProjectId || !workspaceState.document_id || workspaceState.document_id === "unknown") {
       return;
     }
 
-    const url = `/api/documents/${encodeURIComponent(workspaceState.document_id)}/file#page=${viewerPage}`;
+    const url = `/api/projects/${encodeURIComponent(activeProjectId)}/documents/${encodeURIComponent(workspaceState.document_id)}/file#page=${viewerPage}`;
     window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  async function collectFilteredCardIds(): Promise<string[]> {
+    if (!reportId) {
+      return [];
+    }
+
+    const cardIds: string[] = [];
+    let page = 1;
+
+    while (true) {
+      const result = await fetchReportCards(reportId, {
+        page,
+        pageSize: EXPORT_CARD_PAGE_SIZE,
+        q: deferredSearchText.trim() || undefined,
+        checkType: categoryFilter,
+        severity: severityFilter,
+        reviewType: reviewTypeFilter,
+      });
+
+      cardIds.push(...result.cards.map((item) => item.item_id));
+      if (cardIds.length >= result.total || result.cards.length === 0) {
+        break;
+      }
+      page += 1;
+    }
+
+    return cardIds;
   }
 
   async function exportReport(): Promise<void> {
@@ -756,11 +865,12 @@ export default function TenderPage() {
     }
 
     try {
+      const cardIds = await collectFilteredCardIds();
       const { blob, fileName } = await exportReportFile({
         report_id: reportId,
         format: "docx",
         selected_standards: selectedStandards,
-        card_ids: visibleCards.map((item) => item.item_id),
+        card_ids: cardIds,
       });
 
       const url = URL.createObjectURL(blob);
@@ -783,9 +893,7 @@ export default function TenderPage() {
     }
 
     const result = await updateManualReview(reportId, item.item_id, payload);
-    setReportItems((previous) =>
-      previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)),
-    );
+    setReportItems((previous) => previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)));
   }
 
   async function updateManualReviewHistory(item: ReportItem, historyId: string, payload: ManualReviewUpdatePayload): Promise<void> {
@@ -794,9 +902,7 @@ export default function TenderPage() {
     }
 
     const result = await updateManualReviewHistoryEntry(reportId, item.item_id, historyId, payload);
-    setReportItems((previous) =>
-      previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)),
-    );
+    setReportItems((previous) => previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)));
   }
 
   async function deleteManualReviewHistory(item: ReportItem, historyId: string): Promise<void> {
@@ -805,17 +911,32 @@ export default function TenderPage() {
     }
 
     const result = await deleteManualReviewHistoryEntry(reportId, item.item_id, historyId);
-    setReportItems((previous) =>
-      previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)),
-    );
+    setReportItems((previous) => previous.map((card) => (card.item_id === result.item.item_id ? result.item : card)));
   }
 
-  const templateName = template?.name ?? "N/A";
+  const templateName = getTemplateName(activeProject);
 
   return (
     <TenderAppShell
+      subtitle={activeProject ? `Project: ${activeProject.name}` : undefined}
       actions={
         <>
+          <label className="c-topbar-project-picker">
+            <span className="c-topbar-project-label">Project</span>
+            <select
+              className="c-select-input c-topbar-project-select"
+              value={activeProjectId}
+              disabled={loadingTemplate || loadingReport || !workspaceConfig}
+              onChange={(event) => setActiveProjectId(event.target.value)}
+              aria-label="Switch project"
+            >
+              {(workspaceConfig?.projects ?? []).map((project) => (
+                <option key={project.project_id} value={project.project_id}>
+                  {project.name}
+                </option>
+              ))}
+            </select>
+          </label>
           <button className="c-btn c-btn-secondary" type="button" disabled title="Temporarily unavailable">
             Admin Settings
           </button>
@@ -850,8 +971,8 @@ export default function TenderPage() {
             {evaluationScopeExpanded ? (
               <div id="evaluation-scope-panel">
                 {loadingTemplate ? <p className="c-empty">Loading evaluation standards...</p> : null}
-                {templateError ? <p className="c-alert">Unable to load evaluation settings right now.</p> : null}
-                {template && !templateError ? (
+                {templateError ? <p className="c-alert">{templateError}</p> : null}
+                {activeProject && !templateError ? (
                   <>
                     <p className="c-notice">Standard set: {templateName}</p>
                     <div className="c-card-meta" style={{ marginTop: "12px" }}>
@@ -867,90 +988,116 @@ export default function TenderPage() {
             ) : null}
           </section>
 
-          <section className="c-section">
+          <section className="c-section c-report-section">
             <div className="c-section-header">
               <div>
                 <h2 className="c-section-title">Report Cards</h2>
                 <p className="c-section-desc">
-                  Click evidence to auto-resolve across referenced documents and update PDF highlight.
+                  Search and filter results server-side, then click evidence to resolve against project documents.
                 </p>
               </div>
-              <span className="c-badge">{visibleCards.length} cards</span>
+              <span className="c-badge">{totalCards.toLocaleString()} cards</span>
             </div>
 
-            <div className="c-card-filters">
-              <input
-                className="c-search-input"
-                type="search"
-                value={searchText}
-                placeholder="Search cards by keywords..."
-                onChange={(event) => setSearchText(event.target.value)}
-              />
-              <select
-                className="c-select-input"
-                value={reviewTypeFilter}
-                aria-label="Filter cards by review type"
-                onChange={(event) => setReviewTypeFilter(event.target.value as "all" | "consistency" | "compliance")}
-              >
-                <option value="all">All Review Types</option>
-                <option value="consistency">Consistency Review</option>
-                <option value="compliance">Compliance Review</option>
-              </select>
-              <select
-                className="c-select-input"
-                value={categoryFilter}
-                aria-label="Filter cards by category"
-                onChange={(event) => setCategoryFilter(event.target.value)}
-              >
-                <option value="all">All Categories</option>
-                {categoryOptions.map((category) => (
-                  <option key={category} value={category}>
-                    {formatCheckTypeLabel(category)}
-                  </option>
-                ))}
-              </select>
-              <select
-                className="c-select-input"
-                value={severityFilter}
-                aria-label="Filter cards by severity"
-                onChange={(event) => setSeverityFilter(event.target.value as "all" | Severity)}
-              >
-                <option value="all">All Severities</option>
-                {severityOptions.map((severity) => (
-                  <option key={severity} value={severity}>
-                    {SEVERITY_LABELS[severity]}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {loadingReport ? <p className="c-empty">Loading report cards...</p> : null}
-            {reportError ? <p className="c-alert">{reportError}</p> : null}
-            {!loadingReport && !reportError && visibleCards.length === 0 ? (
-              <p className="c-empty">No cards match the current filters or search text.</p>
-            ) : null}
-
-            <div className="c-card-list">
-              {visibleCards.map((item) => (
-                <ComplianceCard
-                  key={item.item_id}
-                  item={item}
-                  isActive={item.item_id === activeItemId}
-                  reportId={reportId}
-                  activeDocumentId={
-                    item.item_id === activeItemId && !isManualViewerMode ? workspaceState.document_id : undefined
-                  }
-                  activeReferenceId={item.item_id === activeItemId && !isManualViewerMode ? activeReferenceId : undefined}
-                  documentLabels={documentLabels}
-                  documentFileNames={documentFileNames}
-                  onEvidenceClick={(card, options) => void focusEvidence(card, options)}
-                  onSaveManualReview={(card, payload) => saveManualReview(card, payload)}
-                  onUpdateManualReviewHistory={(card, historyId, payload) =>
-                    updateManualReviewHistory(card, historyId, payload)
-                  }
-                  onDeleteManualReviewHistory={(card, historyId) => deleteManualReviewHistory(card, historyId)}
+            <div className="c-report-section-body">
+              <div className="c-card-filters">
+                <input
+                  className="c-search-input"
+                  type="search"
+                  value={searchText}
+                  placeholder="Search cards by keywords..."
+                  onChange={(event) => setSearchText(event.target.value)}
                 />
-              ))}
+                <select
+                  className="c-select-input"
+                  value={reviewTypeFilter}
+                  aria-label="Filter cards by review type"
+                  onChange={(event) => setReviewTypeFilter(event.target.value as "all" | "consistency" | "compliance")}
+                >
+                  <option value="all">All Review Types</option>
+                  <option value="consistency">Consistency Review</option>
+                  <option value="compliance">Compliance Review</option>
+                </select>
+                <select
+                  className="c-select-input"
+                  value={categoryFilter}
+                  aria-label="Filter cards by category"
+                  onChange={(event) => setCategoryFilter(event.target.value)}
+                >
+                  <option value="all">All Categories</option>
+                  {categoryOptions.map((category) => (
+                    <option key={category} value={category}>
+                      {formatCheckTypeLabel(category)}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  className="c-select-input"
+                  value={severityFilter}
+                  aria-label="Filter cards by severity"
+                  onChange={(event) => setSeverityFilter(event.target.value as "all" | Severity)}
+                >
+                  <option value="all">All Severities</option>
+                  {SEVERITY_ORDER.map((severity) => (
+                    <option key={severity} value={severity}>
+                      {SEVERITY_LABELS[severity]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {loadingReport ? <p className="c-empty">Loading report cards...</p> : null}
+              {reportError ? <p className="c-alert">{reportError}</p> : null}
+              {!loadingReport && !reportError && reportItems.length === 0 ? (
+                <p className="c-empty">No cards match the current filters or search text.</p>
+              ) : null}
+
+              <div className="c-card-list">
+                {reportItems.map((item) => (
+                  <ComplianceCard
+                    key={item.item_id}
+                    item={item}
+                    isActive={item.item_id === activeItemId}
+                    reportId={reportId}
+                    activeDocumentId={item.item_id === activeItemId && !isManualViewerMode ? workspaceState.document_id : undefined}
+                    activeReferenceId={item.item_id === activeItemId && !isManualViewerMode ? activeReferenceId : undefined}
+                    documentLabels={documentLabels}
+                    documentFileNames={documentFileNames}
+                    onEvidenceClick={(card, options) => void focusEvidence(card, options)}
+                    onSaveManualReview={(card, payload) => saveManualReview(card, payload)}
+                    onUpdateManualReviewHistory={(card, historyId, payload) =>
+                      updateManualReviewHistory(card, historyId, payload)
+                    }
+                    onDeleteManualReviewHistory={(card, historyId) => deleteManualReviewHistory(card, historyId)}
+                  />
+                ))}
+              </div>
+
+              {totalCards > 0 ? (
+                <div className="c-card-pagination">
+                  <span className="c-card-pagination-meta">
+                    Page {cardsPage} / {totalPages}
+                  </span>
+                  <div className="c-card-pagination-actions">
+                    <button
+                      className="c-btn c-btn-secondary"
+                      type="button"
+                      onClick={() => setCardsPage((value) => Math.max(1, value - 1))}
+                      disabled={cardsPage <= 1 || loadingReport}
+                    >
+                      Previous Page
+                    </button>
+                    <button
+                      className="c-btn c-btn-secondary"
+                      type="button"
+                      onClick={() => setCardsPage((value) => Math.min(totalPages, value + 1))}
+                      disabled={cardsPage >= totalPages || loadingReport}
+                    >
+                      Next Page
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </section>
 
@@ -970,6 +1117,7 @@ export default function TenderPage() {
             onOpenDocument={openWorkspacePdf}
           />
           <PdfWorkspace
+            projectId={activeProjectId}
             documentId={workspaceState.document_id}
             currentPage={viewerPage}
             highlightPage={workspaceState.page}

@@ -26,11 +26,22 @@ def ingest(request: Request, payload: ReportIngestRequest) -> dict[str, object]:
 def list_cards(
   request: Request,
   report_id: str,
-  status_filter: str | None = Query(default=None, alias="status"),
+  page: int = Query(default=1, ge=1),
+  page_size: int = Query(default=50, ge=1, le=200),
+  query: str | None = Query(default=None, alias="q"),
   severity: str | None = Query(default=None),
   check_type: str | None = Query(default=None),
+  review_type: str | None = Query(default=None),
 ) -> dict[str, object]:
-  result = get_cards(report_id, status=status_filter, severity=severity, check_type=check_type)
+  result = get_cards(
+    report_id,
+    page=page,
+    page_size=page_size,
+    query=query,
+    severity=severity,
+    check_type=check_type,
+    review_type=review_type,
+  )
   return ok_response(request, result.model_dump())
 
 

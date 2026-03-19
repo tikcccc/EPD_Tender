@@ -40,9 +40,30 @@
   gap: var(--space-3);
 }
 
+.c-topbar-project-picker {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--space-2);
+}
+
+.c-topbar-project-label {
+  color: var(--color-subtext);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.c-topbar-project-select {
+  min-width: 180px;
+}
+
 .c-sidebar-stack {
-  display: grid;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   gap: var(--space-4);
+  min-height: 0;
 }
 
 .c-section {
@@ -51,6 +72,24 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   padding: var(--space-4);
+}
+
+.c-report-section {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.c-report-section-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.c-report-section-body::-webkit-scrollbar {
+  width: 8px;
 }
 
 .c-section-header {
@@ -298,6 +337,24 @@
 .c-card-list {
   display: grid;
   gap: var(--space-3);
+}
+
+.c-card-pagination {
+  align-items: center;
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  margin-top: var(--space-3);
+}
+
+.c-card-pagination-meta {
+  color: var(--color-subtext);
+  font-size: var(--fs-13);
+}
+
+.c-card-pagination-actions {
+  display: inline-flex;
+  gap: var(--space-2);
 }
 
 .c-card {
@@ -794,6 +851,60 @@
   gap: 8px;
 }
 
+.c-evidence-ref-pagination {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: space-between;
+}
+
+.c-evidence-ref-pagination-meta {
+  color: #475569;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+
+.c-evidence-ref-pagination-actions {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.c-evidence-ref-pagination-pages {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.c-evidence-ref-page-btn {
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  display: inline-flex;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  height: 32px;
+  justify-content: center;
+  min-width: 32px;
+  padding: 0 8px;
+}
+
+.c-evidence-ref-page-btn:hover {
+  background: var(--color-primary-soft);
+  border-color: #b5cef2;
+}
+
+.c-evidence-ref-page-btn.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
 .c-evidence-ref-item {
   align-items: flex-start;
   background: #fff;
@@ -809,6 +920,12 @@
 .c-evidence-ref-item:hover {
   border-color: #96b9ea;
   box-shadow: inset 0 0 0 1px rgba(31, 111, 235, 0.15);
+}
+
+.c-evidence-ref-item.is-disabled,
+.c-evidence-ref-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 .c-evidence-ref-item.is-active {
@@ -916,9 +1033,13 @@
 .c-toolbar-top-actions {
   align-items: center;
   display: inline-flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: var(--space-2);
   flex-shrink: 0;
+}
+
+.c-toolbar-doc-search {
+  min-width: 180px;
 }
 
 .c-toolbar-doc-select {
@@ -1399,6 +1520,14 @@
 }
 
 @media (max-width: 1080px) {
+  .c-report-section {
+    min-height: auto;
+  }
+
+  .c-report-section-body {
+    overflow: visible;
+  }
+
   .c-template-actions {
     grid-template-columns: 1fr;
   }
@@ -1411,9 +1540,10 @@
   .c-toolbar-top-actions {
     justify-content: flex-end;
     width: auto;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
+  .c-toolbar-doc-search,
   .c-toolbar-doc-select {
     max-width: 320px;
     min-width: 180px;
@@ -1463,9 +1593,33 @@
   .c-card-filters {
     grid-template-columns: 1fr;
   }
+
+  .c-card-pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .c-card-pagination-actions {
+    width: 100%;
+  }
 }
 
 @media (max-width: 760px) {
+  .c-topbar-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .c-topbar-project-picker {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .c-topbar-project-select {
+    min-width: 0;
+    width: 100%;
+  }
+
   .c-toolbar {
     align-items: stretch;
     flex-direction: column;
@@ -1477,6 +1631,7 @@
     flex-wrap: wrap;
   }
 
+  .c-toolbar-doc-search,
   .c-toolbar-doc-select {
     max-width: none;
     min-width: 0;

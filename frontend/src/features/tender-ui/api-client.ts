@@ -12,9 +12,11 @@ import type {
   ResolveEvidencePayload,
   ResolveEvidenceResult,
   SelectedStandard,
+  WorkspaceProjectsConfig,
 } from "./types";
 
 const FALLBACK_API_BASE = "http://localhost:8000";
+const DEFAULT_REQUEST_TIMEOUT_MS = 15000;
 
 export function getApiBaseUrl(): string {
   const configured = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -41,8 +43,34 @@ async function parseEnvelope<T>(response: Response): Promise<T> {
   return payload.data;
 }
 
+async function apiFetch(input: string, init?: RequestInit, timeoutMs = DEFAULT_REQUEST_TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
+
+  try {
+    return await fetch(input, {
+      ...init,
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error(`Request timed out after ${Math.round(timeoutMs / 1000)}s.`);
+    }
+
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error("Network request failed.");
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 export async function fetchNecTemplate(): Promise<NecTemplatePayload> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/templates/nec`, {
+  const response = await apiFetch(`${getApiBaseUrl()}/api/v1/templates/nec`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",
@@ -52,8 +80,19 @@ export async function fetchNecTemplate(): Promise<NecTemplatePayload> {
   return parseEnvelope<NecTemplatePayload>(response);
 }
 
+export async function fetchWorkspaceProjectsConfig(): Promise<WorkspaceProjectsConfig> {
+  const response = await apiFetch(`${getApiBaseUrl()}/api/v1/projects/config`, {
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return parseEnvelope<WorkspaceProjectsConfig>(response);
+}
+
 export async function ingestReport(payload: IngestReportPayload): Promise<IngestReportResult> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/reports/ingest`, {
+  const response = await apiFetch(`${getApiBaseUrl()}/api/v1/reports/ingest`, {
     method: "POST",
     cache: "no-store",
     headers: {
@@ -65,8 +104,39 @@ export async function ingestReport(payload: IngestReportPayload): Promise<Ingest
   return parseEnvelope<IngestReportResult>(response);
 }
 
-export async function fetchReportCards(reportId: string): Promise<ReportCardsResult> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/reports/${reportId}/cards`, {
+export async function fetchReportCards(
+  reportId: string,
+  options?: {
+    page?: number;
+    pageSize?: number;
+    q?: string;
+    checkType?: string;
+    severity?: string;
+    reviewType?: "all" | "consistency" | "compliance";
+  },
+): Promise<ReportCardsResult> {
+  const query = new URLSearchParams();
+  if (options?.page) {
+    query.set("page", String(options.page));
+  }
+  if (options?.pageSize) {
+    query.set("page_size", String(options.pageSize));
+  }
+  if (options?.q) {
+    query.set("q", options.q);
+  }
+  if (options?.checkType && options.checkType !== "all") {
+    query.set("check_type", options.checkType);
+  }
+  if (options?.severity && options.severity !== "all") {
+    query.set("severity", options.severity);
+  }
+  if (options?.reviewType && options.reviewType !== "all") {
+    query.set("review_type", options.reviewType);
+  }
+
+  const suffix = query.size > 0 ? `?${query.toString()}` : "";
+  const response = await apiFetch(`${getApiBaseUrl()}/api/v1/reports/${reportId}/cards${suffix}`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",
@@ -77,7 +147,7 @@ export async function fetchReportCards(reportId: string): Promise<ReportCardsRes
 }
 
 export async function resolveEvidence(payload: ResolveEvidencePayload): Promise<ResolveEvidenceResult> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/evidence/resolve`, {
+  const response = await apiFetch(`${getApiBaseUrl()}/api/v1/evidence/resolve`, {
     method: "POST",
     cache: "no-store",
     headers: {
@@ -94,7 +164,7 @@ export async function updateManualReview(
   itemId: string,
   payload: ManualReviewUpdatePayload,
 ): Promise<ManualReviewUpdateResult> {
-  const response = await fetch(
+  const response = await apiFetch(
     `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-review`,
     {
       method: "PATCH",
@@ -119,7 +189,7 @@ export async function fetchManualReviewHistory(
     page: String(page),
     page_size: String(pageSize),
   });
-  const response = await fetch(
+  const response = await apiFetch(
     `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-reviews?${query.toString()}`,
     {
       cache: "no-store",
@@ -138,7 +208,7 @@ export async function updateManualReviewHistoryEntry(
   historyId: string,
   payload: ManualReviewUpdatePayload,
 ): Promise<ManualReviewHistoryUpdateResult> {
-  const response = await fetch(
+  const response = await apiFetch(
     `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-reviews/${encodeURIComponent(historyId)}`,
     {
       method: "PATCH",
@@ -158,7 +228,7 @@ export async function deleteManualReviewHistoryEntry(
   itemId: string,
   historyId: string,
 ): Promise<ManualReviewHistoryDeleteResult> {
-  const response = await fetch(
+  const response = await apiFetch(
     `${getApiBaseUrl()}/api/v1/reports/${encodeURIComponent(reportId)}/cards/${encodeURIComponent(itemId)}/manual-reviews/${encodeURIComponent(historyId)}`,
     {
       method: "DELETE",
@@ -178,7 +248,7 @@ export async function exportReportFile(payload: {
   selected_standards: SelectedStandard[];
   card_ids: string[];
 }): Promise<{ blob: Blob; fileName: string }> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/exports/report`, {
+  const response = await apiFetch(`${getApiBaseUrl()}/api/v1/exports/report`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

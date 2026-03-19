@@ -2,6 +2,7 @@ export type Severity = "major" | "minor" | "info";
 export type ConsistencyStatus = "consistent" | "inconsistent" | "unknown";
 export type StatusDomain = "consistency" | "compliance";
 export type MatchStatus = "resolved_exact" | "resolved_approximate" | "unresolved";
+export type StatusPresentation = "normalized" | "raw";
 export type ManualVerdict = "accepted" | "rejected" | "needs_followup";
 export type ManualVerdictCategory =
   | "evidence_gap"
@@ -23,6 +24,9 @@ export interface ReportItem {
   keywords: string[];
   source: string;
   severity: Severity;
+  raw_status?: string;
+  status_presentation?: StatusPresentation;
+  source_pack?: string;
   manual_verdict?: string;
   manual_verdict_category?: string;
   manual_verdict_note?: string;
@@ -36,6 +40,7 @@ export interface StandardDefinition {
   default_priority: number;
   enabled_by_default: boolean;
   check_types: string[];
+  check_type_domains?: Record<string, StatusDomain[]>;
 }
 
 export interface StandardTemplateEntry {
@@ -59,6 +64,7 @@ export interface DocumentReference {
   document_id: string;
   file_name: string;
   display_name: string;
+  relative_path?: string;
 }
 
 export interface TenderUiConfig {
@@ -120,19 +126,45 @@ export interface NecTemplatePayload {
   documents: DocumentReference[];
 }
 
+export interface ProjectReportSourceSummary {
+  source_id: string;
+  label: string;
+  order: number;
+}
+
+export interface WorkspaceProjectConfig {
+  project_id: string;
+  name: string;
+  default_template_id: string;
+  standards_catalog: StandardDefinition[];
+  templates: StandardTemplate[];
+  documents: DocumentReference[];
+  report_sources: ProjectReportSourceSummary[];
+}
+
+export interface WorkspaceProjectsConfig {
+  default_project_id: string;
+  projects: WorkspaceProjectConfig[];
+}
+
 export interface IngestReportPayload {
+  project_id?: string;
   report_source: string;
   report_items?: ReportItem[];
 }
 
 export interface IngestReportResult {
   report_id: string;
+  project_id: string;
   items_count: number;
   invalid_items: Array<Record<string, string>>;
 }
 
 export interface ReportCardsResult {
   report_id: string;
+  page: number;
+  page_size: number;
+  total: number;
   cards: ReportItem[];
 }
 
