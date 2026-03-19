@@ -32,6 +32,7 @@ def list_cards(
   severity: str | None = Query(default=None),
   check_type: str | None = Query(default=None),
   review_type: str | None = Query(default=None),
+  status: str | None = Query(default=None),
 ) -> dict[str, object]:
   result = get_cards(
     report_id,
@@ -41,6 +42,7 @@ def list_cards(
     severity=severity,
     check_type=check_type,
     review_type=review_type,
+    status=status,
   )
   return ok_response(request, result.model_dump())
 

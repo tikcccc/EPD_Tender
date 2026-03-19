@@ -198,6 +198,15 @@ def test_hy_card_filters_and_normalization(client: TestClient) -> None:
   assert page2.status_code == 200
   assert len(page2.json()["data"]["cards"]) == 5
 
+  raw_status_filtered = client.get(
+    f"/api/v1/reports/{report_id}/cards",
+    params={"page": 1, "page_size": 20, "check_type": "ntt_vs_ecc_ntt", "status": "not_found"},
+  )
+  assert raw_status_filtered.status_code == 200
+  raw_status_payload = raw_status_filtered.json()["data"]
+  assert raw_status_payload["total"] > 0
+  assert all(card["raw_status"] == "not_found" for card in raw_status_payload["cards"])
+
 
 def test_project_document_route_serves_hy_pdf(client: TestClient) -> None:
   response = client.get("/api/v1/projects/hy202214/documents/I-HY_2022_14-GCT-00/file")

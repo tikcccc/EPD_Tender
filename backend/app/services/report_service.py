@@ -263,6 +263,22 @@ def _matches_query(item: ReportItem, query: str | None) -> bool:
   return all(any(token in haystack for haystack in haystacks) for token in query_tokens)
 
 
+def _display_status_token(item: ReportItem) -> str:
+  raw_status = _normalize_status_token(item.raw_status)
+  if item.status_presentation == "raw" and raw_status:
+    return raw_status
+
+  status_domain = "compliance" if item.status_domain == "compliance" else "consistency"
+  if status_domain == "compliance":
+    if item.consistency_status == "consistent":
+      return "compliant"
+    if item.consistency_status == "inconsistent":
+      return "non_compliant"
+    return "unknown"
+
+  return item.consistency_status
+
+
 def _filter_cards(
   cards: list[ReportItem],
   *,
@@ -270,7 +286,9 @@ def _filter_cards(
   severity: str | None = None,
   check_type: str | None = None,
   review_type: str | None = None,
+  status: str | None = None,
 ) -> list[ReportItem]:
+  normalized_status = _normalize_status_token(status)
   filtered: list[ReportItem] = []
   for item in cards:
     status_domain = "compliance" if item.status_domain == "compliance" else "consistency"
@@ -279,6 +297,8 @@ def _filter_cards(
     if check_type is not None and item.check_type != check_type:
       continue
     if review_type is not None and status_domain != review_type:
+      continue
+    if normalized_status is not None and _display_status_token(item) != normalized_status:
       continue
     if not _matches_query(item, query):
       continue
@@ -346,6 +366,7 @@ def get_cards(
   severity: str | None = None,
   check_type: str | None = None,
   review_type: str | None = None,
+  status: str | None = None,
 ) -> ReportCardsData:
   cards = _find_report(report_id).cards
   filtered = _filter_cards(
@@ -354,6 +375,7 @@ def get_cards(
     severity=severity,
     check_type=check_type,
     review_type=review_type,
+    status=status,
   )
   total = len(filtered)
   start = max(0, (page - 1) * page_size)

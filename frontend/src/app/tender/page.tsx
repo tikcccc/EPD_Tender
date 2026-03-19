@@ -45,6 +45,33 @@ const SEVERITY_LABELS: Record<Severity, string> = {
   minor: "Minor",
   info: "Info",
 };
+type ReviewTypeFilter = "all" | "consistency" | "compliance";
+type StatusFilterValue =
+  | "all"
+  | "consistent"
+  | "inconsistent"
+  | "compliant"
+  | "non_compliant"
+  | "unknown"
+  | "modified"
+  | "not_found"
+  | "uncertain";
+
+const STATUS_FILTER_OPTIONS: Array<{
+  value: StatusFilterValue;
+  label: string;
+  reviewTypes: ReviewTypeFilter[];
+}> = [
+  { value: "all", label: "All Statuses", reviewTypes: ["all", "consistency", "compliance"] },
+  { value: "consistent", label: "Consistent", reviewTypes: ["all", "consistency"] },
+  { value: "inconsistent", label: "Inconsistent", reviewTypes: ["all", "consistency"] },
+  { value: "compliant", label: "Compliant", reviewTypes: ["all", "compliance"] },
+  { value: "non_compliant", label: "Non-compliant", reviewTypes: ["all", "compliance"] },
+  { value: "unknown", label: "Unknown", reviewTypes: ["all", "consistency", "compliance"] },
+  { value: "modified", label: "Modified", reviewTypes: ["all", "consistency", "compliance"] },
+  { value: "not_found", label: "Not Found", reviewTypes: ["all", "consistency", "compliance"] },
+  { value: "uncertain", label: "Uncertain", reviewTypes: ["all", "consistency", "compliance"] },
+];
 
 type ResolveCandidate = {
   order: number;
@@ -374,7 +401,8 @@ export default function TenderPage() {
 
   const [searchText, setSearchText] = useState("");
   const deferredSearchText = useDeferredValue(searchText);
-  const [reviewTypeFilter, setReviewTypeFilter] = useState<"all" | "consistency" | "compliance">("all");
+  const [reviewTypeFilter, setReviewTypeFilter] = useState<ReviewTypeFilter>("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [severityFilter, setSeverityFilter] = useState<"all" | Severity>("all");
   const [evaluationScopeExpanded, setEvaluationScopeExpanded] = useState(false);
@@ -438,6 +466,9 @@ export default function TenderPage() {
     });
     return Array.from(categories).sort((a, b) => a.localeCompare(b));
   }, [reviewTypeFilter, standardsCatalog]);
+  const statusOptions = useMemo(() => {
+    return STATUS_FILTER_OPTIONS.filter((option) => option.reviewTypes.includes(reviewTypeFilter));
+  }, [reviewTypeFilter]);
 
   const selectedStandards = useMemo<SelectedStandard[]>(() => {
     return selectedOrder.map((standardId, index) => {
@@ -488,7 +519,7 @@ export default function TenderPage() {
 
   useEffect(() => {
     setCardsPage(1);
-  }, [activeProjectId, searchText, reviewTypeFilter, categoryFilter, severityFilter]);
+  }, [activeProjectId, searchText, reviewTypeFilter, statusFilter, categoryFilter, severityFilter]);
 
   useEffect(() => {
     if (categoryFilter === "all") {
@@ -501,6 +532,18 @@ export default function TenderPage() {
 
     setCategoryFilter("all");
   }, [categoryFilter, categoryOptions]);
+
+  useEffect(() => {
+    if (statusFilter === "all") {
+      return;
+    }
+
+    if (statusOptions.some((option) => option.value === statusFilter)) {
+      return;
+    }
+
+    setStatusFilter("all");
+  }, [statusFilter, statusOptions]);
 
   useEffect(() => {
     if (!activeProject) {
@@ -520,6 +563,7 @@ export default function TenderPage() {
       setCardsPage(1);
       setSearchText("");
       setReviewTypeFilter("all");
+      setStatusFilter("all");
       setCategoryFilter("all");
       setSeverityFilter("all");
       setSelectedOrder(getDefaultSelectedOrder(currentProject));
@@ -724,6 +768,7 @@ export default function TenderPage() {
           q: deferredSearchText.trim() || undefined,
           checkType: categoryFilter,
           severity: severityFilter,
+          status: statusFilter,
           reviewType: reviewTypeFilter,
         });
 
@@ -763,7 +808,7 @@ export default function TenderPage() {
     return () => {
       disposed = true;
     };
-  }, [activeProject, cardsPage, categoryFilter, deferredSearchText, focusEvidence, reportId, reviewTypeFilter, severityFilter]);
+  }, [activeProject, cardsPage, categoryFilter, deferredSearchText, focusEvidence, reportId, reviewTypeFilter, severityFilter, statusFilter]);
 
   useEffect(() => {
     setViewerPage(Math.max(1, workspaceState.page));
@@ -845,6 +890,7 @@ export default function TenderPage() {
         q: deferredSearchText.trim() || undefined,
         checkType: categoryFilter,
         severity: severityFilter,
+        status: statusFilter,
         reviewType: reviewTypeFilter,
       });
 
@@ -1012,7 +1058,7 @@ export default function TenderPage() {
                   className="c-select-input"
                   value={reviewTypeFilter}
                   aria-label="Filter cards by review type"
-                  onChange={(event) => setReviewTypeFilter(event.target.value as "all" | "consistency" | "compliance")}
+                  onChange={(event) => setReviewTypeFilter(event.target.value as ReviewTypeFilter)}
                 >
                   <option value="all">All Review Types</option>
                   <option value="consistency">Consistency Review</option>
@@ -1028,6 +1074,18 @@ export default function TenderPage() {
                   {categoryOptions.map((category) => (
                     <option key={category} value={category}>
                       {formatCheckTypeLabel(category)}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  className="c-select-input"
+                  value={statusFilter}
+                  aria-label="Filter cards by status"
+                  onChange={(event) => setStatusFilter(event.target.value as StatusFilterValue)}
+                >
+                  {statusOptions.map((statusOption) => (
+                    <option key={statusOption.value} value={statusOption.value}>
+                      {statusOption.label}
                     </option>
                   ))}
                 </select>

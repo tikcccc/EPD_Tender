@@ -112,6 +112,7 @@ export async function fetchReportCards(
     q?: string;
     checkType?: string;
     severity?: string;
+    status?: string;
     reviewType?: "all" | "consistency" | "compliance";
   },
 ): Promise<ReportCardsResult> {
@@ -130,6 +131,9 @@ export async function fetchReportCards(
   }
   if (options?.severity && options.severity !== "all") {
     query.set("severity", options.severity);
+  }
+  if (options?.status && options.status !== "all") {
+    query.set("status", options.status);
   }
   if (options?.reviewType && options.reviewType !== "all") {
     query.set("review_type", options.reviewType);
