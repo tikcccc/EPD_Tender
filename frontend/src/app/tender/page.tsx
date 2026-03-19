@@ -32,6 +32,11 @@ import type {
 
 const CARD_PAGE_SIZE = 50;
 const EXPORT_CARD_PAGE_SIZE = 200;
+const IDLE_WORKSPACE_DOCUMENT: DocumentReference = {
+  document_id: "",
+  file_name: "No document selected",
+  display_name: "No document selected",
+};
 const FALLBACK_DOCUMENT: DocumentReference = {
   document_id: "unknown",
   file_name: "unknown.pdf",
@@ -371,14 +376,14 @@ function getTemplateName(project: WorkspaceProjectConfig | null): string {
   return template?.name ?? project.name;
 }
 
-function createIdleWorkspaceState(document: DocumentReference): EvidenceWorkspaceState {
+function createIdleWorkspaceState(): EvidenceWorkspaceState {
   return {
     item_id: "N/A",
-    document_id: document.document_id,
-    file_name: document.file_name,
-    display_name: document.display_name,
+    document_id: IDLE_WORKSPACE_DOCUMENT.document_id,
+    file_name: IDLE_WORKSPACE_DOCUMENT.file_name,
+    display_name: IDLE_WORKSPACE_DOCUMENT.display_name,
     page: 1,
-    quote: "Pick a card to focus evidence in the workspace.",
+    quote: "Click a referenced source to load it in the workspace.",
     bbox: null,
     bboxes: null,
     match_status: "resolved_approximate",
@@ -408,7 +413,7 @@ export default function TenderPage() {
   const [evaluationScopeExpanded, setEvaluationScopeExpanded] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
 
-  const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>(createIdleWorkspaceState(FALLBACK_DOCUMENT));
+  const [workspaceState, setWorkspaceState] = useState<EvidenceWorkspaceState>(createIdleWorkspaceState());
   const [activeItemId, setActiveItemId] = useState<string>("");
   const [activeReferenceId, setActiveReferenceId] = useState<string>("");
   const [workspaceDocuments, setWorkspaceDocuments] = useState<DocumentReference[]>([FALLBACK_DOCUMENT]);
@@ -572,7 +577,7 @@ export default function TenderPage() {
       setActiveReferenceId("");
       setIsManualViewerMode(false);
       setSwitchingDocument(false);
-      setWorkspaceState(createIdleWorkspaceState(baseDocuments[0] ?? FALLBACK_DOCUMENT));
+      setWorkspaceState(createIdleWorkspaceState());
       setExportNotice("");
       requestKeyRef.current = "";
 
@@ -782,12 +787,10 @@ export default function TenderPage() {
         const baseDocuments = currentProject.documents.length > 0 ? currentProject.documents : [FALLBACK_DOCUMENT];
         setWorkspaceDocuments(baseDocuments);
 
-        if (result.cards.length > 0) {
-          void focusEvidence(result.cards[0]);
-        } else {
+        if (result.cards.length === 0) {
           setActiveItemId("");
           setActiveReferenceId("");
-          setWorkspaceState(createIdleWorkspaceState(baseDocuments[0] ?? FALLBACK_DOCUMENT));
+          setWorkspaceState(createIdleWorkspaceState());
         }
       } catch (error) {
         if (!disposed && requestKeyRef.current === requestKey) {
@@ -834,7 +837,7 @@ export default function TenderPage() {
     if (activeDocument) {
       return activeDocument.document_id;
     }
-    return workspaceDocuments[0]?.document_id ?? workspaceState.document_id;
+    return workspaceState.document_id;
   }, [workspaceDocuments, workspaceState.document_id]);
 
   function handleDocumentChange(documentId: string): void {
@@ -1170,6 +1173,7 @@ export default function TenderPage() {
             documentOptions={toolbarDocumentOptions}
             currentPage={viewerPage}
             pageCount={viewerPageCount}
+            canOpenDocument={Boolean(workspaceState.document_id)}
             isDocumentSwitching={switchingDocument || workspaceState.loading}
             onDocumentChange={handleDocumentChange}
             onOpenDocument={openWorkspacePdf}

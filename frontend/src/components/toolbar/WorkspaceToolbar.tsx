@@ -11,6 +11,7 @@ type WorkspaceToolbarProps = {
   documentOptions: WorkspaceDocumentOption[];
   currentPage: number;
   pageCount: number;
+  canOpenDocument?: boolean;
   isDocumentSwitching?: boolean;
   onDocumentChange: (documentId: string) => void;
   onOpenDocument: () => void;
@@ -22,6 +23,7 @@ export function WorkspaceToolbar({
   documentOptions,
   currentPage,
   pageCount,
+  canOpenDocument,
   isDocumentSwitching,
   onDocumentChange,
   onOpenDocument,
@@ -43,6 +45,14 @@ export function WorkspaceToolbar({
     const current = documentOptions.find((option) => option.documentId === currentDocumentId);
     return current ? [current, ...matched] : matched;
   }, [currentDocumentId, documentOptions, normalizedSearch]);
+  const effectiveOptions = useMemo(() => {
+    const hasCurrentOption = documentOptions.some((option) => option.documentId === currentDocumentId);
+    if (hasCurrentOption) {
+      return filteredOptions;
+    }
+
+    return [{ documentId: currentDocumentId, label: "Select a document" }, ...filteredOptions];
+  }, [currentDocumentId, documentOptions, filteredOptions]);
   const showSearch = documentOptions.length > 12;
 
   return (
@@ -69,13 +79,13 @@ export function WorkspaceToolbar({
           disabled={Boolean(isDocumentSwitching)}
           aria-label="Switch document"
         >
-          {filteredOptions.map((option) => (
+          {effectiveOptions.map((option) => (
             <option key={option.documentId} value={option.documentId}>
               {option.label}
             </option>
           ))}
         </select>
-        <button className="c-btn c-btn-secondary" type="button" onClick={onOpenDocument}>
+        <button className="c-btn c-btn-secondary" type="button" onClick={onOpenDocument} disabled={!canOpenDocument}>
           Open PDF
         </button>
       </div>
